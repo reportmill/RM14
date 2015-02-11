@@ -342,7 +342,6 @@ private static class RMTextShapeHpr <T extends RMTextShape> extends RMShapeHpr <
         
         // Iterate over runs and create text spans
         RMTextLayout layout = aTextShape.getTextLayout(); if(layout==null) return;
-        RMColor color = RMColor.black;
         for(RMTextRun run=layout.getRun(); run!=null; run=run.getNext()) {
             String str = run.toString(); RMFont rfont = run.getFont(); RMColor rcolor = run.getColor();
             double x = run.getX(), y = run.getYBaseline();
@@ -353,7 +352,7 @@ private static class RMTextShapeHpr <T extends RMTextShape> extends RMShapeHpr <
             tspan.add("font-style", rfont.isItalic()? "italic" : "normal");
             tspan.add("font-weight", rfont.isBold()? "bold" : "normal");
             tspan.add("font-size", (int)rfont.getSize());
-            if(!color.equals(rcolor)) tspan.add("fill", '#' + rcolor.toHexString()); color = rcolor;
+            if(!rcolor.equals(RMColor.black)) tspan.add("fill", '#' + rcolor.toHexString());
             tspan.setValue(str);
             text.addElement(tspan);
         }
