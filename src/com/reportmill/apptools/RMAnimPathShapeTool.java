@@ -1,65 +1,54 @@
 package com.reportmill.apptools;
 import com.reportmill.shape.*;
-import java.util.List;
 import snap.swing.SwingEvent;
 
 /**
- * Provides Swing UI editing for RMAnimPathShape.
+ * Provides UI editing for RMAnimPathShape.
  */
-public class RMAnimPathShapeTool extends RMPolygonShapeTool {
+public class RMAnimPathShapeTool <T extends RMAnimPathShape> extends RMTool <T> {
 
 /**
- * Updates the Swing UI controls from the currently selected oval.
+ * Updates the UI controls from the currently selected oval.
  */
 public void resetUI()
 {
     // Get path shape
-    RMAnimPathShape animpathShape = (RMAnimPathShape)getSelectedShape(); if(animpathShape==null) return;
+    RMAnimPathShape aps = getSelectedShape(); if(aps==null) return;
 
     // Update position slider [show range in ui as 0-100]
-    setNodeValue("PositionSlider", animpathShape.getDistance()*100);
-    setNodeValue("PositionText", animpathShape.getDistance()*100);
+    setNodeValue("PositionSlider", aps.getDistance()*100);
+    setNodeValue("PositionText", aps.getDistance()*100);
     
     // Update alignment
-    setNodeValue("AlignmentCheckBox", animpathShape.getPreservesOrientation());
+    setNodeValue("AlignmentCheckBox", aps.getPreservesOrientation());
     
     // Update origin matrix
-    setNodeValue("align"+animpathShape.getChildOrigin(), true);
+    setNodeValue("align" + aps.getChildOrigin(), true);
 }
 
 /**
-* Updates the currently selected oval from the Swing UI controls.
-*/
+ * Updates the currently selected oval from the UI controls.
+ */
 public void respondUI(SwingEvent anEvent)
 {
     // Get selected path shape (just return if null)
-    RMAnimPathShape animpathShape = (RMAnimPathShape)getSelectedShape(); if(animpathShape==null) return;
+    RMAnimPathShape aps = getSelectedShape(); if(aps==null) return;
     
-    // Let superclass handle pop-up menu
-    super.respondUI(anEvent);
+    // Handle PositionSlider or PositionText
+    if(anEvent.equals("PositionSlider") || anEvent.equals("PositionText"))
+        aps.setDistance(anEvent.getFloatValue()/100f);
     
-    // Get shapes
-    List <RMAnimPathShape> pathShapes = getSelectedShapes();
+    // Handle AlignmentCheckBox
+    if(anEvent.equals("AlignmentCheckBox"))
+        aps.setPreservesOrientation(anEvent.getBoolValue());
     
-    // Update all selected animpath shapes
-    for(RMAnimPathShape shape : pathShapes) {
-        
-        // Handle distance slider or text field
-        if(anEvent.equals("PositionSlider") || anEvent.equals("PositionText"))
-            shape.setDistance(anEvent.getFloatValue()/100f);
-        
-        // Handle alignment checkbox
-        else if(anEvent.equals("AlignmentCheckBox"))
-            shape.setPreservesOrientation(anEvent.getBoolValue());
-        
-        // Handle origin matrix
-        else if(anEvent.getName().startsWith("align"))
-            shape.setChildOrigin(anEvent.getName().charAt(5)-'0'); // buttons in matrix are named align0-align9
-        
-        // Handle reverse path button - Bounds of path should be the same, so there's no reason to call resetPath()
-        else if(anEvent.equals("ReversePathButton"))
-            shape.setPath(shape.getPath().getReversedPath());
-    }
+    // Handle origin matrix
+    if(anEvent.getName().startsWith("align"))
+        aps.setChildOrigin(anEvent.getName().charAt(5)-'0'); // buttons in matrix are named align0-align9
+    
+    // Handle ReversePathButton - Bounds of path should be the same, so there's no reason to call resetPath()
+    if(anEvent.equals("ReversePathButton"))
+        aps.setPath(aps.getPath().getReversedPath());
 }
 
 /**
