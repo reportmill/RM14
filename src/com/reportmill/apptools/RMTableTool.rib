@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325">
+  <font name="Arial" size="11" />
+  <jlabel x="5" y="5" width="68" height="18" text="Dataset Key:" align="left" />
+  <jtextfield name="ListKeyText" x="73" y="4" width="196" height="20" EnabledEvents="DragDrop" />
+  <jlabel x="5" y="29" width="62" height="18" text="Filter Expr:" />
+  <jtextfield name="FilterKeyText" x="63" y="28" width="206" height="20" EnabledEvents="DragDrop" />
+  <jlabel x="4" y="54" width="90" height="18" text="Grouping:" />
+  <menubutton name="GroupKeysMenuButton" x="203" y="53" width="66" height="18" text="Keys..." text-position="left">
+    <border type="bevel" bevel-type="raised" />
+    <jmenuitem name="AddGroupMenuItem" text="Add..." />
+    <jmenuitem name="RemoveGroupMenuItem" text="Remove" />
+    <jmenuitem name="KeysMenuItem" text="Keys..." />
+    <jmenuitem name="MoveGroupUpMenuItem" text="Move Group Up" />
+    <jmenuitem name="MoveGroupDownMenuItem" text="Move Group Down" />
+  </menubutton>
+  <jscrollpane x="4" y="72" width="267" height="75" vertical="always">
+    <jtable name="GroupingTable" />
+  </jscrollpane>
+  <jcheckbox name="HeaderCheckBox" x="25" y="150" width="70" height="16" text="Header" />
+  <jcheckbox name="DetailsCheckBox" x="100" y="150" width="70" height="16" text="Details" />
+  <jcheckbox name="SummaryCheckBox" x="175" y="150" width="94" height="16" text="Summary" />
+  <jlabel x="4" y="278" width="127" height="18" text="Number of Columns:" />
+  <jtextfield name="NumColumnsText" x="113" y="278" width="35" height="20" align="center" />
+  <jlabel x="4" y="302" width="120" height="18" text="Inter-column Spacing:" />
+  <jtextfield name="ColumnSpacingText" x="113" y="302" width="35" height="20" align="center" />
+  <jbutton name="TableGroupButton" x="153" y="302" width="117" height="20" text="Make TableGroup" align="center" margin="0,0,0,0" />
+</panel>

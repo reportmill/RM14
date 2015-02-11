@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="262" height="284">
+  <font name="Arial" size="11" />
+  <jlabel x="8" y="47" width="49" height="18" text="Bar Gap:" align="left" />
+  <jspinner name="BarGapSpinner" x="61" y="45" width="65" height="22" min="0.0" max="1.0" step="0.1" value="0.0" />
+  <jlabel x="131" y="47" width="131" height="18" text="(as fraction of bar width)" align="left" />
+  <jlabel x="8" y="77" width="49" height="18" text="Set Gap:" align="left" />
+  <jspinner name="SetGapSpinner" x="61" y="75" width="65" height="22" min="0.0" step="0.1" value="0.0" />
+  <jlabel x="131" y="77" width="126" height="18" text="(as fraction of bar width)" align="left" />
+  <jlabel x="8" y="114" width="147" height="22" text="Minimum Section Bar Count:" align="left" />
+  <jspinner name="BarCountSpinner" x="158" y="114" width="65" height="22" min="0" step="1" value="0" />
+</panel>

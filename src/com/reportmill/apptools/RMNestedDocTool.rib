@@ -1,0 +1,17 @@
+<panel width="275" height="325" >
+  <font name="Arial" size="12" />
+
+  <panel x="50" y="50" width="155" height="95" >
+    <border title="Animation" />
+
+    <jlabel x="10" y="15" width="75" height="20" value="Scale Factor:" align="right" />
+    <jtextfield name="ScaleFactorText" x="95" y="15" width="50" height="20" align="center" />
+
+    <jlabel x="10" y="40" width="75" height="20" value="Initial Delay:" align="right" />
+    <jtextfield name="InitialDelayText" x="95" y="40" width="50" height="20" align="center" />
+
+    <jlabel x="10" y="65" width="75" height="20" value="Gap Delay:" align="right" />
+    <jtextfield name="GapDelayText" x="95" y="65" width="50" height="20" align="center" />
+  </panel>
+
+</panel>

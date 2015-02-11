@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="220">
+  <font name="Arial" size="11" />
+  <colorwell name="StrokeColorWell" x="40" y="13" width="60" height="30" />
+  <jlabel x="55" y="49" width="50" height="22" text="Width:" align="left" />
+  <jtextfield name="StrokeWidthText" x="45" y="71" width="50" height="20" align="center">
+    <binding aspect="Text" key="Strokes.Width" />
+  </jtextfield>
+  <thumbwheel name="StrokeWidthThumb" x="15" y="95" width="111" height="16" max="20" absmin="0" round="1">
+    <binding aspect="Value" key="Strokes.Width" />
+  </thumbwheel>
+  <jlabel x="40" y="127" width="70" height="22" text="Dash Array:" align="left" />
+  <jtextfield x="110" y="127" width="104" height="22">
+    <binding aspect="Text" key="Strokes.DashArrayString" />
+  </jtextfield>
+  <jlabel x="40" y="154" width="70" height="22" text="Dash Phase:" align="left" />
+  <jspinner x="110" y="154" width="58" height="22" foreground="#000000" step="1" value="0">
+    <binding aspect="Value" key="Strokes.DashPhase" />
+  </jspinner>
+  <jcheckbox x="175" y="25" width="78" height="22" text="Top" align="left">
+    <binding aspect="Selected" key="Strokes.ShowTop" />
+  </jcheckbox>
+  <jcheckbox x="136" y="48" width="50" height="22" text="Left" align="left">
+    <binding aspect="Selected" key="Strokes.ShowLeft" />
+  </jcheckbox>
+  <jcheckbox x="225" y="48" width="32" height="22" align="left">
+    <binding aspect="Selected" key="Strokes.ShowRight" />
+  </jcheckbox>
+  <jcheckbox x="175" y="71" width="78" height="22" text="Bottom" align="left">
+    <binding aspect="Selected" key="Strokes.ShowBottom" />
+  </jcheckbox>
+  <jlabel x="185" y="48" width="35" height="22" text="Right" align="right" />
+</panel>

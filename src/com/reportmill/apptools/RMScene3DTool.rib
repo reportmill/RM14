@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325">
+  <font name="Arial" size="11" />
+  <panel x="13" y="172" width="250" height="45" asize="-~-,--~">
+    <border type="etched" title="Depth" />
+    <jslider name="DepthSlider" x="7" y="17" width="180" height="20" asize="-~-,--~" min="10" max="200" />
+    <jtextfield name="DepthText" x="192" y="15" width="50" height="20" asize="~--,--~" align="center" />
+  </panel>
+  <panel x="13" y="227" width="250" height="45" asize="-~-,--~">
+    <border type="etched" title="Focal Length (inches from screen to eye)" />
+    <jslider name="FOVSlider" x="7" y="17" width="180" height="20" asize="-~-,--~" min="6" max="60" />
+    <jtextfield name="FOVText" x="192" y="15" width="50" height="20" asize="~--,--~" align="center" />
+  </panel>
+  <customview name="TrackballControl" x="35" y="48" width="112" height="112" asize="~-~,--~" class="com.reportmill.apptools.RMTrackballControl">
+    <font name="Arial" size="12" />
+  </customview>
+  <panel x="41" y="11" width="190" height="25" asize="~-~,--~">
+    <jcombobox name="RenderingComboBox" x="71" width="110" height="27" focus="false" maxvisible="8">
+      <item text="Real 3D" />
+      <item text="Pseudo 3D" />
+    </jcombobox>
+    <jlabel x="11" y="1" width="60" height="22" text="Rendering:" align="right" />
+  </panel>
+  <jspinner name="YawSpinner" x="194" y="60" width="54" height="22" step="1" value="0" />
+  <jlabel x="162" y="61" width="32" height="20" text="Yaw:" align="left" />
+  <jspinner name="PitchSpinner" x="194" y="91" width="54" height="22" step="1" value="0" />
+  <jlabel x="162" y="92" width="32" height="20" text="Pitch:" align="left" />
+  <jspinner name="RollSpinner" x="194" y="122" width="54" height="22" step="1" value="0" />
+  <jlabel x="162" y="123" width="32" height="20" text="Roll:" align="left" />
+</panel>

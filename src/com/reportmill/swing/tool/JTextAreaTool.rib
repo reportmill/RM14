@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325">
+  <font name="Arial" size="11" />
+  <jcheckbox name="SendActionOnReturnCheckBox" x="8" y="10" width="224" height="20" text="Send action on return key">
+    <binding aspect="Selected" key="SelectedShapes.SendActionOnReturn" />
+  </jcheckbox>
+  <jcheckbox name="SendActionOnFocusLostCheckBox" x="8" y="36" width="224" height="20" text="Send action on focus lost">
+    <binding aspect="Selected" key="SelectedShapes.SendActionOnFocusLost" />
+  </jcheckbox>
+  <jcheckbox name="SendActionOnDropStringCheckBox" x="8" y="62" width="224" height="20" text="Send action on drag and drop string">
+    <binding aspect="Selected" key="SelectedShapes.SendActionOnDropString" />
+  </jcheckbox>
+</panel>

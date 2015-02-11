@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325">
+  <font name="Arial" size="11" />
+  <panel x="4" y="48" width="267" height="77" asize="~-~,--~">
+    <border title="Orientation" />
+    <jradiobutton name="HorizontalRadioButton" x="26" y="17" width="80" height="20" text="Horizontal" selected="true" bgroup="SeparatorOrientation" />
+    <jradiobutton name="VerticalRadioButton" x="26" y="39" width="80" height="20" text="Vertical" bgroup="SeparatorOrientation" />
+  </panel>
+</panel>

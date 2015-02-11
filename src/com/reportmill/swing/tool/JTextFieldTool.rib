@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325">
+  <font name="Arial" size="11" />
+  <jlabel x="8" y="4" width="71" height="22" text="Margins:" />
+  <jtextfield name="MarginText" x="57" y="4" width="211" height="22" />
+  <jcheckbox name="SendActionOnFocusLostCheckBox" x="8" y="32" width="224" height="20" text="Send action on focus lost" align="left">
+    <binding aspect="Selected" key="SelectedShapes.SendActionOnFocusLost" />
+  </jcheckbox>
+  <jcheckbox name="SendActionOnDropStringCheckBox" x="8" y="58" width="224" height="20" text="Send action on drag and drop string">
+    <binding aspect="Selected" key="SelectedShapes.SendActionOnDropString" />
+  </jcheckbox>
+  <jcheckbox name="IsBorderPaintedCheckBox" x="8" y="84" width="224" height="20" text="Show Border" />
+  <jcheckbox name="AutoScrollsCheckBox" x="8" y="110" width="224" height="20" text="Auto Scroll" />
+  <jcheckbox name="EditableCheckBox" x="8" y="136" width="224" height="20" text="Editable" />
+</panel>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="262" height="284">
+  <font name="Arial" size="11" />
+  <jlabel x="8" y="30" width="54" height="22" text="Text:" align="left" />
+  <jtextfield name="LegendText" x="54" y="30" width="193" height="22" EnabledEvents="DragDrop">
+    <binding aspect="Text" key="SelectedShape.LegendText" />
+  </jtextfield>
+  <jlabel x="8" y="56" width="80" height="22" text="Column Count:" align="left" />
+  <jtextfield name="ColumnCountText" x="88" y="56" width="30" height="22" EnabledEvents="DragDrop">
+    <binding aspect="Text" key="SelectedShape.ColumnCount" />
+  </jtextfield>
+</panel>

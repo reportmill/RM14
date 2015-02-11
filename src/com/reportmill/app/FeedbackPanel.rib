@@ -1,0 +1,42 @@
+<panel width="450" height="435" >
+  <font name="Arial" size="11" />
+  <jlabel x="10" y="10" width="380" height="25" value="Use this form to send feedback to ReportMill Software." >
+    <font name="Arial-Bold" size="12" />
+  </jlabel>
+  <jlabel x="10" y="40" width="40" height="25" value="Name:" />
+  <jtextfield name="UserText" x="52" y="40" width="138" height="25" />
+  <jlabel x="200" y="40" width="35" height="25" value="Email:" />
+  <jtextfield name="EmailText" x="235" y="40" width="195" height="25" />
+  <jlabel x="10" y="70" width="90" height="25" value="Feedback Type:" />
+  <jcombobox name="TypeComboBox" x="90" y="70" width="200" height="20" >
+    <item text="Bug Report" />
+    <item text="Enhancement Request" />
+    <item text="General Comment" />
+  </jcombobox>
+  <jlabel x="10" y="95" width="90" height="20" value="Severity:" />
+  <jcombobox name="SeverityComboBox" x="90" y="95" width="200" height="20" >
+    <item text="Low" />
+    <item text="Medium" />
+    <item text="High" />
+  </jcombobox>
+  <jlabel x="10" y="120" width="90" height="20" value="Module:" />
+  <jcombobox name="ModuleComboBox" x="90" y="120" width="200" height="20" >
+    <item text="General" />
+    <item text="Text" />
+    <item text="Images" />
+    <item text="Drawing" />
+    <item text="Tables" />
+    <item text="Graphs" />
+    <item text="Labels" />
+    <item text="Animation" />
+    <item text="Runtime" />
+    <item text="API" />
+    <item text="Other" />
+  </jcombobox>
+  <jlabel x="10" y="150" width="40" height="25" value="Title:" />
+  <jtextfield name="TitleText" x="55" y="150" width="375" height="25" />
+  <jlabel x="10" y="180" width="430" height="25" value="Detailed Description of Problem/Enhancement:" />
+  <jscrollpane x="10" y="200" width="425" height="230" vertical="always" >
+    <jtextarea name="DescriptionText" />
+  </jscrollpane>
+</panel>

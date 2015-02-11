@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325" >
+  <font name="Arial" size="11" />
+  <jlabel x="5" y="5" width="68" height="18" text="Dataset Key:" align="left" />
+  <jtextfield name="ListKeyText" x="73" y="4" width="196" height="20" EnabledEvents="DragDrop" />
+  <jlabel x="5" y="30" width="150" height="20" value="Avery&#169; Product Number:" />
+  <jcombobox name="LabelFormatsComboBox" x="5" y="50" width="265" height="25" />
+  <jlabel x="5" y="77" width="80" height="20" value="Rows:" align="right" />
+  <jtextfield name="NumRowsText" x="87" y="77" width="50" height="20" align="center" />
+  <jlabel x="139" y="77" width="60" height="20" value="Columns:" align="right" />
+  <jtextfield name="NumColumnsText" x="201" y="77" width="50" height="20" align="center" />
+  <jlabel x="5" y="99" width="80" height="20" value="Label Width:" align="right" />
+  <jtextfield name="LabelWidthText" x="87" y="99" width="50" height="20" align="center" />
+  <jlabel x="139" y="99" width="60" height="20" value="Height:" align="right" />
+  <jtextfield name="LabelHeightText" x="201" y="99" width="50" height="20" align="center" />
+  <jlabel x="5" y="121" width="80" height="20" value="Spacing Width:" align="right" />
+  <jtextfield name="SpacingWidthText" x="87" y="121" width="50" height="20" align="center" />
+  <jlabel x="139" y="121" width="60" height="20" value="Height:" align="right" />
+  <jtextfield name="SpacingHeightText" x="201" y="121" width="50" height="20" align="center" />
+</panel>

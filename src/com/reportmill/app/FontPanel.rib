@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="260">
+  <font name="Arial" size="11" />
+  <jlabel x="5" width="91" height="18" asize="-~~,--~" value="Family" />
+  <jscrollpane x="5" y="20" width="150" height="205" asize="-~~,-~-" vertical="always">
+    <jlist name="FamilyList" />
+  </jscrollpane>
+  <jlabel x="160" width="65" height="18" asize="~~-,--~" value="Sizes" />
+  <jscrollpane x="160" y="20" width="65" height="180" asize="~~-,-~-" vertical="always">
+    <jlist name="SizesList" />
+  </jscrollpane>
+  <jtextfield name="SizeText" x="160" y="204" width="65" height="21" asize="~~-,~--" />
+  <thumbwheel name="SizeThumb" x="242" y="20" width="16" height="68" asize="~--,-~-" type="linear" round="1" />
+  <jtogglebutton name="BoldButton" x="236" y="92" width="30" height="30" asize="~--,~--" value="B">
+    <font name="Arial-Bold" size="20" />
+  </jtogglebutton>
+  <jtogglebutton name="ItalicButton" x="236" y="126" width="30" height="30" asize="~--,~--" value="I">
+    <font name="Arial-Bold" size="20" />
+  </jtogglebutton>
+  <jtogglebutton name="UnderlineButton" x="236" y="160" width="30" height="30" asize="~--,~--" value="U">
+    <font name="Arial-Bold" size="20" />
+  </jtogglebutton>
+  <jtogglebutton name="OutlineButton" x="236" y="194" width="30" height="30" asize="~--,~--" value="O">
+    <font name="Arial-Bold" size="20" />
+  </jtogglebutton>
+  <jcombobox name="FontNameComboBox" x="4" y="230" width="255" height="25" asize="-~-,~--" />
+</panel>

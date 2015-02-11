@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="330" height="220">
+  <font name="Arial" size="11" />
+  <jlabel x="5" y="3" width="131" height="20" text="Not in Dictionary:" align="left" />
+  <jtextfield name="WordText" x="5" y="23" width="215" height="22" asize="-~-,--~" />
+  <jscrollpane name="" x="5" y="68" width="215" height="147" asize="-~-,-~-" vertical="always">
+    <font name="Arial" size="12" />
+    <jlist name="SuggestionList" width="196" height="143" asize="-~-,-~-" selection="single-interval" />
+  </jscrollpane>
+  <jlabel x="5" y="46" width="131" height="20" text="Suggestions:" align="left" />
+  <jbutton name="FindNextButton" x="230" y="23" width="90" height="22" asize="~--,--~" text="Find Next" />
+  <jbutton name="CorrectButton" x="230" y="55" width="90" height="22" asize="~--,--~" text="Correct" />
+  <jbutton name="LearnButton" x="230" y="88" width="90" height="22" asize="~--,--~" text="Learn" />
+  <jbutton name="CloseButton" x="230" y="193" width="90" height="22" asize="~--,~--" text="Close" />
+</panel>

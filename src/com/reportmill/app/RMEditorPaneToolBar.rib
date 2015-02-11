@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="638" height="95">
+  <font name="Arial" size="12" />
+  <panel width="638" height="30" asize="-~-,--~">
+    <font name="Arial" size="11" />
+    <jbutton x="4" y="2" width="4" height="24" image="/com/reportmill/viewer/images.ribs/ToolBar.png" align="center" text-position="center" border="false" content="false" margin="0" />
+    <jbutton name="NewButton" x="11" y="3" width="22" height="22" ttip="New" image="/com/reportmill/viewer/images.ribs/File_New.png" align="center" text-position="center" border="false" content="false" margin="0" />
+    <jbutton name="OpenButton" x="33" y="3" width="22" height="22" ttip="Open" image="/com/reportmill/viewer/images.ribs/File_Open.png" align="center" text-position="center" border="false" content="false" margin="0" />
+    <jbutton name="SaveButton" x="55" y="3" width="22" height="22" ttip="Save" image="/com/reportmill/viewer/images.ribs/File_Save.png" align="center" text-position="center" border="false" content="false" margin="0" />
+    <jbutton name="PrintButton" x="77" y="3" width="22" height="22" ttip="Print" image="/com/reportmill/viewer/images.ribs/File_Print.png" align="center" text-position="center" border="false" content="false" margin="0" />
+    <jseparator x="103" y="6" width="3" height="18" orientation="1" />
+    <jbutton name="CutButton" x="108" y="3" width="22" height="22" ttip="Cut" image="/com/reportmill/viewer/images.ribs/Edit_Cut.png" align="center" border="false" content="false" margin="0" />
+    <jbutton name="CopyButton" x="130" y="3" width="22" height="22" ttip="Copy" image="/com/reportmill/viewer/images.ribs/Edit_Copy.png" align="center" border="false" content="false" margin="0" />
+    <jbutton name="PasteButton" x="152" y="3" width="22" height="22" ttip="Paste" image="/com/reportmill/viewer/images.ribs/Edit_Paste.png" align="center" border="false" content="false" margin="0" />
+    <jbutton name="DeleteButton" x="174" y="3" width="22" height="22" ttip="Delete" image="/com/reportmill/viewer/images.ribs/Edit_Delete.png" align="center" border="false" content="false" margin="0" />
+    <jseparator x="200" y="6" width="3" height="18" orientation="1" />
+    <jbutton name="UndoButton" x="205" y="3" width="22" height="22" ttip="Undo" image="/com/reportmill/viewer/images.ribs/Edit_Undo.png" align="center" border="false" content="false" margin="0" />
+    <jbutton name="RedoButton" x="227" y="3" width="22" height="22" ttip="Redo" image="/com/reportmill/viewer/images.ribs/Edit_Redo.png" align="center" border="false" content="false" margin="0" />
+    <jseparator x="253" y="6" width="3" height="18" orientation="1" />
+    <jbutton name="MoneyButton" x="258" y="3" width="22" height="22" ttip="Money Format" image="Format_Money.png" align="center" text-position="center" border="false" content="false" margin="0" />
+    <jbutton name="PercentButton" x="280" y="3" width="22" height="22" ttip="Percent Format" image="Format_Percent.png" align="center" text-position="center" border="false" content="false" margin="0" />
+    <jbutton name="CommaButton" x="302" y="3" width="22" height="22" ttip="Comma Format" image="Format_Comma.png" align="center" text-position="center" border="false" content="false" margin="0" />
+    <jbutton name="DecimalAddButton" x="324" y="3" width="22" height="22" ttip="Add Decimal" image="Format_DecimalAdd.png" align="center" text-position="center" border="false" content="false" margin="0" />
+    <jbutton name="DecimalRemoveButton" x="346" y="3" width="22" height="22" ttip="Remove Decimal" image="Format_DecimalRemove.png" align="center" text-position="center" border="false" content="false" margin="0" />
+    <jseparator x="372" y="6" width="3" height="18" orientation="1" />
+    <jbutton name="FillColorPickerButton" x="375" y="3" width="32" height="22" ttip="Set Fill Color" image="Color_FillColor.png" align="center" margin="0" class="snap.swing.ColorPickerButton" />
+    <jbutton name="StrokeColorPickerButton" x="406" y="3" width="32" height="22" foreground="#000000" ttip="Set Stroke Color" image="Color_StrokeColor.png" align="center" margin="0" class="snap.swing.ColorPickerButton" />
+    <jbutton name="PreviewHTMLButton" x="460" y="3" width="22" height="22" ttip="Preview HTML" image="/com/reportmill/viewer/images.ribs/Preview_HTML.png" align="center" text-position="center" border="false" content="false" margin="0" />
+    <jbutton name="PreviewPDFButton" x="482" y="3" width="22" height="22" ttip="Preview PDF" image="/com/reportmill/viewer/images.ribs/Preview_PDF.png" align="center" text-position="center" border="false" content="false" margin="0" />
+  </panel>
+  <panel y="30" width="462" height="30">
+    <font name="Arial" size="11" />
+    <jbutton x="4" y="2" width="4" height="24" image="/com/reportmill/viewer/images.ribs/ToolBar.png" align="center" text-position="center" border="false" content="false" margin="0" />
+    <jcombobox name="FontFaceComboBox" x="11" y="3" width="131" height="22" EnabledEvents="KeyPressed,KeyFinished,FocusGained" editable="true" MaximumRowCount="30" />
+    <jcombobox name="FontSizeComboBox" x="145" y="3" width="55" height="22" EnabledEvents="FocusGained" editable="true" MaximumRowCount="15" />
+    <jbutton name="BoldButton" x="253" y="3" width="22" height="22" ttip="Make Bold" image="/com/reportmill/viewer/images.ribs/Format_Bold.png" align="center" text-position="center" border="false" content="false" margin="0" />
+    <jbutton name="ItalicButton" x="275" y="3" width="22" height="22" ttip="Make Italic" image="/com/reportmill/viewer/images.ribs/Format_Italic.png" align="center" text-position="center" border="false" content="false" margin="0" />
+    <jbutton name="UnderlineButton" x="297" y="3" width="22" height="22" ttip="Make Underline" image="/com/reportmill/viewer/images.ribs/Format_Underline.png" align="center" text-position="center" border="false" content="false" margin="0" />
+    <jseparator x="323" y="6" width="3" height="18" orientation="1" />
+    <jbutton name="AlignLeftButton" x="328" y="3" width="22" height="22" ttip="Align Left" image="/com/reportmill/viewer/images.ribs/Format_AlignLeft.png" align="center" border="false" content="false" margin="0" />
+    <jbutton name="AlignCenterButton" x="350" y="3" width="22" height="22" ttip="Align Center" image="/com/reportmill/viewer/images.ribs/Format_AlignCenter.png" align="center" border="false" content="false" margin="0" />
+    <jbutton name="AlignRightButton" x="372" y="3" width="22" height="22" ttip="Align Right" image="/com/reportmill/viewer/images.ribs/Format_AlignRight.png" align="center" border="false" content="false" margin="0" />
+    <jbutton name="AlignFullButton" x="394" y="3" width="22" height="22" ttip="Full Justify" image="/com/reportmill/viewer/images.ribs/Format_AlignFull.png" align="center" border="false" content="false" margin="0" />
+    <jseparator x="420" y="6" width="3" height="18" orientation="1" />
+    <jbutton name="FontSizeUpButton" x="200" y="3" width="22" height="22" ttip="Increase Font Size" image="/com/reportmill/viewer/images.ribs/Format_IncreaseFont.png" align="center" border="false" content="false" margin="0" />
+    <jbutton name="FontSizeDownButton" x="222" y="3" width="22" height="22" ttip="Decrease Font Size" image="/com/reportmill/viewer/images.ribs/Format_DecreaseFont.png" align="center" border="false" content="false" margin="0" />
+    <jseparator x="248" y="6" width="3" height="18" orientation="1" />
+    <jbutton name="TextColorPickerButton" x="425" y="3" width="32" height="22" foreground="#ff0000" ttip="Set Text Color" image="Color_TextColor.png" align="center" margin="0" class="snap.swing.ColorPickerButton" />
+  </panel>
+  <panel y="60" width="638" height="35" asize="-~-,-~-">
+    <jtogglebutton name="PreviewEditButton" x="6" y="4" width="92" height="26" text="Preview" align="center" />
+    <jlabel name="PreviewDropDown" x="98" y="21" width="10" height="10" image="tiny_triangle.png" align="center">
+      <font name="Arial" size="11" />
+    </jlabel>
+    <jtogglebutton name="RMSelectToolButton" x="112" y="5" width="25" height="25" ttip="Selection Tool" image="/com/reportmill/apptools/RMSelect.png" align="center" text-position="center" selected="true" bgroup="bg1" />
+    <jtogglebutton name="RMLineShapeToolButton" x="137" y="5" width="25" height="25" ttip="Line Tool" image="/com/reportmill/apptools/RMLineShape.png" align="center" bgroup="bg1" />
+    <jtogglebutton name="RMRectShapeToolButton" x="162" y="5" width="25" height="25" ttip="Rectangle Tool" image="/com/reportmill/apptools/RMRectShape.png" align="center" bgroup="bg1" />
+    <jtogglebutton name="RMOvalShapeToolButton" x="187" y="5" width="25" height="25" ttip="Oval Tool" image="/com/reportmill/apptools/RMOvalShape.png" align="center" bgroup="bg1" />
+    <jtogglebutton name="RMTextToolButton" x="212" y="5" width="25" height="25" ttip="Text Tool" image="/com/reportmill/apptools/RMText.png" align="center" bgroup="bg1" />
+    <jtogglebutton name="RMPolygonShapeToolButton" x="237" y="5" width="25" height="25" ttip="Polygon Tool" image="/com/reportmill/apptools/RMPolygonShape.png" align="center" bgroup="bg1" />
+    <jtogglebutton name="RMStarShapeToolButton" x="262" y="5" width="25" height="25" ttip="Star Tool" image="/com/reportmill/apptools/RMStarShape.png" align="center" bgroup="bg1" />
+    <jtogglebutton name="PencilToolButton" x="287" y="5" width="25" height="25" ttip="Pencil Tool" image="/com/reportmill/apptools/RMPencilShape.png" align="center" bgroup="bg1" />
+    <jtogglebutton name="RMFlowShapeToolButton" x="312" y="5" width="25" height="25" ttip="Flow Shape Tool" image="/com/reportmill/apptools/RMShape.png" align="center" bgroup="bg1" />
+    <menubutton name="AddShapesMenuButton" x="370" y="2" width="36" height="32" ttip="Add Shapes" image="AddShapes.png" border="false" popup-x="15" popup-y="24" popup-width="180" popup-height="200">
+      <jmenuitem name="AddTableButton" text="Table" image="/com/reportmill/apptools/RMTable.png" icon-text-gap="10" />
+      <jmenuitem name="AddGraphButton" text="Graph" image="/com/reportmill/apptools/RMGraph.png" icon-text-gap="10" />
+      <jmenuitem name="AddLabelsButton" text="Labels" image="/com/reportmill/apptools/RMLabels.png" icon-text-gap="10" />
+      <jmenuitem name="AddCrossTabFrameButton" text="CrossTab" image="/com/reportmill/apptools/RMCrossTabFrame.png" icon-text-gap="10" />
+      <jmenuitem name="AddCrossTabButton" text="Simple Table" image="/com/reportmill/apptools/RMCrossTab.png" icon-text-gap="10" />
+      <jmenuitem name="AddImagePlaceHolderMenuItem" text="Image Placeholder" image="/com/reportmill/apptools/RMImage.png" icon-text-gap="10" />
+      <jmenuitem name="AddSubreportMenuItem" text="Subreport" image="/com/reportmill/apptools/RMSubreport.png" icon-text-gap="10" />
+    </menubutton>
+    <jbutton name="ConnectToDataSourceButton" x="411" y="2" width="32" height="32" ttip="Connect to DataSource" image="DataSource.png" align="center" border="false" content="false" margin="0" />
+    <jbutton name="InspectorPanelButton" x="470" y="2" width="32" height="32" ttip="Inspector Panel" image="InspectorPanel.png" align="center" border="false" content="false" focus-painted="false" />
+    <jbutton name="KeysPanelButton" x="505" y="2" width="32" height="32" ttip="Keys Panel" image="KeysPanel.png" align="center" border="false" content="false" focus-painted="false" />
+    <jbutton name="ColorPanelButton" x="540" y="2" width="32" height="32" ttip="Color Panel" image="ColorPanel.png" align="center" border="false" content="false" focus-painted="false" />
+    <jbutton name="FontPanelButton" x="572" y="2" width="32" height="32" ttip="Font Panel" image="FontPanel.png" align="center" border="false" content="false" focus-painted="false" />
+  </panel>
+</panel>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325">
+  <font name="Arial" size="11" />
+  <jlabel x="5" y="6" width="68" height="18" text="Dataset Key:" align="left" />
+  <jtextfield name="DatasetKeyText" x="73" y="5" width="196" height="20" EnabledEvents="DragDrop" />
+  <jlabel x="5" y="31" width="62" height="18" text="Filter Expr:" />
+  <jtextfield name="FilterKeyText" x="63" y="30" width="206" height="20" EnabledEvents="DragDrop" />
+  <jspinner name="RowCountSpinner" x="10" y="95" width="60" height="22" min="1" step="1" value="1" />
+  <jlabel x="10" y="73" width="50" height="18" text="Rows:" align="left" v-align="bottom" />
+  <jspinner name="ColCountSpinner" x="10" y="142" width="60" height="22" min="1" step="1" value="1" />
+  <jlabel x="10" y="120" width="69" height="18" text="Columns:" align="left" v-align="bottom" />
+  <jspinner name="HeaderRowCountSpinner" x="95" y="95" width="70" height="22" min="0" step="1" value="0" />
+  <jlabel x="95" y="73" width="84" height="18" text="Header Rows:" align="left" v-align="bottom" />
+  <jspinner name="HeaderColCountSpinner" x="95" y="142" width="70" height="22" min="0" step="1" value="0" />
+  <jlabel x="95" y="120" width="109" height="18" text="Header Columns:" align="left" v-align="bottom" />
+  <jbutton name="AutoFormatButton" x="10" y="294" width="109" height="22" asize="--~,~--" text="Auto Format..." align="center" />
+</panel>

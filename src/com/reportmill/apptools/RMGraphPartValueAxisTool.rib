@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="262" height="284">
+  <font name="Arial" size="11" />
+  <jcheckbox name="ShowLabelsCheckBox" x="68" y="26" width="120" height="17" text="Show Axis Labels" align="left" />
+  <jcheckbox name="ShowMajorGridCheckBox" x="68" y="48" width="149" height="17" text="Show Major Grid Lines" align="left" />
+  <jcheckbox name="ShowMinorGridCheckBox" x="68" y="70" width="149" height="17" text="Show Minor Grid Lines" align="left" />
+  <jlabel x="61" y="147" width="55" height="22" text="Axis Min:" align="left" />
+  <jtextfield name="AxisMinText" x="116" y="147" width="62" height="22" align="center" />
+  <jspinner name="LabelRollSpinner" x="116" y="103" width="62" height="22" step="15" value="0" />
+  <jlabel x="62" y="103" width="54" height="22" text="Rotation:" align="left" />
+  <jlabel x="61" y="174" width="55" height="22" text="Axis Max:" align="left" />
+  <jtextfield name="AxisMaxText" x="116" y="174" width="62" height="22" align="center" />
+  <jlabel x="62" y="202" width="55" height="20" text="Count:" align="left" />
+  <jspinner name="AxisCountSpinner" x="116" y="202" width="62" height="22" min="0" step="1" value="0" />
+</panel>

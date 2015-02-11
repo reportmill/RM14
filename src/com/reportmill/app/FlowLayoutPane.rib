@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="250" height="275">
+  <font name="Arial" size="11" />
+  <jlabel x="10" y="10" width="200" height="20" text="Flow Layout Constraints:">
+    <font name="Arial Bold" size="12" />
+  </jlabel>
+  <jcheckbox name="NewlineCheckBox" x="22" y="45" width="163" height="22" EnabledEvents="Action," text="Add Newline After" align="left" selected="true" />
+</panel>

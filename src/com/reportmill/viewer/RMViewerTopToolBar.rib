@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="400" height="30">
+  <font name="Arial" size="11" />
+  <jbutton x="4" y="2" width="4" height="24" image="/com/reportmill/viewer/images.ribs/ToolBar.png" align="center" text-position="center" border="false" content="false" margin="0" />
+  <jbutton name="SaveButton" x="10" y="3" width="22" height="22" ttip="Save" image="/com/reportmill/viewer/images.ribs/File_Save.png" align="center" text-position="center" border="false" content="false" margin="0" />
+  <jbutton name="PreviewPDFButton" x="32" y="3" width="22" height="22" ttip="Preview PDF" image="/com/reportmill/viewer/images.ribs/Preview_PDF.png" align="center" text-position="center" border="false" content="false" margin="0" />
+  <jbutton name="PrintButton" x="54" y="3" width="22" height="22" ttip="Print" image="/com/reportmill/viewer/images.ribs/File_Print.png" align="center" text-position="center" border="false" content="false" margin="0" />
+  <jbutton name="CopyButton" x="76" y="3" width="22" height="22" ttip="Copy" image="/com/reportmill/viewer/images.ribs/Edit_Copy.png" align="center" border="false" content="false" margin="0" />
+  <jtogglebutton name="MoveButton" x="282" y="3" width="25" height="25" ttip="Move" image="/com/reportmill/viewer/images.ribs/Move.png" align="center" text-position="center" selected="true" bgroup="bg1" segment-position="first" />
+  <jtogglebutton name="TextButton" x="307" y="3" width="25" height="25" ttip="Text " image="/com/reportmill/viewer/images.ribs/Text.png" align="center" bgroup="bg1" segment-position="middle" />
+  <jtogglebutton name="SelectButton" x="332" y="3" width="25" height="25" ttip="Select" image="/com/reportmill/viewer/images.ribs/Select.png" align="center" bgroup="bg1" segment-position="last" />
+</panel>

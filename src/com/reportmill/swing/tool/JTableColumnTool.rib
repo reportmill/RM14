@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325">
+  <font name="Lucida Grande" size="13" />
+  <jlabel x="23" y="27" width="58" height="22" text="Header:" align="left">
+    <font name="Arial" size="11" />
+  </jlabel>
+  <jtextfield name="HeaderText" x="88" y="27" width="175" height="22">
+    <font name="Arial" size="11" />
+  </jtextfield>
+  <jcheckbox name="ResizableCheckBox" x="33" y="66" width="149" height="22" text="Resizable" align="left">
+    <font name="Arial" size="11" />
+  </jcheckbox>
+</panel>

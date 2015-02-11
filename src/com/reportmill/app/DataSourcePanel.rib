@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325">
+  <font name="Arial" size="11" />
+  <jlabel name="DSLabel" x="4" y="4" width="228" height="18" text="XXX DataSource">
+    <font name="Arial Bold" size="14" />
+  </jlabel>
+  <jlabel x="10" y="24" width="130" height="16" text="Entities" />
+  <jlabel x="145" y="24" width="130" height="16" text="Properties" />
+  <jscrollpane x="5" y="40" width="130" height="170" vertical="always">
+    <jlist name="EntitiesList" />
+  </jscrollpane>
+  <jscrollpane x="140" y="40" width="130" height="170" vertical="always">
+    <jlist name="PropertiesList" />
+  </jscrollpane>
+  <switchpane name="CardPanel" y="210" width="275" height="115">
+    <panel name="EntityPanel" width="275" height="115">
+      <jlabel x="5" y="5" width="100" height="15" text="Entity Attributes" />
+    </panel>
+    <panel name="PropertyPanel" width="275" height="115">
+      <jlabel x="5" y="5" width="100" height="15" text="Property Attributes" />
+      <jlabel x="55" y="27" width="50" height="15" text="Type:" />
+      <jcombobox name="TypeComboBox" x="105" y="26" width="140" height="20" />
+      <jlabel x="55" y="49" width="50" height="15" text="Subtype:" />
+      <jcombobox name="SubtypeComboBox" x="105" y="48" width="140" height="20" />
+      <jcheckbox name="PrimaryCheckBox" x="55" y="70" width="150" height="20" text="Primary" />
+      <jcheckbox name="PrivateCheckBox" x="55" y="90" width="150" height="20" text="Private" />
+    </panel>
+  </switchpane>
+  <menubutton x="251" y="4" width="19" height="19" align="center" text-position="center">
+    <border type="bevel" bevel-type="raised" />
+    <jmenuitem name="SaveDatasetMenuItem" text="Save As XML..." />
+  </menubutton>
+</panel>

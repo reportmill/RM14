@@ -1,0 +1,19 @@
+
+rm -rf /tmp/javadoc
+
+cd /Temp/RM14
+
+javadoc -d /tmp/javadoc -windowtitle 'ReportMill 14 API' \
+-header 'ReportMill 14 API' \
+-footer 'ReportMill 14 API' \
+-overview scripts/overview.html \
+-public \
+src/com/reportmill/base/*.java \
+src/com/reportmill/graphics/*.java \
+src/com/reportmill/text/*.java \
+src/com/reportmill/shape/*.java \
+src/com/reportmill/viewer/RMViewer.java
+
+echo "Zipping javadoc.zip"
+cd /tmp
+zip -rq javadoc.zip javadoc

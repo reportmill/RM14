@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325">
+  <font name="Arial" size="11" />
+  <panel y="29" width="268" height="80">
+    <border type="etched" title="Position Along Path" />
+    <jtextfield name="PositionText" x="114" y="44" width="41" height="22" text="100" />
+    <jslider name="PositionSlider" x="8" y="14" width="251" height="38" ticks="100" />
+    <jlabel x="19" y="45" width="50" height="22" text="Start" align="left" />
+    <jlabel x="199" y="44" width="50" height="22" text="End" align="right" />
+    <jlabel x="158" y="44" width="29" height="22" text="%" align="left" />
+  </panel>
+  <panel x="65" y="147" width="140" height="148">
+    <border type="etched" />
+    <jtogglebutton name="align0" x="17" y="13" width="34" height="34" image="/com/reportmill/swing/tool/pkg.images/align0.png" align="center" selected="true" bgroup="AlignGroup" />
+    <jtogglebutton name="align1" x="51" y="13" width="34" height="34" image="/com/reportmill/swing/tool/pkg.images/align1.png" align="center" text-position="right" bgroup="AlignGroup" />
+    <jtogglebutton name="align2" x="85" y="13" width="34" height="34" image="/com/reportmill/swing/tool/pkg.images/align2.png" align="center" text-position="right" content="false" bgroup="AlignGroup" margin="4,4,4,4" />
+    <jtogglebutton name="align3" x="17" y="47" width="34" height="34" image="/com/reportmill/swing/tool/pkg.images/align3.png" align="center" bgroup="AlignGroup" />
+    <jtogglebutton name="align4" x="51" y="47" width="34" height="34" image="/com/reportmill/swing/tool/pkg.images/align4.png" align="center" bgroup="AlignGroup" />
+    <jtogglebutton name="align5" x="85" y="47" width="34" height="34" image="/com/reportmill/swing/tool/pkg.images/align5.png" align="center" bgroup="AlignGroup" />
+    <jtogglebutton name="align6" x="17" y="81" width="34" height="34" image="/com/reportmill/swing/tool/pkg.images/align6.png" align="center" bgroup="AlignGroup" />
+    <jtogglebutton name="align7" x="51" y="81" width="34" height="34" image="/com/reportmill/swing/tool/pkg.images/align7.png" align="center" bgroup="AlignGroup" />
+    <jtogglebutton name="align8" x="85" y="81" width="34" height="34" image="/com/reportmill/swing/tool/pkg.images/align8.png" align="center" bgroup="AlignGroup" />
+    <jlabel y="126" width="140" height="16" text="origin/center of rotation" align="center" v-align="top" text-position="center" v-text-position="top">
+      <font name="Arial Italic" size="11" />
+    </jlabel>
+  </panel>
+  <jcheckbox name="AlignmentCheckBox" x="65" y="122" width="160" height="22" text="Align Shapes With Path" align="left" />
+  <jbutton name="ReversePathButton" x="224" y="260" width="31" height="35" ttip="reverse path" image="/com/reportmill/apptools/RMGradientFillTool.ribs/reverse.png" pressed-image="/com/reportmill/apptools/RMGradientFillTool.ribs/reverse_pressed.png" align="center" border="false" content="false" />
+</panel>

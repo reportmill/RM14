@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="240">
+  <font name="Arial" size="12" />
+  <jtabbedpane x="5" y="5" width="120" height="140">
+    <panel x="11" y="33" width="99" height="94" asize="-~-,-~-" title="One" />
+    <panel width="100" height="90" title="Two" />
+  </jtabbedpane>
+  <jlabel name="undraggableShape" x="5" y="139" width="120" height="20" text="Tab Pane" align="center" />
+  <jscrollpane x="137" y="5" width="120" height="132" vertical="always">
+    <jtree x="2" y="2" width="101" height="128" asize="-~-,-~-" />
+  </jscrollpane>
+  <jlabel name="undraggableShape" x="137" y="139" width="120" height="20" text="Items Tree" align="center" />
+</panel>

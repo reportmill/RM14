@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325">
+  <font name="Arial" size="11" />
+  <panel x="60" y="215" width="140" height="68" asize="~-~,--~">
+    <border title="Orientation" />
+    <jradiobutton name="HorizontalRadioButton" x="10" y="17" width="80" height="20" text="Horizontal" selected="true" bgroup="SeparatorOrientation" />
+    <jradiobutton name="VerticalRadioButton" x="10" y="39" width="80" height="20" text="Vertical" bgroup="SeparatorOrientation" />
+  </panel>
+  <jcheckbox name="IsIndeterminateCheckBox" x="71" y="14" width="119" height="22" text="Is Indeterminate" align="left" />
+  <panel x="60" y="52" width="140" height="150">
+    <border title="Values" />
+    <jlabel x="25" y="27" width="30" height="22" text="Min:" />
+    <jtextfield name="MinValueText" x="54" y="27" width="51" height="22" paintborder="true" />
+    <jlabel x="24" y="55" width="36" height="22" text="Max:" />
+    <jtextfield name="MaxValueText" x="54" y="55" width="51" height="22" paintborder="true" />
+    <jlabel x="24" y="83" width="36" height="22" text="Init:" />
+    <jtextfield name="InitValueText" x="54" y="83" width="51" height="22" paintborder="true" />
+    <jslider name="InitValueSlider" x="9" y="115" width="120" height="25" />
+  </panel>
+</panel>

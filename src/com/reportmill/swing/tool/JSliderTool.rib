@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325">
+  <font name="Arial" size="11" />
+  <panel x="5" y="5" width="105" height="119">
+    <border title="Values" />
+    <jlabel x="10" y="27" width="30" height="22" text="Min:" />
+    <jtextfield name="MinValueText" x="39" y="27" width="51" height="22" />
+    <jlabel x="9" y="55" width="36" height="22" text="Max:" />
+    <jtextfield name="MaxValueText" x="39" y="55" width="51" height="22" />
+    <jlabel x="9" y="83" width="36" height="22" text="Init:" />
+    <jtextfield name="InitValueText" x="39" y="83" width="51" height="22" />
+  </panel>
+  <panel x="112" y="5" width="162" height="120">
+    <border title="Ticks" />
+    <jlabel x="9" y="55" width="83" height="22" text="Major Spacing:" />
+    <jtextfield name="MajorTicksText" x="91" y="55" width="51" height="22" />
+    <jlabel x="9" y="83" width="76" height="22" text="Minor Spacing:" />
+    <jtextfield name="MinorTicksText" x="91" y="83" width="51" height="22" />
+    <jcheckbox name="PaintTicksCheckBox" x="14" y="24" width="65" height="20" text="Paint" />
+    <jcheckbox name="SnapTicksCheckBox" x="82" y="24" width="65" height="20" text="Snap" />
+  </panel>
+  <panel x="5" y="129" width="105" height="68">
+    <border title="Appearance" />
+    <jcheckbox name="PaintLabelsCheckBox" x="10" y="18" width="89" height="20" text="Paint Labels" />
+    <jcheckbox name="PaintTrackCheckBox" x="10" y="37" width="90" height="20" text="Paint Track" />
+  </panel>
+  <panel x="112" y="129" width="162" height="68">
+    <border title="Orientation" />
+    <jradiobutton name="HorizontalRadioButton" x="10" y="17" width="80" height="20" text="Horizontal" />
+    <jradiobutton name="VerticalRadioButton" x="10" y="39" width="80" height="20" text="Vertical" />
+  </panel>
+</panel>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325">
+  <font name="Arial" size="11" />
+  <menubutton x="5" y="5" width="140" height="20" text="Table Group Options" text-position="left">
+    <border type="bevel" bevel-type="raised" />
+    <jmenuitem name="AddPeerMenuItem" text="Add Peer Table" />
+    <jmenuitem name="AddChildMenuItem" text="Add Child Table" />
+    <jmenuitem name="RemoveTableMenuItem" text="Remove Table" />
+    <jmenuitem name="PasteTableMenuItem" text="Paste Table" />
+    <jmenuitem text="separator" />
+    <jmenuitem name="MoveUpMenuItem" text="Move Up" />
+    <jmenuitem name="MoveDownMenuItem" text="Move Down" />
+    <jmenuitem name="MoveInMenuItem" text="Move In" />
+    <jmenuitem name="MoveOutMenuItem" text="Move Out" />
+  </menubutton>
+  <jbutton name="KeysButton" x="210" y="5" width="60" height="20" text="Keys..." align="center" />
+  <jscrollpane x="5" y="30" width="265" height="215" vertical="asneeded">
+    <customview name="TableTree" width="261" height="211" class="com.reportmill.apptools.RMTableGroupTool$TGTree" />
+  </jscrollpane>
+  <jlabel x="5" y="275" width="40" height="20" text="Key:" />
+  <jtextfield name="DatasetKeyText" x="45" y="275" width="225" height="20" EnabledEvents="DragDrop">
+    <binding aspect="Text" key="MainTable.DatasetKey" />
+  </jtextfield>
+  <jcheckbox name="StartOnNewPageCheckBox" x="57" y="300" width="200" height="20" text="Start on new page">
+    <binding aspect="Selected" key="MainTable.StartingPageBreak" />
+  </jcheckbox>
+  <jlabel x="5" y="250" width="40" height="20" text="Name:" align="left" />
+  <jtextfield name="MainTableNameText" x="45" y="250" width="225" height="20" EnabledEvents="DragDrop">
+    <binding aspect="Text" key="MainTable.Name" />
+  </jtextfield>
+</panel>

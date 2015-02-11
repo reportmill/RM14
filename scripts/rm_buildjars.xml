@@ -1,0 +1,21 @@
+
+<project name="buildjars" basedir="/Temp/RM14/bin" >
+
+	<!-- Build ReportMill 14 jarfile -->
+	<target name="ReportMill14">
+		<jar destfile="ReportMill14.jar" basedir="/Temp/RM14/bin" >
+			<include name="com/" />
+			<include name="snap/swing/" />
+			<include name="snap/swing/helpers/" />
+			<include name="snap/util/" />
+			<include name="snap/web/" />
+			<include name="snap/websites/" />
+			<exclude name="com/reportmill/App*" />
+			<exclude name="com/reportmill/apptools/" />
+			<exclude name="com/reportmill/app/" />
+			<exclude name="com/reportmill/Welcome*" />
+			<exclude name="com/reportmill/swing/tool/" />
+		</jar>
+	</target>
+	
+</project>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325">
+  <font name="Arial" size="11" />
+  <jlabel y="7" width="115" height="20" text="AutoResize Columns:" align="right" />
+  <jcombobox name="AutoResizeComboBox" x="118" y="5" width="145" height="27" focus="false">
+    <item text="Subsequent Columns" />
+    <item text="Next Column" />
+    <item text="All Columns" />
+    <item text="Last Column" />
+    <item text="Resize Table" />
+  </jcombobox>
+  <jcheckbox name="RowSelectionCheckBox" x="8" y="33" width="141" height="22" text="Row Selection Allowed" align="left" />
+  <jcheckbox name="ColumnSelectionCheckBox" x="8" y="55" width="161" height="22" text="Column Selection Allowed" align="left" />
+  <panel x="87" y="211" width="107" height="106">
+    <border title="Grid" />
+    <colorwell name="GridColorWell" x="22" y="21" width="60" height="30" />
+    <jcheckbox name="GridHorizontalCheckBox" x="12" y="51" width="89" height="22" text="Horizontal" align="left" />
+    <jcheckbox name="GridVerticalCheckBox" x="12" y="71" width="89" height="22" text="Vertical" align="left" />
+  </panel>
+  <jlabel x="8" y="83" width="66" height="22" text="Row Height:" align="left" />
+  <jtextfield name="RowHeightText" x="81" y="83" width="68" height="22" paintborder="true" />
+  <jlabel x="8" y="111" width="66" height="22" text="Spacing X:" align="left" />
+  <jtextfield name="SpacingXText" x="81" y="111" width="68" height="22" paintborder="true" />
+  <jlabel x="8" y="139" width="66" height="22" text="Spacing Y:" align="left" />
+  <jtextfield name="SpacingYText" x="81" y="139" width="68" height="22" paintborder="true" />
+</panel>

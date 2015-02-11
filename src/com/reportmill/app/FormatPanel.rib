@@ -1,0 +1,31 @@
+<panel width="275" height="260">
+  <font name="Arial" size="11" />
+  <jtogglebutton name="NoFormatButton" x="70" y="5" width="40" height="30" image="no-formatter.png" bgroup="bg1" 
+    asize="~-~,--~" />
+  <jtogglebutton name="NumberFormatButton" x="120" y="5" width="40" height="30" image="number-formatter.png" bgroup="bg1" asize="~-~,--~" />
+  <jtogglebutton name="DateFormatButton" x="170" y="5" width="40" height="30" image="date-formatter.png" bgroup="bg1" asize="~-~,--~" />
+  <switchpane name="PickerPanel" x="0" y="45" width="275" height="215" asize="-~-,-~-" >
+    <panel width="275" height="215">
+      <jlabel width="275" height="215" value="Selection has no format" align="center" valign="center" asize="-~-,-~-" />
+    </panel>
+    <panel width="275" height="215" >
+      <jscrollpane x="5" y="0" width="265" height="162" vertical="always" asize="-~-,-~-" >
+        <jtable name="NumberFormatTable" />
+      </jscrollpane>
+      <jlabel x="5" y="167" width="70" height="20" value="Format:" asize="--~,~--" />
+      <jtextfield name="NumberFormatText" x="55" y="167" width="215" height="20" asize="-~-,~--" />
+      <jcheckbox name="NegativeInRedCheckBox" x="5" y="192" width="115" height="20" value="Negative in Red" asize="--~,~--" />
+      <jlabel x="120" y="192" width="75" height="20" value="String for Null:" asize="--~,~--" />
+      <jtextfield name="NumberNullStringText" x="195" y="192" width="75" height="20" asize="-~~,~--" />
+    </panel>
+    <panel width="275" height="215" >
+      <jscrollpane x="5" y="0" width="265" height="162" vertical="always" asize="-~-,-~-" >
+        <jtable name="DateFormatTable" />
+      </jscrollpane>
+      <jlabel x="5" y="165" width="70" height="20" value="Custom:" align="right" asize="--~,~--" />
+      <jtextfield name="DateFormatText" x="80" y="165" width="190" height="20" asize="-~-,~--" />
+      <jlabel x="5" y="190" width="70" height="20" value="String for Null:" align="right" asize="--~,~--" />
+      <jtextfield name="DateNullStringText" x="80" y="190" width="190" height="20" asize="-~-,~--" />
+    </panel>
+  </switchpane>
+</panel>

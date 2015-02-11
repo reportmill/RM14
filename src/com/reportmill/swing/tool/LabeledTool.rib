@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="165">
+  <font name="Arial" size="11" />
+  <jlabel x="4" y="4" width="71" height="22" text="Image Name:" />
+  <jtextfield name="ImageNameText" x="78" y="4" width="180" height="22" />
+  <panel x="4" y="30" width="125" height="130">
+    <border title="Content Alignment" />
+    <jtogglebutton name="align0" x="10" y="17" width="34" height="34" image="align0.png" align="center" selected="true" bgroup="AlignGroup" />
+    <jtogglebutton name="align1" x="44" y="17" width="34" height="34" image="align1.png" align="center" bgroup="AlignGroup" />
+    <jtogglebutton name="align2" x="78" y="17" width="34" height="34" image="align2.png" align="center" bgroup="AlignGroup" />
+    <jtogglebutton name="align3" x="10" y="51" width="34" height="34" image="align3.png" align="center" bgroup="AlignGroup" />
+    <jtogglebutton name="align4" x="44" y="51" width="34" height="34" image="align4.png" align="center" bgroup="AlignGroup" />
+    <jtogglebutton name="align5" x="78" y="51" width="34" height="34" image="align5.png" align="center" bgroup="AlignGroup" />
+    <jtogglebutton name="align6" x="10" y="85" width="34" height="34" image="align6.png" align="center" bgroup="AlignGroup" />
+    <jtogglebutton name="align7" x="44" y="85" width="34" height="34" image="align7.png" align="center" bgroup="AlignGroup" />
+    <jtogglebutton name="align8" x="78" y="85" width="34" height="34" image="align8.png" align="center" bgroup="AlignGroup" />
+  </panel>
+  <panel x="134" y="30" width="125" height="130">
+    <border title="Text Position" />
+    <jtogglebutton name="tpos0" x="10" y="17" width="34" height="34" image="tpos0.png" align="center" selected="true" bgroup="TextPositionGroup" />
+    <jtogglebutton name="tpos1" x="44" y="17" width="34" height="34" image="tpos1.png" align="center" bgroup="TextPositionGroup" />
+    <jtogglebutton name="tpos2" x="78" y="17" width="34" height="34" image="tpos2.png" align="center" bgroup="TextPositionGroup" />
+    <jtogglebutton name="tpos3" x="10" y="51" width="34" height="34" image="tpos3.png" align="center" bgroup="TextPositionGroup" />
+    <jtogglebutton name="tpos4" x="44" y="51" width="34" height="34" image="tpos4.png" align="center" bgroup="TextPositionGroup" />
+    <jtogglebutton name="tpos5" x="78" y="51" width="34" height="34" image="tpos5.png" align="center" bgroup="TextPositionGroup" />
+    <jtogglebutton name="tpos6" x="10" y="85" width="34" height="34" image="tpos6.png" align="center" bgroup="TextPositionGroup" />
+    <jtogglebutton name="tpos7" x="44" y="85" width="34" height="34" image="tpos7.png" align="center" bgroup="TextPositionGroup" />
+    <jtogglebutton name="tpos8" x="78" y="85" width="34" height="34" image="tpos8.png" align="center" bgroup="TextPositionGroup" />
+  </panel>
+</panel>

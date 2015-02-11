@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="240">
+  <font name="Arial" size="12" />
+  <customview x="5" y="5" width="120" height="140" />
+  <jscrollpane x="135" y="5" width="120" height="140" horizontal="always" vertical="always">
+    <customview />
+  </jscrollpane>
+</panel>

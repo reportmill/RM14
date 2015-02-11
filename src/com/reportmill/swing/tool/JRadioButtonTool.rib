@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325">
+  <font name="Arial" size="11" />
+  <jlabel x="8" y="18" width="103" height="22" text="Button Group Name:" />
+  <jcombobox name="ButtonGroupNameComboBox" x="115" y="18" width="153" height="22" editable="true" />
+  <jcheckbox name="SelectedCheckBox" x="8" y="44" width="224" height="20" text="Selected" />
+</panel>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="220">
+  <font name="Arial" size="11" />
+  <colorwell name="StrokeColorWell" x="90" y="31" width="60" height="30" />
+  <jcombobox name="RuleComboBox" x="61" y="80" width="135" height="23" focus="false" maxvisible="6" />
+</panel>

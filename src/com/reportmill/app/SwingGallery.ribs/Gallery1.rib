@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="240">
+  <font name="Arial" size="12" />
+  <jlabel x="133" y="80" width="121" height="20" text="Scrolling Text" align="center" name="undraggableShape"/>
+  <jscrollpane x="137" y="8" width="110" height="70" vertical="always">
+    <font name="Arial" size="11" />
+    <jtextarea x="2" y="2" width="91" height="66" asize="-~-,-~-" />
+  </jscrollpane>
+  <jspinner x="12" y="94" width="110" height="22">
+    <font name="Arial" size="11" />
+  </jspinner>
+  <jcombobox x="12" y="128" width="110" height="22" editable="true">
+    <font name="Arial" size="11" />
+  </jcombobox>
+  <jcombobox x="137" y="128" width="110" height="22" editable="false">
+    <font name="Arial" size="11" />
+  </jcombobox>
+  <jtextfield x="12" y="8" width="110" height="22" value="Default Text" paintborder="true">
+    <font name="Arial" size="11" />
+  </jtextfield>
+  <jpasswordfield x="12" y="37" width="110" height="22" value="Password" paintborder="true">
+    <font name="Arial" size="11" />
+  </jpasswordfield>
+  <jformattedtextfield x="12" y="63" width="110" height="22" value="$1,000,00.00 " paintborder="true">
+    <font name="Arial" size="11" />
+  </jformattedtextfield>
+</panel>

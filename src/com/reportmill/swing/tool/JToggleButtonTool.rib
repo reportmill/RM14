@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="259" height="212">
+  <font name="Arial" size="11" />
+  <jcheckbox name="SelectedCheckBox" x="4" y="4" width="200" height="22" text="Selected" align="left" />
+  <jcheckbox name="IsBorderPaintedCheckBox" x="4" y="30" width="200" height="22" text="Show Border" align="left" />
+  <jcheckbox name="IsContentAreaFilledCheckBox" x="4" y="56" width="200" height="22" text="Fill Content Area" align="left" />
+  <jlabel x="4" y="82" width="116" height="22" text="Margins:" />
+  <jtextfield name="MarginText" x="122" y="82" width="130" height="22" />
+  <jlabel x="4" y="108" width="116" height="22" text="Selected Image Name:" align="left" />
+  <jtextfield name="SelectedImageNameText" x="122" y="108" width="130" height="22" />
+  <jlabel x="4" y="134" width="116" height="22" text="Button Group Name:" align="left" />
+  <jcombobox name="ButtonGroupNameComboBox" x="122" y="134" width="130" height="22" editable="true" />
+</panel>

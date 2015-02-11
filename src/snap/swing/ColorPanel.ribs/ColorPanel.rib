@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel name="ColorPanel" width="275" height="260">
+  <font name="Arial" size="11" />
+  <window title="Color Panel" />
+  <jsplitpane width="275" height="260" asize="-~-,-~-" orientation="vertical" borderless="true" divider-location="225">
+    <panel width="275" height="225" asize="-~-,---" min-width="0" min-height="0">
+      <jtogglebutton name="ImagePickerButton" x="20" width="40" height="27" foreground="#000000" image="spectrum-icon.png" align="center" selected="true" bgroup="bg1" />
+      <jtogglebutton name="RGBPickerButton" x="60" width="40" height="27" foreground="#000000" image="rgb-icon.png" align="center" bgroup="bg1" />
+      <jtogglebutton name="GrayPickerButton" x="100" width="40" height="27" foreground="#000000" image="grayscale-icon.png" align="center" bgroup="bg1" />
+      <jtogglebutton name="SwatchPickerButton" x="140" width="40" height="27" foreground="#000000" image="swatches-icon.png" align="center" bgroup="bg1" />
+      <switchpane name="PickerPanel" y="27" width="275" height="198" foreground="#000000" asize="-~-,-~-">
+        <panel name="ImagePicker" width="275" height="198" asize="-~-,-~-">
+          <jcombobox name="ImageComboBox" x="10" y="177" width="255" height="22" asize="-~-,~--" maxvisible="8" />
+          <jscrollpane x="5" y="5" width="265" height="170" asize="-~-,-~-">
+            <customview name="ImagePickerLabel" class="snap.swing.ColorPanel$ImagePickerLabel" />
+          </jscrollpane>
+        </panel>
+        <panel name="RGBPicker" width="275" height="200">
+          <font name="Arial" size="11" />
+          <jtextfield name="AlphaText" x="225" y="131" width="45" height="22" asize="~--,~-~" align="center" />
+          <jslider name="AlphaSlider" x="20" y="131" width="200" height="30" asize="-~-,~-~" max="255"/>
+          <jlabel x="5" y="131" width="15" height="20" asize="--~,~-~" text="A:" />
+          <jtextfield name="BlueText" x="225" y="89" width="45" height="22" asize="~--,~-~" align="center" />
+          <jslider name="BlueSlider" x="20" y="89" width="200" height="30" asize="-~-,~-~" max="255"/>
+          <jlabel x="5" y="89" width="15" height="20" asize="--~,~-~" text="B:" />
+          <jtextfield name="GreenText" x="225" y="47" width="45" height="22" asize="~--,~-~" align="center" />
+          <jslider name="GreenSlider" x="20" y="47" width="200" height="30" asize="-~-,~-~" max="255"/>
+          <jlabel x="5" y="47" width="15" height="20" asize="--~,~-~" text="G:" />
+          <jtextfield name="RedText" x="225" y="5" width="45" height="22" asize="~--,~-~" align="center" />
+          <jslider name="RedSlider" x="20" y="5" width="200" height="38" asize="-~-,~-~" max="255"/>
+          <jlabel x="5" y="5" width="15" height="20" asize="--~,~-~" text="R:" />
+          <panel x="86" y="174" width="108" height="23" asize="~-~,~--">
+            <jtextfield name="HexText" x="28" width="74" height="22" asize="---,---" align="center" />
+            <jlabel width="31" height="22" asize="---,---" text="Hex:" align="left" />
+          </panel>
+        </panel>
+        <panel name="GrayPicker" width="275" height="200">
+          <font name="Arial" size="11" />
+          <jtextfield name="GrayAlphaText" x="225" y="55" width="45" height="22" asize="~--,~-~" align="center" />
+          <jslider name="GrayAlphaSlider" x="20" y="55" width="200" height="30" asize="-~-,~-~" max="255"/>
+          <jlabel x="5" y="55" width="15" height="20" asize="--~,~-~" text="A:" />
+          <jtextfield name="GrayText" x="225" y="5" width="45" height="22" asize="~--,~-~" align="center" />
+          <jslider name="GraySlider" x="20" y="5" width="200" height="30" asize="-~-,~-~" max="255" ticks="40" />
+          <jlabel x="5" y="5" width="15" height="20" asize="--~,~-~" text="G:" />
+        </panel>
+        <panel name="SwatchPicker" width="275" height="200">
+          <font name="Arial" size="11" />
+        </panel>
+      </switchpane>
+      <colorwell name="DisplayColorWell" x="199" width="40" height="27" foreground="#000000" selectable="false" />
+      <menubutton name="HistoryMenuButton" x="239" y="18" width="16" height="11" ttip="Recent Colors" image="tiny_triangle.png" text-position="left" border="false" popup-x="-40" popup-y="10" popup-width="56" popup-height="120" />
+    </panel>
+    <panel y="234" width="275" height="26" foreground="#ff52ff" asize="-~-,-~-" min-width="0" min-height="0">
+      <panel name="ColorDock" x="5" width="266" height="23" asize="-~-,-~-" class="snap.swing.ColorDock" />
+    </panel>
+  </jsplitpane>
+</panel>

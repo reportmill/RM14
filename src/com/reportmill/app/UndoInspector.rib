@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325">
+  <font name="Arial" size="11" />
+  <jlabel x="10" width="130" height="16" text="Undos/Redos:" align="left" />
+  <jlabel x="145" width="130" height="16" text="Changes:" align="left" />
+  <jscrollpane x="5" y="16" width="130" height="110" vertical="always">
+    <jlist name="UndosList" x="2" y="2" width="111" height="106" />
+  </jscrollpane>
+  <jscrollpane x="5" y="130" width="130" height="110" vertical="always">
+    <jlist name="RedosList" x="2" y="2" width="111" height="106" />
+  </jscrollpane>
+  <jscrollpane x="145" y="16" width="123" height="224" vertical="always">
+    <jlist name="ChangesList" x="2" y="2" width="104" height="220" selection="single-interval" />
+  </jscrollpane>
+  <jscrollpane x="5" y="259" width="263" height="64" vertical="always">
+    <jtextarea name="ChangeText" x="2" y="2" width="244" height="60" asize="-~-,-~-" />
+  </jscrollpane>
+  <jlabel x="5" y="241" width="130" height="16" text="Change Details:" align="left" />
+</panel>

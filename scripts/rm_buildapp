@@ -1,0 +1,44 @@
+
+echo "RMStudio Buildapp"
+cd /Temp/RM14/bin
+date > BuildInfo.txt
+
+echo "Getting resources"
+cp /Temp/RMJars/spell.jar .
+
+echo "Creating AppLoader.jar Manifest"
+echo "Main-Class: com.reportmill.AppLoader\nClass-Path: spell.jar" > MANIFEST.MF
+
+echo "Creating AppLoader.jar"
+jar cmf MANIFEST.MF AppLoader.jar com/reportmill/AppLoader*.class
+
+echo "Creating RMStudio.app"
+cd /Temp/RM14
+/Library/Java/JavaVirtualMachines/jdk1.8.0_20.jdk/Contents/Home/bin/javapackager -deploy -native image \
+-outdir /Temp/RM14/bin/RMApp -outfile RMStudio14 -name RMStudio14 \
+-appclass com.reportmill.AppLoader -v -srcdir /Temp/RM14/bin \
+-srcfiles AppLoader.jar:RMStudio14.jar:spell.jar:BuildInfo.txt
+
+echo "Removing extra JDK files"
+cd /Temp/RM14/bin/RMApp/bundles
+rm -rf RMStudio14.app/Contents/PlugIns/jdk1.8.0_20.jdk/Contents/Home/jre/lib/jfxrt.jar
+rm -rf RMStudio14.app/Contents/PlugIns/jdk1.8.0_20.jdk/Contents/Home/jre/lib/libjfx*
+rm -rf RMStudio14.app/Contents/PlugIns/jdk1.8.0_20.jdk/Contents/Home/jre/lib/libjavafx*
+rm -rf RMStudio14.app/Contents/PlugIns/jdk1.8.0_20.jdk/Contents/Home/jre/lib/deploy.jar
+rm -rf RMStudio14.app/Contents/PlugIns/jdk1.8.0_20.jdk/Contents/Home/jre/lib/libg*
+rm -rf RMStudio14.app/Contents/PlugIns/jdk1.8.0_20.jdk/Contents/Home/jre/lib/plugin.jar
+rm -rf RMStudio14.app/Contents/PlugIns/jdk1.8.0_20.jdk/Contents/Home/jre/lib/javaws.jar
+
+echo "Running codesign"
+codesign -f -s "Developer ID Application" RMStudio14.app/Contents/PlugIns/jdk1.8.0_20.jdk
+codesign -f -s "Developer ID Application" RMStudio14.app
+
+echo "Codesign Verify"
+codesign --verify --verbose=4 RMStudio14.app
+
+echo "Spctl Verify"
+spctl --verbose --assess --type execute RMStudio14.app
+
+echo "Making zip"
+rm -rf RMStudio14.app.zip
+zip -rq RMStudio14.app.zip RMStudio14.app

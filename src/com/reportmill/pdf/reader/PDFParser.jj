@@ -1,0 +1,354 @@
+# PDF Parser
+#/Temp/Downloads/javacc50/bin/javacc -OUTPUT_DIRECTORY=/Temp/RM14/src/com/reportmill/pdf/reader \
+#	/Temp/RM14/src/com/reportmill/pdf/reader/PDFParser.jj
+options { STATIC = false; USER_CHAR_STREAM = true; }
+PARSER_BEGIN(PDFParser)
+package com.ribs.pdf;
+import java.io.*;
+import java.util.*;
+
+public class PDFParser {
+
+    // A JavaCC char stream for binary data
+    public PDFCharStream   pdfdata;
+    
+    // The PDF file
+    PDFFile                _pdfFile;
+  
+/** Creates a new PDF parser. */
+public PDFParser()
+{
+    this(new PDFParserTokenManager(null));
+}
+
+/** Creates a new PDF parser. */
+public PDFParser(PDFFile aPdfFile, byte data[])
+{
+    this();
+    _pdfFile = aPdfFile;
+    pdfdata = new PDFCharStream(data);
+    ReInit(pdfdata);
+}
+
+public void resetLexingLocation(int offset)
+{
+    pdfdata.ReInit(offset);
+    ReInit(pdfdata);
+}
+
+
+public void resetLexingData(byte newdata[], int offset)
+{
+    pdfdata.ReInit(newdata, offset);
+    ReInit(pdfdata);
+}
+
+/** Allocate space in the xref table.
+ *  Fills any holes up to and including objNum with empty entries
+ */
+public void fillXRefTable(Vector xref, int objNum)
+{
+    int numEntries = xref.size();
+    while(numEntries <= objNum)
+        xref.add(new PDFXEntry(numEntries++));
+}
+
+}
+PARSER_END(PDFParser)
+
+
+SKIP : { " " | "\r" | "\t" | "\n" }
+
+TOKEN :
+{
+    < #DIGIT: ["0"-"9"] >
+|   < #WHITE: [" ","\t","\n","\r","\f"] >
+|   < #TO_EOL: (~["\n","\r"])* ("\n"|"\r"|"\r\n") >
+}
+
+// PDF booleans & null
+TOKEN :
+{
+    < BOOLEAN_TRUE: "true" >
+|   < BOOLEAN_FALSE: "false" >
+|   < NULL_OBJECT: "null" >
+}
+
+// PDF Integer, Real, HEX String and Name                             
+TOKEN :
+{
+    < NUM_INTEGER: (["+","-"])?(<DIGIT>)+ >
+|   < NUM_REAL: (["+","-"])?(<DIGIT>)*"."(<DIGIT>)+ >
+|   < PDF_HEX_STRING: "<"([" ","\t","\n","\r","\f","0"-"9","a"-"f","A"-"F"])*">" >
+|   < PDF_NAME: "/"(~["%","(",")","<",">","[","]","{","}","/"," ","\t","\n","\r","\f"])+ >
+}
+
+// PDF Array and Dictionary start/end tokens
+TOKEN :
+{
+    < ARRAY_BEGIN: "[" >
+|   < ARRAY_END: "]" >
+|   < DICT_BEGIN: "<<" >
+|   < DICT_END: ">>" >
+}
+
+// PDF Stream tokens
+TOKEN :
+{
+    < STREAM_END: "endstream" >
+|   < STREAM_BEGIN: "stream" ("\r")? >
+|   < TRAILER: "trailer" >
+|   < XREF: "xref" >
+|   < START_XREF: "startxref" >
+|   < XREF_F: "f">
+|   < XREF_N: "n">
+}
+
+// PDF OBJECT_BEGIN and OBJECT_END Tokens
+TOKEN : { < OBJECT_BEGIN: "obj" > | < OBJECT_END: "endobj" > }
+
+// PDF_COMMENT Token: Anything after a % (use SPECIAL_TOKEN to swallow them)
+SPECIAL_TOKEN : { <PDF_COMMENT: "%" (~["\n","\r"])* ("\n"|"\r"|"\r\n")> }
+
+// PDF_STRING Token: Anything inside a pair of parens, including escaped parens and nested strings
+TOKEN_MGR_DECLS : { int _inString = 0; }
+<DEFAULT> MORE: { "(" : IN_STRING }
+<IN_STRING, IN_STRING_NEST> MORE: { "(" { _inString++; } : IN_STRING_NEST }
+<IN_STRING, IN_STRING_NEST> MORE: { "\\(" | "\\)" }
+<IN_STRING_NEST> MORE: { ")" { _inString--; if(_inString==0) SwitchTo(IN_STRING); } }
+<IN_STRING, IN_STRING_NEST> MORE: { <~[")"]> }
+<IN_STRING> TOKEN : { < PDF_STRING: ")" > : DEFAULT }
+
+String pdfversion() : { token_source.SwitchTo(SPECIAL_COMMENTS); }
+{
+    <PDF_HEADER> { 
+        String version = token.image;
+        token_source.SwitchTo(DEFAULT);
+        return version;
+    }
+}
+
+void checkEOF() : { token_source.SwitchTo(SPECIAL_COMMENTS); }
+{
+    <EOF_MARKER> { token_source.SwitchTo(DEFAULT); }
+}
+
+// Getting interesting PDF comments is done in different lexing state so they aren't tossed away like other comments
+<SPECIAL_COMMENTS> SKIP : { " " | "\r" | "\t" | "\n" }
+<SPECIAL_COMMENTS> TOKEN :
+{
+    < PDF_HEADER: "%PDF-" (~["\n","\r"])* >
+|   < EOF_MARKER: "%%EOF" >
+}
+
+int startxref() : { Integer i; }
+{
+    <START_XREF> i=integer() { return i.intValue(); }
+}
+
+Object pdf_object() : { Object node; }
+{
+    node=array() { return node; }
+|   node=dictionary() ( node=stream((Hashtable)node) )? { return node; }
+|   LOOKAHEAD(3) node=reference() { return node; }
+|   node=leaf() { return node; }
+}
+
+Object reference() : { Integer which, gen; }
+{
+    which=integer() gen=integer() "R" {
+        int entry = which.intValue();
+        Vector xref = _pdfFile._xref;
+        int numentries = xref.size();
+        
+        // Fill in any holes if necessary and return reference
+        fillXRefTable(xref, entry);
+        return xref.get(entry);
+    }
+}
+
+Object object_definition() : { Object o; Integer oNum, genNum; }
+{
+    oNum=integer() genNum=integer() <OBJECT_BEGIN> o=pdf_object() <OBJECT_END> {
+        return o;
+    }
+}
+
+Vector array() : { Vector a; Object o; }
+{
+    <ARRAY_BEGIN> { a = new Vector(); }
+    ( o=pdf_object() { a.addElement(o); } )*
+    <ARRAY_END> { return a; }
+}
+
+Hashtable dictionary() : { Hashtable d; Object key, val; }
+{
+    <DICT_BEGIN> { d = new Hashtable(); }
+    ( <PDF_NAME> { key = token.image.substring(1); } val=pdf_object() { d.put(key, val); } )*
+    <DICT_END> { return d; }
+}
+
+Object stream(Hashtable d) : { byte data[]; int length; }
+{
+    <STREAM_BEGIN> {
+        Integer lengthObj = (Integer)_pdfFile.resolveObject(d.get("Length"));
+        length = lengthObj.intValue();
+    }
+    data=stream_contents(length)
+    <STREAM_END> { return new PDFStream(data, d); }
+}
+
+JAVACODE
+byte[] stream_contents(int length)
+{
+    byte bytes[];
+  
+    try {
+    char c = pdfdata.readChar();
+  
+    // In PDF version 1.0 linefeed after 'stream' is mandatory (in 1+, it's optional)
+    if(_pdfFile._version.equals("%PDF-1.0")) {
+        if (c != '\n') 
+            throw new ParseException("Expecting line feed character after 'stream'");
+    }
+    
+    // If char after 'stream' is not newline, backup so it is included as stream data
+    else if(c != '\n') 
+        pdfdata.backup(1);
+    
+    bytes = pdfdata.GetNextBytes(length);
+    
+    // Catch IOException
+    } catch(IOException e) { throw new ParseException("Premature end of input in stream"); }
+
+    return bytes;
+}
+
+Object leaf() : { Object l; }
+{
+     <BOOLEAN_TRUE> { return Boolean.TRUE; }
+|    <BOOLEAN_FALSE> { return Boolean.FALSE; }
+|    <NULL_OBJECT> { return "null"; }
+|    l=integer() { return l; }
+|    l=real() { return l; }
+|    <PDF_NAME> { return token.image; }
+|    <PDF_STRING> { return token.image; }
+|    <PDF_HEX_STRING> { return token.image; }
+}
+
+Integer integer() : { }
+{ 
+  <NUM_INTEGER> { return Integer.valueOf(token.image); }
+}
+
+Double real() : { }
+{
+  <NUM_REAL> { return Double.valueOf(token.image); }
+}
+
+int xrefentrystate() : { }
+{
+  <XREF_F> { return XREF_F; }
+| <XREF_N> { return XREF_N; }
+}
+
+Hashtable pdfXRefSection(Vector xref) : {Hashtable trail;}
+{
+  (
+  (pdfXRefTable(xref) trail=trailer())
+| (trail=pdfXRefStream(xref))
+  ) { return trail; }
+}
+
+void pdfXRefTable(Vector xref) : { Integer entrypos, subentries; }
+{
+    <XREF> (entrypos=integer() subentries=integer() {
+        int ep = entrypos.intValue();
+        int sub = subentries.intValue();
+        int numentries = xref.size();
+        
+        // Allocate xref entries
+        fillXRefTable(xref, ep+sub-1);
+            
+        while(sub>0) {
+            Integer fileoff = integer();
+            Integer gen = integer();
+            int x = xrefentrystate();
+            PDFXEntry anEntry = (PDFXEntry)xref.get(ep);
+            
+            // Only read entry if it's state hasn't been set - XRefs at end of file override ones that came earlier
+            if(anEntry.state==PDFXEntry.EntryUnknown) {
+                anEntry.state = x==XREF_F? PDFXEntry.EntryDeleted : PDFXEntry.EntryNotYetRead;
+                anEntry.fileOffset = fileoff.intValue();
+                anEntry.generation = gen.intValue();
+            }
+            ++ep;
+            --sub;
+        }
+    } )+ {  }
+}
+
+Hashtable pdfXRefStream(Vector xref) : {Object obj;}
+{
+  obj=object_definition() { 
+      if (obj instanceof PDFStream) {
+             PDFStream xstm=(PDFStream)obj;
+             Hashtable xmap=(Hashtable)xstm.getDictionary();
+             if ("/XRef".equals(xmap.get("Type"))) {
+                 int maxObjPlusOne = ((Number)xmap.get("Size")).intValue();
+                 int fieldWidths[] = PDFDictUtils.getIntArray(xmap, null, "W");
+                 int fields[] = new int[fieldWidths.length];
+                 int indices[] = PDFDictUtils.getIntArray(xmap, null, "Index");
+                 if (indices==null)
+                     indices = new int[]{0, maxObjPlusOne};
+                 int i,j,k,l,nsubsections;
+                 int subStart, numEntries;
+                 PDFXEntry anEntry;
+                 byte xrefdata[] = xstm.decodeStream();
+                 int xrefdatapos=0;
+                  
+                 // Allocate space for all xrefs to come
+                 fillXRefTable(xref, maxObjPlusOne-1);
+                 // Read in each subsection
+                 nsubsections=indices.length/2;
+                 for(i=0; i<nsubsections; ++i) {
+                     subStart = indices[2*i];
+                     numEntries = indices[2*i+1];
+                     for(j=0; j<numEntries; ++j) {
+                         // Pull out the fields from the stream data.
+                         for(k=0; k<fields.length;++k) {
+                             fields[k]=0;
+                             for(l=0; l<fieldWidths[k]; ++l)
+                                 fields[k]=(fields[k])<<8 | (xrefdata[xrefdatapos++] & 0xff);
+                         }
+                         // Get the xref and set the values if not already set
+                         anEntry = (PDFXEntry)xref.get(subStart+j);
+                         if (anEntry.state==PDFXEntry.EntryUnknown) {
+                             switch(fields[0]) {
+                             case 0: anEntry.state = PDFXEntry.EntryDeleted;
+                                     break;
+                             case 1: anEntry.state = PDFXEntry.EntryNotYetRead;
+                                     anEntry.fileOffset = fields[1];
+                                     anEntry.generation = fieldWidths[2]>0 ? fields[2] : 0;
+                                     break;
+                             case 2: anEntry.state = PDFXEntry.EntryCompressed;
+                                     //really the object number of the object stream
+                                     anEntry.fileOffset=fields[1];
+                                     //and the index of the object within the object stream
+                                     anEntry.generation=fields[2];
+                                     break;
+                             }
+                         }
+                     }
+                 }
+             return xmap;
+             }
+         }
+         throw new ParseException("Error reading cross-reference stream");
+     }
+}
+             
+Hashtable trailer() : { Hashtable h;}
+{
+    <TRAILER> h=dictionary() { return h; }
+}

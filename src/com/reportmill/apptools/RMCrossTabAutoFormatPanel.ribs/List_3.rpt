@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document version="9" null-string="&lt;NA&gt;">
+  <page width="255" height="102">
+    <cell-table x="8" y="7" width="120" height="44" header-row-count="1" header-column-count="1" dataset-key="datum">
+      <column width="60" />
+      <column width="60" />
+      <row height="22">
+        <cell show-left-border="false" show-right-border="false" />
+        <cell show-left-border="false" show-right-border="false">
+          <font name="Times New Roman Bold" size="12" />
+          <color value="#3a3a9b" />
+          <pgraph />
+          <string>@month@</string>
+          <grouping key="month" />
+        </cell>
+      </row>
+      <row height="22">
+        <cell show-left-border="false" show-right-border="false" show-top-border="false">
+          <font name="Times New Roman" size="12" />
+          <pgraph />
+          <string>@state@</string>
+          <grouping key="state" />
+        </cell>
+        <cell show-left-border="false" show-right-border="false" show-top-border="false">
+          <font name="Times New Roman" size="12" />
+          <pgraph />
+          <string>@value@</string>
+        </cell>
+      </row>
+    </cell-table>
+  </page>
+</document>

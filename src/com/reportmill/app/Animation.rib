@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325">
+  <font name="Arial" size="11" />
+  <panel x="2" width="271" height="42">
+    <border title=" Current Time " />
+    <jslider name="TimeSlider" x="10" y="14" width="196" height="24" />
+    <jtextfield name="TimeText" x="214" y="14" width="51" height="21" align="center" />
+  </panel>
+  <jbutton name="PlayButton" x="4" y="47" width="36" height="19" text="Play">
+    <font name="Arial" size="10" />
+  </jbutton>
+  <jbutton name="StopButton" x="40" y="47" width="36" height="19" text="Stop">
+    <font name="Arial" size="10" />
+  </jbutton>
+  <jbutton name="StepButton" x="76" y="47" width="36" height="19" text="Step">
+    <font name="Arial" size="10" />
+  </jbutton>
+  <jbutton name="BackButton" x="112" y="47" width="36" height="19" text="Back">
+    <font name="Arial" size="10" />
+  </jbutton>
+  <jcheckbox name="LoopCheckBox" x="162" y="47" width="60" height="19" text="Loop">
+    <font name="Arial" size="10" />
+  </jcheckbox>
+  <jlabel x="4" y="73" width="71" height="20" text="Key Frame">
+    <border type="etched" />
+  </jlabel>
+  <jlabel x="77" y="73" width="122" height="20" text="Changes for Shape">
+    <border type="etched" />
+  </jlabel>
+  <menubutton x="201" y="73" width="20" height="19">
+    <font name="Arial" size="10" />
+    <jmenuitem name="ShiftFramesMenuItem" text="Shift Frames" />
+    <jmenuitem name="ScaleFramesMenuItem" text="Scale Frames" />
+  </menubutton>
+  <jbutton name="DeleteButton" x="223" y="73" width="48" height="19" text="Delete">
+    <font name="Arial" size="10" />
+  </jbutton>
+  <jscrollpane x="4" y="94" width="71" height="227" vertical="always">
+    <font name="Arial" size="10" />
+    <jlist name="KeyFrameList" selection="single-interval" />
+  </jscrollpane>
+  <jscrollpane x="77" y="94" width="198" height="84" vertical="always">
+    <font name="Arial" size="10" />
+    <jlist name="ChangesList" selection="multiple-interval" />
+  </jscrollpane>
+  <jcombobox name="InterpolationComboBox" x="77" y="180" width="198" height="22" />
+  <jtextarea name="HelpText" x="80" y="204" width="195" height="55" foreground="#555555" opaque="false">
+    <font name="Arial" size="10" />
+  </jtextarea>
+  <jlabel x="78" y="284" width="62" height="17" text="Frame Rate" />
+  <jtextfield name="FrameRateText" x="77" y="300" width="60" height="21" align="center" />
+  <jlabel x="140" y="284" width="60" height="17" text="Max Time" />
+  <jtextfield name="MaxTimeText" x="139" y="300" width="60" height="21" align="center" />
+  <jbutton name="InterpolatorUIButton" x="205" y="300" width="64" height="22" text="Edit..." />
+</panel>

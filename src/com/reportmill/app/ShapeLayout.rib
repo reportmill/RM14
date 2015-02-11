@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="250" height="275">
+  <font name="Arial" size="11" />
+  <panel name="SwitchPane" width="250" height="275" />
+</panel>

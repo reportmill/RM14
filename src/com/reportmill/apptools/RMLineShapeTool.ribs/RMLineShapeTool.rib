@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325">
+  <font name="Arial" size="11" />
+  <panel x="58" y="181" width="152" height="85">
+    <border type="etched" title=" Scale" />
+    <thumbwheel type="linear" name="ScaleThumbWheel" x="26" y="50" width="100" height="16" max="4" absmin="0" />
+    <jtextfield name="ScaleText" x="26" y="23" width="100" height="22" text="1" align="center" />
+  </panel>
+  <menubutton name="ArrowsMenuButton" x="113" y="95" width="36" height="24" text-position="left">
+    <border type="bevel" bevel-type="raised" />
+  </menubutton>
+  <jlabel x="92" y="67" width="74" height="22" text="Arrow Head:" align="center" />
+</panel>

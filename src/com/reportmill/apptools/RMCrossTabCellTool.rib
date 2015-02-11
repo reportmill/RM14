@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="280">
+  <font name="Arial" size="11" />
+  <jcheckbox name="VisibleCheckBox" x="97" y="155" width="100" height="20" text="Visible" align="left" />
+  <jlabel name="GroupingKeyLabel" x="5" y="14" width="75" height="22" text="Grouping Key:" align="left" />
+  <jtextfield name="GroupingKeyText" x="80" y="14" width="190" height="22" asize="-~-,--~" EnabledEvents="DragDrop" />
+  <jlabel x="5" y="208" width="50" height="22" text="Borders:" align="left" />
+  <jcheckbox name="ShowLeftBorderCheckBox" x="59" y="208" width="57" height="22" text="Left" align="left" />
+  <jcheckbox name="ShowRightBorderCheckBox" x="128" y="208" width="57" height="22" text="Right" align="left" />
+  <jcheckbox name="ShowTopBorderCheckBox" x="97" y="186" width="57" height="22" text="Top" align="left" />
+  <jcheckbox name="ShowBottomBorderCheckBox" x="97" y="230" width="81" height="22" text="Bottom" align="left" />
+</panel>

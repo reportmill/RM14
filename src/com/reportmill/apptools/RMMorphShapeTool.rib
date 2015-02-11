@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325">
+  <font name="Arial" size="11" />
+  <panel x="5" y="44" width="268" height="60">
+    <border type="etched" title="Morphing" />
+    <jslider name="MorphingSlider" x="8" y="22" width="189" height="25" />
+    <jtextfield name="MorphingText" x="197" y="22" width="59" height="22" />
+  </panel>
+</panel>

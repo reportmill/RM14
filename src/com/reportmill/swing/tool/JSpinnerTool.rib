@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325">
+  <font name="Arial" size="11" />
+  <panel x="57" y="67" width="161" height="190">
+    <border type="etched" title="Values" />
+    <jtextfield name="MinValueText" x="91" y="75" width="50" height="22" ttip="Lower bounds" />
+    <jtextfield name="MaxValueText" x="91" y="104" width="50" height="22" ttip="Upper bounds" />
+    <jlabel x="31" y="27" width="64" height="22" text="Initial Value:" align="left" />
+    <jtextfield name="InitValueText" x="91" y="27" width="50" height="22" ttip="Starting Spinner Value" />
+    <jlabel x="33" y="151" width="50" height="22" text="Step:" align="left" />
+    <jtextfield name="StepValueText" x="91" y="153" width="50" height="22" ttip="increment" />
+    <jcheckbox name="MinEnabledCheckbox" x="8" y="75" width="79" height="22" text="Minimum:" align="left" />
+    <jcheckbox name="MaxEnabledCheckbox" x="8" y="103" width="79" height="22" text="Maximum:" align="left" />
+  </panel>
+</panel>

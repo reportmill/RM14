@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="271" height="290">
+  <font name="Arial" size="11" />
+  <jlabel x="7" width="95" height="22" text="Table Formats:" align="left" />
+  <jscrollpane x="7" y="22" width="259" height="147" asize="-~-,-~-" vertical="always">
+    <font name="Arial" size="12" />
+    <jlist name="AutoTableList" selection="single-interval" />
+  </jscrollpane>
+  <jscrollpane x="7" y="178" width="259" height="111" asize="---,~--">
+    <font name="Arial" size="12" />
+    <customview name="AutoTableViewer" class="com.reportmill.viewer.RMViewer" />
+  </jscrollpane>
+</panel>

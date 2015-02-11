@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325">
+  <font name="Arial" size="11" />
+  <jlabel x="5" y="14" width="73" height="20" text="Tabs:" />
+  <panel x="5" y="40" width="265" height="136">
+    <jscrollpane width="265" height="110" asize="-~-,-~-" vertical="always">
+      <jlist name="ItemsList" x="2" y="2" width="246" height="106" asize="-~-,-~-">
+        <font name="Arial" size="12" />
+      </jlist>
+    </jscrollpane>
+    <jtextfield name="ItemText" y="114" width="140" height="22" asize="-~-,~--" SendActionOnFocusLost="false" />
+    <jbutton name="AddItemButton" x="144" y="114" width="23" height="22" ttip="Add Item" asize="~--,~--" text="+" align="center" margin="0,0,0,0">
+      <font name="Arial" size="14" />
+    </jbutton>
+    <jbutton name="RemoveItemButton" x="171" y="114" width="23" height="22" ttip="Remove Item" asize="~--,~--" text="-" align="center" margin="0,0,0,0">
+      <font name="Arial" size="14" />
+    </jbutton>
+    <jbutton name="RenameItemButton" x="198" y="114" width="67" height="22" asize="~--,~--" text="Rename" align="center" margin="0,0,0,0" />
+  </panel>
+</panel>

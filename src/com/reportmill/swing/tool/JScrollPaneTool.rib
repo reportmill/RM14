@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325">
+  <font name="Arial" size="11" />
+  <panel x="32" y="14" width="216" height="114">
+    <border title="Scroll Bars" />
+    <jradiobutton name="HAlwaysRadioButton" x="10" y="36" width="92" height="22" text="Always" bgroup="ScrollerHorizontalRadios" />
+    <jradiobutton name="HNeverRadioButton" x="10" y="58" width="92" height="22" text="Never" selected="true" bgroup="ScrollerHorizontalRadios" />
+    <jradiobutton name="HAsNeededRadioButton" x="10" y="80" width="92" height="22" text="As Needed" bgroup="ScrollerHorizontalRadios" />
+    <jlabel x="10" y="15" width="91" height="22" text="Horizontal" />
+    <jradiobutton name="VAlwaysRadioButton" x="114" y="36" width="92" height="22" text="Always" selected="true" bgroup="ScrollerVerticalRadios" />
+    <jradiobutton name="VNeverRadioButton" x="114" y="58" width="92" height="22" text="Never" bgroup="ScrollerVerticalRadios" />
+    <jradiobutton name="VAsNeededRadioButton" x="114" y="80" width="92" height="22" text="As Needed" bgroup="ScrollerVerticalRadios" />
+    <jlabel x="114" y="15" width="91" height="22" text="Vertical" />
+  </panel>
+  <jbutton name="SelectViewButton" x="62" y="144" width="160" height="22" text="Select Viewport View" align="center" />
+</panel>

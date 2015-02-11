@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325">
+  <font name="Arial" size="11" />
+  <jlabel x="10" y="10" width="60" height="20" text="Sound Key:" />
+  <jtextfield name="KeyText" x="70" y="10" width="142" height="20" EnabledEvents="DragDrop" />
+  <jbutton name="KeysButton" x="215" y="10" width="55" height="20" text="Keys" align="center" />
+  <jlabel x="10" y="35" width="39" height="20" text="Delay:" />
+  <jtextfield name="DelayText" x="70" y="35" width="72" height="20" align="center" />
+  <jlabel x="10" y="60" width="63" height="20" text="Loop Count:" />
+  <jtextfield name="LoopCountText" x="70" y="60" width="72" height="20" align="center" />
+  <jlabel name="TypeLabel" x="10" y="210" width="70" height="20" />
+  <jcheckbox name="PlayingCheckBox" x="101" y="102" width="100" height="22" text="Playing" align="left" />
+</panel>

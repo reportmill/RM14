@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325">
+  <font name="Arial" size="11" />
+  <jtextfield name="MinText" x="113" y="14" width="100" height="20" align="center">
+    <font name="LucidaGrande" size="13" />
+  </jtextfield>
+  <jtextfield name="MaxText" x="113" y="41" width="100" height="20" align="center">
+    <font name="LucidaGrande" size="13" />
+  </jtextfield>
+  <jlabel x="40" y="14" width="75" height="20" value="Min Value:" />
+  <jlabel x="40" y="41" width="73" height="20" value="Max Value:" />
+  <jtextfield name="InitText" x="113" y="68" width="100" height="20" align="center">
+    <font name="LucidaGrande" size="13" />
+  </jtextfield>
+  <jlabel x="40" y="68" width="72" height="20" value="Initial Value:" />
+  <jtextfield name="AbsMinText" x="113" y="95" width="100" height="20" align="center">
+    <font name="LucidaGrande" size="13" />
+  </jtextfield>
+  <jlabel x="40" y="95" width="72" height="20" value="Absolute Min:" />
+  <jtextfield name="AbsMaxText" x="113" y="122" width="100" height="20" align="center">
+    <font name="LucidaGrande" size="13" />
+  </jtextfield>
+  <jlabel x="33" y="122" width="79" height="20" value="Absolute Max:" />
+  <jtextfield name="RoundToText" x="113" y="149" width="100" height="20" align="center">
+    <font name="LucidaGrande" size="13" />
+  </jtextfield>
+  <jlabel x="40" y="149" width="72" height="20" value="Round to::" />
+  <panel x="78" y="190" width="100" height="70">
+    <border title="Display" />
+    <jradiobutton name="RadialRadioButton" x="10" y="15" width="80" height="20" value="Radial" />
+    <jradiobutton name="LinearRadioButton" x="10" y="40" width="80" height="20" value="Linear" />
+  </panel>
+</panel>

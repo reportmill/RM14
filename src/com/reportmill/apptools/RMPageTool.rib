@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325">
+  <font name="Arial" size="11" />
+  <jlabel x="9" y="32" width="57" height="20" text="Layers:">
+    <font name="Arial Bold" size="11" />
+  </jlabel>
+  <jbutton name="AllVisibleButton" x="106" y="30" width="26" height="26" image="LayerVisible.png" align="center" />
+  <jbutton name="AllInvisibleButton" x="132" y="30" width="26" height="26" image="LayerInvisible.png" align="center" />
+  <jbutton name="AllLockedButton" x="158" y="30" width="26" height="26" image="LayerLocked.png" align="center" />
+  <jscrollpane x="10" y="57" width="174" height="119">
+    <jtable name="LayersTable" x="2" y="2" width="170" height="115" selection="multiple-interval" />
+  </jscrollpane>
+  <jbutton name="AddButton" x="186" y="57" width="89" height="25" text="Add" align="center" />
+  <jbutton name="RemoveButton" x="186" y="86" width="89" height="25" text="Remove" align="center" />
+  <jbutton name="RenameButton" x="186" y="115" width="89" height="25" text="Rename" align="center" />
+  <jbutton name="MergeButton" x="186" y="144" width="89" height="25" text="Merge" align="center" />
+  <jcheckbox x="54" y="184" width="138" height="22" text="Paint Background" align="left">
+    <binding aspect="Selected" key="SelectedShapes.PaintBackground" />
+  </jcheckbox>
+  <jlabel x="5" y="5" width="68" height="18" text="Dataset Key:" align="left" />
+  <jtextfield name="DatasetKeyText" x="73" y="4" width="196" height="20" EnabledEvents="DragDrop">
+    <binding aspect="Text" key="SelectedShapes.DatasetKey" />
+  </jtextfield>
+</panel>

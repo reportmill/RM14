@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="445" height="275">
+  <font name="Arial" size="14" />
+  <jlabel name="WelcomeAnimLabel" width="445" height="275" />
+  <jlabel name="BuildLabel" x="3" y="2" width="200" height="11" text="Build">
+    <font name="Arial Bold" size="9" />
+  </jlabel>
+  <jlabel name="JavaLabel" x="3" y="13" width="200" height="11" text="Java: ">
+    <font name="Arial Bold" size="9" />
+  </jlabel>
+  <jlabel name="LicenseLabel" x="3" y="23" width="200" height="11" text="License: ">
+    <font name="Arial Bold" size="9" />
+  </jlabel>
+  <jbutton name="NewButton" x="51" y="225" width="90" height="29" text="New" align="center" />
+  <jbutton name="OpenButton" x="174" y="225" width="90" height="29" text="Open" align="center" />
+  <jbutton name="QuitButton" x="297" y="225" width="90" height="29" text="Quit" align="center" />
+  <menubutton name="RecentFilesMenuButton" x="264" y="241" width="12" height="14" asize="--~,~--" align="center" text-position="left" border="false">
+    <font name="Arial" size="11" />
+  </menubutton>
+</panel>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325">
+  <font name="Arial" size="11" />
+  <panel x="67" y="66" width="141" height="78">
+    <border title="Orientation" />
+    <jradiobutton name="HorizontalRadioButton" x="12" y="23" width="80" height="22" text="Horizontal" align="left" selected="true" enabled="false" bgroup="orientation" />
+    <jradiobutton name="VerticalRadioButton" x="12" y="45" width="80" height="22" text="Vertical" align="left" enabled="false" bgroup="orientation" />
+  </panel>
+  <panel x="67" y="170" width="141" height="78">
+    <border title="Options" />
+    <jcheckbox name="ContinuousCheckBox" x="10" y="24" width="121" height="22" text="Continuous Layout" align="left" />
+    <jcheckbox name="ExpandableCheckBox" x="10" y="44" width="100" height="22" text="Expandable" align="left" />
+  </panel>
+</panel>

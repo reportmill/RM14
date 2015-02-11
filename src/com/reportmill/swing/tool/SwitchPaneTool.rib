@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325">
+  <font name="Arial" size="11" />
+  <jscrollpane x="5" y="48" width="265" height="110" asize="-~-,-~-" vertical="always">
+    <font name="Arial" size="11" />
+    <jlist name="ItemsList" x="2" y="2" width="246" height="106" asize="-~-,-~-">
+      <font name="Arial" size="11" />
+      <binding aspect="Items" key="SelectedShapes.PaneShapes.Name" />
+      <binding aspect="SelectedItem" key="SelectedShapes.SelectedPaneName" />
+      <item text="One" />
+      <item text="Two" />
+      <item text="Three" />
+      <item text="Four" />
+      <item text="Five" />
+    </jlist>
+  </jscrollpane>
+  <jtextfield name="ItemText" x="6" y="165" width="140" height="22" asize="-~-,~--" focus="false">
+    <font name="Arial" size="11" />
+    <binding aspect="Text" key="SelectedShapes.SelectedPaneName" />
+  </jtextfield>
+  <jbutton name="AddItemButton" x="218" y="28" width="23" height="18" asize="~--,~--" ttip="Add Item" text="+" align="center" v-align="top" margin="0,0,0,0">
+    <font name="Arial" size="11" />
+  </jbutton>
+  <jbutton name="RemoveItemButton" x="243" y="28" width="23" height="18" asize="~--,~--" ttip="Remove Item" text="-" align="center" v-align="top" margin="0,0,0,0">
+    <font name="Arial" size="11" />
+  </jbutton>
+  <jlabel x="5" y="24" width="50" height="22" text="Panes:" align="left">
+    <font name="Arial" size="11" />
+  </jlabel>
+</panel>

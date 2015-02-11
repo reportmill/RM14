@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="350" height="360">
+  <font name="Arial" size="12" />
+  <jtabbedpane width="350" height="360" selectedindex="0">
+    <panel x="11" y="33" width="329" height="314" asize="-~-,-~-" visible="false" title="License">
+      <jcheckbox name="EnableExceptionsCheckBox" x="40" y="130" width="250" height="24" text="Enable Exception Reporting" />
+      <jtextfield name="LicenseText" x="94" y="50" width="210" height="24" asize="-~-,--~" />
+      <jlabel x="10" y="50" width="88" height="24" text="License Key:" align="left" />
+    </panel>
+    <panel x="11" y="33" width="329" height="314" asize="-~-,-~-" visible="false" title="Formats">
+      <jlabel x="10" y="20" width="150" height="20" text="Number Formats:" />
+      <jbutton name="ResetNumbersButton" x="120" y="20" width="40" height="18" text="Reset" align="center" />
+      <jscrollpane x="10" y="40" width="150" height="200">
+        <jtextarea name="NumberFormatsText" />
+      </jscrollpane>
+      <jlabel x="170" y="20" width="150" height="20" text="Date Formats:" />
+      <jbutton name="ResetDatesButton" x="280" y="20" width="40" height="18" text="Reset" align="center" />
+      <jscrollpane x="170" y="40" width="150" height="200">
+        <jtextarea name="DateFormatsText" />
+      </jscrollpane>
+    </panel>
+  </jtabbedpane>
+</panel>

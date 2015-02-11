@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325">
+  <font name="Arial" size="12" />
+  <jlabel x="16" y="13" width="39" height="22" text="Border:" align="left">
+    <font name="Arial" size="11" />
+  </jlabel>
+  <jlist name="BorderList" x="60" y="8" width="162" height="27" selection="single-interval" />
+  <panel name="TitlePanel" x="16" y="41" width="254" height="28">
+    <jtextfield name="TitleText" x="44" width="204" height="20" paintborder="true" />
+    <jlabel width="39" height="22" text="Title:" align="left">
+      <font name="Arial" size="11" />
+    </jlabel>
+  </panel>
+</panel>

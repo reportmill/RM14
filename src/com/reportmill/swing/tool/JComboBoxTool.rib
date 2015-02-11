@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325">
+  <font name="Arial" size="11" />
+  <jcheckbox name="EditableCheckBox" x="156" y="50" width="103" height="20" text="Editable" />
+  <jlabel x="7" y="121" width="183" height="20" text="List Items (separate by newline):" align="left" />
+  <jscrollpane x="5" y="144" width="265" height="176" vertical="always">
+    <jtextarea name="ItemsStringText" width="246" height="172" asize="-~-,-~-">
+      <font name="Arial" size="12" />
+    </jtextarea>
+  </jscrollpane>
+  <jlabel x="5" y="50" width="83" height="20" text="Selected Index:" align="left" />
+  <jtextfield name="SelectedIndexText" x="84" y="50" width="50" height="22" />
+  <jlabel name="VisibleItemsLabel" x="5" y="80" width="73" height="20" text="Visible Items:" align="left" />
+  <jspinner name="VisibleItemsSpinner" x="75" y="80" width="52" height="22" foreground="#000000" min="0.0" />
+  <jlabel name="VisibleItemsLabel" x="7" y="22" width="113" height="20" text="Item Display Key:" align="left" />
+  <jtextfield x="97" y="22" width="162" height="22">
+    <binding aspect="Text" key="SelectedShapes.ItemDisplayKey" />
+  </jtextfield>
+</panel>

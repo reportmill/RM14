@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="262" height="284">
+  <font name="Arial" size="11" />
+  <jlabel x="8" y="85" width="54" height="22" text="Item Text:" align="left" />
+  <jtextfield name="ItemKeyText" x="62" y="85" width="193" height="22" EnabledEvents="DragDrop" />
+  <jcheckbox name="ShowGridLinesCheckBox" x="68" y="48" width="140" height="17" text="Show Grid Lines" align="left" />
+  <jspinner name="LabelRollSpinner" x="62" y="116" width="62" height="22" step="15" value="0" />
+  <jlabel x="8" y="116" width="54" height="22" text="Rotation:" align="left" />
+  <jcheckbox name="ShowLabelsCheckBox" x="68" y="26" width="140" height="17" text="Show Axis Labels" align="left" />
+</panel>

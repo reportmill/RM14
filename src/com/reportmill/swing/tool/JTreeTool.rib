@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325">
+  <font name="Arial" size="11" />
+  <jlabel x="9" y="44" width="71" height="22" text="Margins:" />
+  <jtextfield name="MarginText" x="80" y="44" width="188" height="22" paintborder="true" />
+  <panel x="7" y="127" width="262" height="95">
+    <border title="" />
+    <jcheckbox name="RootVisibleCheckBox" x="10" y="48" width="87" height="20" text="Show Root" />
+    <jcheckbox name="EditableCheckBox" x="10" y="27" width="224" height="20" text="Editable" />
+    <jcheckbox name="ShowsRootHandlesCheckBox" x="111" y="48" width="145" height="20" text="Allow Collapsed Root" />
+  </panel>
+  <panel x="5" y="225" width="266" height="71">
+    <border title="Send Action" />
+    <jcheckbox name="SendActionOnClickCheckBox" x="10" y="18" width="224" height="20" text="On click" />
+    <jcheckbox name="SendActionOnDoubleClickCheckBox" x="10" y="37" width="224" height="20" text="On double click" />
+  </panel>
+  <jlabel x="9" y="72" width="71" height="22" text="Root Title:" align="left" />
+  <jtextfield name="RootTitleText" x="80" y="72" width="188" height="22" paintborder="true" />
+</panel>

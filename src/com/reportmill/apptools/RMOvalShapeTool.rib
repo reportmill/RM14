@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="325">
+  <font name="Arial" size="11" />
+  <panel x="15" y="40" width="250" height="48" >
+    <border title="Start Angle" />
+    <thumbwheel x="7" y="22" width="180" height="16" name="StartThumb" max="360" round="1" />
+    <jtextfield x="192" y="20" width="50" height="20" name="StartText" align="center" />
+  </panel>
+  <panel x="13" y="97" width="250" height="48" >
+    <border title="Sweep Angle" />
+    <thumbwheel x="7" y="22" width="180" height="16" name="SweepThumb" max="360" absmin="0" absmax="360" round="1" />
+    <jtextfield x="192" y="20" width="50" height="20" name="SweepText" align="center" />
+  </panel>
+</panel>

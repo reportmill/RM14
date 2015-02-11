@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel width="275" height="240">
+  <font name="Arial" size="11" />
+  <jlabel x="5" y="5" width="50" height="22" text="Label" />
+  <jbutton x="5" y="30" width="80" height="22" text="Button" align="center" />
+  <jtogglebutton x="5" y="60" width="80" height="22" text="Toggle" align="center" />
+  <jcheckbox x="5" y="92" width="100" height="22" text="Check Box" />
+  <jradiobutton x="5" y="121" width="80" height="22" text="Radio" />
+  <jseparator x="137" y="15" width="100" height="2" orientation="0" />
+  <jslider x="127" y="30" width="120" height="25" />
+  <jprogressbar x="127" y="60" width="120" height="25" />
+  <thumbwheel x="127" y="94" width="120" height="16" />
+  <thumbwheel x="127" y="123" width="120" height="16" type="linear" />
+</panel>
