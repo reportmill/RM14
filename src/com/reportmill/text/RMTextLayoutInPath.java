@@ -136,29 +136,19 @@ private class RMTextLineInPath extends RMTextLine {
     }
     
     /** Rewind last word from line. */
-    protected int deleteFromLastWord(CharSequence anInput, int aStart)
+    /*protected int deleteFromLastWord(CharSequence anInput, int aStart)
     {
-        // Get parent layout
-        RMTextLayoutInPath layout = (RMTextLayoutInPath)getLayout();
-
         // Do normal version (just return if no path or no LongWordFound)
+        RMTextLayoutInPath layout = (RMTextLayoutInPath)getLayout();
         int value = super.deleteFromLastWord(anInput, aStart);
         if(layout.getPath()==null || !layout.getLongWordFound())
             return value;
         
-        // Reset long word found
+        // Reset long word found, rewind back to end of line, drop line down by one point and return deleted chars
         layout._longWordFound = false;
-            
-        // Rewind back to line start
-        int length = length();
-        _layout.deleteChars(_start);
-            
-        // Drop line down by one
-        _pad++;
-        
-        // Return deleted chars
-        return length;
-    }
+        int length = length(); _layout.deleteChars(_start);
+        _pad++; return length;
+    }*/
     
     /** Override to reset pad. */
     public void setLocked(boolean aFlag)  { super.setLocked(aFlag); if(length()>0) _pad = 0; }
