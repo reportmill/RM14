@@ -17,30 +17,25 @@ import snap.web.*;
 public class RMXMLWriter {
 
     // Used to create a schema
-    RMSchemaMaker     _schemaMaker;
+    RMSchemaMaker           _schemaMaker;
     
     // Describes entities and properties of object graph
-    Schema          _schema;
+    Schema                  _schema;
     
     // Tracks circular references
-    List              _processedMaps = new ArrayList(100);
+    List                    _processedMaps = new ArrayList(100);
     
     // Tracks circular references
-    List <XMLElement>  _processedElements = new ArrayList(100);
+    List <XMLElement>       _processedElements = new ArrayList(100);
     
     // Tracks circular references
-    List <Entity>   _processedEntities = new ArrayList(100);
+    List <Entity>           _processedEntities = new ArrayList(100);
     
     // A map of unique id's for properties
-    Map <Property,Integer> _propertyNextUniqueID = new HashMap();
+    Map <Property,Integer>  _propertyNextUniqueID = new HashMap();
     
     // String used for Schema id tag
     public static final String TAG_ID = "id";
-
-/**
- * Creates a new xml writer.
- */
-public RMXMLWriter() { }
 
 /**
  * Returns the schema maker.
@@ -65,19 +60,19 @@ public boolean getIncludeFields()  { return getSchemaMaker().getIncludeFields();
 public void setIncludeFields(boolean aFlag)  { getSchemaMaker().setIncludeFields(aFlag); }
 
 /** Tells writer to ignore any member of the given class from the serialized object graph. */
-public void ignoreClass(Class aClass)  { getSchemaMaker().ignoreClass(aClass); }
+public void ignoreClass(Class aClass)  { getSchemaMaker().addIgnoreClass(aClass); }
 
 /** Tells writer to ignore any member of the given class name from the serialized object graph. */
-public void ignoreClass(String aClassName)  { getSchemaMaker().ignoreClass(aClassName); }
+public void ignoreClass(String aClassName)  { getSchemaMaker().addIgnoreClass(aClassName); }
 
 /** Tells writer to ignore any member with the given method/field name from the serialized object graph. */
-public void ignoreMember(String aFieldName)  { getSchemaMaker().ignoreMember(aFieldName); }
+public void ignoreMember(String aFieldName)  { getSchemaMaker().addIgnoreMember(aFieldName); }
 
 /** Tells writer to ignore any member with the given class - member combination. */
-public void ignoreMember(Class aClass, String aName)  { getSchemaMaker().ignoreMember(aClass, aName); }
+public void ignoreMember(Class aClass, String aName)  { getSchemaMaker().addIgnoreMember(aClass, aName); }
 
 /** Tells writer to ignore any member with the given classname - member combination. */
-public void ignoreMember(String aClassName, String aName)  { getSchemaMaker().ignoreMember(aClassName, aName); }
+public void ignoreMember(String aClassName, String aName)  { getSchemaMaker().addIgnoreMember(aClassName, aName); }
 
 /** Writes given Java dataset to given path as XML, out to three levels deep, which is default degree of separation. */
 public void writeObject(Object anObj, String aPath)  { writeObject(anObj, aPath, 5); }

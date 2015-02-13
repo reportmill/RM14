@@ -19,10 +19,10 @@ public class RMSchemaMaker {
     boolean                _includeFields = false;
     
     // The set of method return types (or field types) to ignore
-    Set                    _ignoredClasses = new HashSet();
+    Set <String>           _ignoredClasses = new HashSet();
     
     // The set of method/field names to ignore
-    Set                    _ignoredMembers = new HashSet();
+    Set <String>           _ignoredMembers = new HashSet();
     
     // Used for pruning more specific Class/member branches
     Map <String,Set>       _ignoredClassMembers = new Hashtable();
@@ -42,8 +42,9 @@ public class RMSchemaMaker {
 public RMSchemaMaker()
 {
     // Initialize ignored Methods/Classes with those we know are useless
-    ignoreMembers("clone", "getClass", "hashCode", "toString");
-    ignoreClass("java.lang.Class");
+    String ignores[] = { "clone", "getClass", "hashCode", "toString" };
+    for(String s : ignores) addIgnoreMember(s);
+    addIgnoreClass("java.lang.Class");
 }
 
 /**
@@ -74,32 +75,27 @@ public void setIncludeFields(boolean aFlag)  { _includeFields = aFlag; }
 /**
  * Tells schema maker to ignore any members encountered with the given class.
  */
-public void ignoreClass(Class aClass)  { _ignoredClasses.add(aClass.getName()); }
+public void addIgnoreClass(Class aClass)  { addIgnoreClass(aClass.getName()); }
 
 /**
  * Tells schema maker to ignore any members encountered with the given class (by class name).
  */
-public void ignoreClass(String aClassName)  { _ignoredClasses.add(aClassName); }
+public void addIgnoreClass(String aClassName)  { _ignoredClasses.add(aClassName); }
 
 /**
  * Tells schema maker to ignore any members encountered with the given name.
  */
-public void ignoreMember(String aName)  { _ignoredMembers.add(aName); }
-
-/**
- * Tells schema maker to ignore any members encountered with the given names.
- */
-public void ignoreMembers(String ... theNames)  { Collections.addAll(_ignoredMembers, theNames); }
+public void addIgnoreMember(String aName)  { _ignoredMembers.add(aName); }
 
 /**
  * Tells schema maker to ignore members for a particular class.
  */
-public void ignoreMember(Class aClass, String aMemberName)  { ignoreMember(aClass.getName(), aMemberName); }
+public void addIgnoreMember(Class aClass, String aMemberName)  { addIgnoreMember(aClass.getName(), aMemberName); }
 
 /**
  * Tells schema maker to ignore members for a particular class name.
  */
-public void ignoreMember(String aClassName, String aMemberName)
+public void addIgnoreMember(String aClassName, String aMemberName)
 {
     // Get ignored class members set (if not present, create and set) and add member name to set
     Set members = _ignoredClassMembers.get(aClassName);
@@ -204,7 +200,7 @@ private Entity getEntity(Object anObject, Class aClass, String aKey, int aDepth,
         for(int i=0; i<fields.length; i++) { Field field = fields[i]; String fieldName = field.getName();
             
             // If field should be ignored, just continue
-            if(ignore(fieldName) || ignore(objClass.getName(), fieldName) ||
+            if(ignoreMember(fieldName) || ignoreMember(objClass.getName(), fieldName) || ignoreClass(field.getType()) ||
                 !Modifier.isPublic(field.getModifiers()) || Modifier.isStatic(field.getModifiers()))
                 continue;
             
@@ -229,9 +225,9 @@ private Entity getEntity(Object anObject, Class aClass, String aKey, int aDepth,
         
         // Just continue if: (1) method should be ignored or (2) has no return value or (3) is non-public or
         //  (4) is static or (5) arg count not zero or (6) doesn't conform to _useGetAndIsMethodsOnly
-        if(ignore(methodName) || ignore(objClass.getName(), methodName) ||
-            method.getReturnType()==void.class || !Modifier.isPublic(modifiers) ||
-            Modifier.isStatic(modifiers) || method.getParameterTypes().length>0 ||
+        if(ignoreMember(methodName) || ignoreMember(objClass.getName(), methodName) ||
+            method.getReturnType()==void.class || ignoreClass(method.getReturnType()) ||
+            !Modifier.isPublic(modifiers) || Modifier.isStatic(modifiers) || method.getParameterTypes().length>0 ||
             (getUseGetAndIsMethodsOnly() && !methodName.startsWith("get") && !methodName.startsWith("is")))
             continue;
 
@@ -314,16 +310,45 @@ public void getProperty(Object aValue, Class aClass, String aKey, int aDepth, En
 /**
  * Returns whether schema maker should ignore any member with the given name.
  */
-private boolean ignore(String aName)  { return _ignoredMembers.contains(aName) || _ignoredClasses.contains(aName); }
+protected boolean ignoreMember(String aName)  { return matches(aName, _ignoredMembers); }
 
 /**
  * Returns whether schema maker should ignore the specific class/member combination.
  */
-private boolean ignore(String aClassName, String aFieldName)
+protected boolean ignoreMember(String aClassName, String aMemberName)
 { 
-    // Get ignored members set (just return if absent) and return whether members contains field name
-    Set members = _ignoredClassMembers.get(aClassName); if(members==null) return false;
-    return members.contains(aFieldName);
+    Set <String> members = _ignoredClassMembers.get(aClassName); if(members==null) return false;
+    return matches(aMemberName, members);
+}
+
+/**
+ * Returns whether schema maker should ignore any member with the given name.
+ */
+protected boolean ignoreClass(Class aClass)  { return matches(aClass.getName(), _ignoredClasses); }
+
+/**
+ * Returns whether given name matches any string in set, with support for prefix/suffix wildcard char '*'.
+ */
+private boolean matches(String aName, Set <String> theNames)
+{
+    // Iterate over set of names
+    for(String name : theNames) {
+        
+        // If starts with wildcard, match against contains or ends with
+        if(name.startsWith("*")) {
+            if(name.endsWith("*")) { if(aName.contains(name.substring(1, name.length()-1))) return true; }
+            else if(name.endsWith(name.substring(1))) return true;
+        }
+        
+        // If ends with wildcard, match with startsWith
+        else if(name.endsWith("*")) { if(aName.startsWith(name.substring(0,name.length()-1))) return true; }
+        
+        // Otherwise match with equals
+        else if(name.equals(aName)) return true;
+    }
+    
+    // Return false since didn't match
+    return false;
 }
 
 /**

@@ -377,11 +377,15 @@ public static List <Movie> getMovies()
 }
 
 /** Writes a movie dataset to file. */
-public static void writeMoviesDataset() { new RMXMLWriter().writeObject(getMovies(), "/tmp/Dataset.xml"); }
+static void writeMoviesDataset() { new RMXMLWriter().writeObject(getMovies(), "/tmp/Dataset.xml"); }
+
+/** Generates a report. */
+static void genReport()  { new RMDocument("/tmp/junk.rpt").generateReport(getMovies()).write("/tmp/junk.pdf"); }
 
 /** Writes a movie dataset to file. */
-public static void main(String args[])  { passwordReport(); }
-public static void main2(String args[])  {
-    new RMDocument("/tmp/junk.rpt").generateReport(getMovies()).write("/tmp/junk.pdf"); }
+public static void main(String args[])
+{
+    writeMoviesDataset();
+}
 
 }
