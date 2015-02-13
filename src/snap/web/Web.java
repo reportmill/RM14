@@ -51,7 +51,6 @@ protected WebSite createSite(WebURL aSiteURL)
     else if(scheme.equals("ftp")) site = new FTPSite();
     else if(scheme.equals("class")) site = new ClassSite();
     else if(scheme.equals("local")) site = new LocalSite();
-    else if(scheme.equals("sandbox")) site = new SandboxSite();
     if(site!=null) site.setURL(aSiteURL);
     return site;
 }

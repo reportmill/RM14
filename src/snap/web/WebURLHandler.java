@@ -24,8 +24,7 @@ static URL createURL(String aSpec) throws MalformedURLException
     // Handle unsupported schemes
     if(scheme.equals("class")) return new URL(null, spec, new BogusURLStreamHandler());
     if(scheme.equals("local")) return new URL(null, spec, new BogusURLStreamHandler());
-    if(scheme.equals("eclipse")) return new URL(null, spec, new BogusURLStreamHandler());
-    if(scheme.equals("sandbox")) return new URL(null, spec, new BogusURLStreamHandler());
+    if(scheme.equals("git")) return new URL(null, spec, new BogusURLStreamHandler());
     return new URL(spec);
 }
 

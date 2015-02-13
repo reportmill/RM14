@@ -798,22 +798,19 @@ protected WebURL createSandboxURL()  { return new WebURL(createSandboxURLS()); }
  */
 protected String createSandboxURLS()
 {
-    // Get URL 
-    WebURL url = getURL();
+    // Get site URL and construct filename string from scheme/host/path
+    WebURL url = getURL(); String fname = "";
+    String scheme = url.getScheme(); if(!scheme.equals("local")) fname += scheme + '/';
+    String host = url.getHost(); if(host!=null && host.length()>0) fname += host + '/';
+    String path = url.getPath(); if(path!=null && path.length()>1) fname += path.substring(1);
     
-    // If local, just return local:/Sandboxes/path
-    if(url.getScheme().equals("local")) {
-        String path = url.getPath(); if(path.endsWith("/bin")) path = path.substring(0, path.length()-4);
-        return "local:/Sandboxes" + path;
-    }
+    // If filename string ends with /bin or /, trim, then replace '/' & '.' separators with '_'
+    if(fname.endsWith("/bin")) fname = fname.substring(0, fname.length()-4);
+    else if(fname.endsWith("/")) fname = fname.substring(0, fname.length()-1);
+    fname = fname.replace('.', '_').replace('/', '_');
     
-    // Construct sandbox URL string
-    StringBuffer sb = new StringBuffer().append(url.getScheme());
-    String host = url.getHost(); if(host!=null && host.length()>0) sb.append('/').append(host);
-    String path = url.getPath(); if(path!=null && path.length()>1) sb.append(path);
-    String sburl = sb.toString(); if(sburl.endsWith("/bin")) sburl = sburl.substring(0, sburl.length()-4);
-    sburl = sburl.replace('.', '_').replace('/', '_');
-    return "sandbox:/" + sburl;
+    // Return URL string for filename in local Sandboxes directory
+    return "local:/Sandboxes/" + fname;
 }
 
 /** Interface for Servlet. */
