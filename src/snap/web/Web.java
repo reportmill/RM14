@@ -48,9 +48,7 @@ protected WebSite createSite(WebURL aSiteURL)
     else if(path!=null && parentSiteURL!=null && parentSiteURL.getPath()!=null) site = new DirSite();
     else if(scheme.equals("file")) site = new FileSite();
     else if(scheme.equals("http")) site = new HTTPSite();
-    else if(scheme.equals("ftp")) site = new FTPSite();
     else if(scheme.equals("class")) site = new ClassSite();
-    else if(scheme.equals("local")) site = new LocalSite();
     if(site!=null) site.setURL(aSiteURL);
     return site;
 }
