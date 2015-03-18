@@ -133,8 +133,8 @@ public void addChars(CharSequence theChars, int anIndex)
 public void addChars(CharSequence theChars, Map theAttrs, int anIndex)
 {
     if(theChars.length()==0) return;
-    RMTextStyle style = getRunAt(anIndex).getStyle();
-    if(theAttrs!=null) style = style.clone(theAttrs);
+    RMXStringRun run = getRunAt(anIndex); RMTextStyle style = run.getStyle();
+    if(theAttrs!=null) style = new RMTextStyle(run).clone(theAttrs);
     addChars(theChars, style, anIndex);
 }
 
