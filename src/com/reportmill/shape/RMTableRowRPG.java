@@ -110,7 +110,7 @@ String getVersionName(ReportOwner anRptOwner, RMTableRow aRow, RMGroup aGroup, S
     }
 
     // Try for FirstOnly and Alternate
-    int index = aGroup.index();
+    int index = aGroup.getParent()!=null? aGroup.index() : 0;
     if(index==0 && aRow.hasVersion(RMTableRow.VersionFirstOnly))
         return RMTableRow.VersionFirstOnly;
     if(index%2==1 && aRow.hasVersion(RMTableRow.VersionAlternate))
