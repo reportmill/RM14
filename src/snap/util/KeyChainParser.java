@@ -172,7 +172,7 @@ public static class UnaryExprHandler extends ParseHandler <RMKeyChain> {
         }
         
         // Handle Ops
-        else if(anId=="-") _op = Op.Subtract;
+        else if(anId=="-") _op = Op.Negate;
         else if(anId=="!") _op = Op.Not;
     }
 }
