@@ -125,7 +125,7 @@ public static class MultiplicativeExprHandler extends BinaryExprHandler { }
 public static abstract class BinaryExprHandler extends ParseHandler <RMKeyChain> {
 
     // The Op
-    Op _op; RMKeyChain  _more;
+    Op _op;
 
     /** ParseHandler method. */
     public void parsedOne(ParseNode aNode, String anId)
@@ -133,9 +133,8 @@ public static abstract class BinaryExprHandler extends ParseHandler <RMKeyChain>
         // Handle KeyChain
         if(aNode.getCustomNode() instanceof RMKeyChain) {
             RMKeyChain kc = aNode.getCustomNode(RMKeyChain.class);
-            if(_part==null) { _part = kc; _more = null; }
-            else if(_more==null) _part = _more = new RMKeyChain(_op, _part, kc);
-            else _more.setChild(_more = new RMKeyChain(_op, _more.getChild(1), kc), 1);
+            if(_part==null) _part = kc;
+            else _part = new RMKeyChain(_op, _part, kc);
         }
         
         // Handle Ops
