@@ -61,16 +61,13 @@ public RMShape rpgAll()
         setHeight(height);
     }
     
-    // If only one page, just return
-    if(_nextPage==null) return this;
-    
     // Get return shape - convert to ColumnsPage if needed
     RMTableRPG rshape = this;
     if(_table.getColumnCount()>1)
         rshape = makeColumns();
     
     // If only one page generated, return it, otherwise return ShapeList
-    ReportOwner.ShapeList slist = new ReportOwner.ShapeList();
+    ReportOwner.ShapeList slist = new ReportOwner.ShapeList(); //if(_nextPage==null) return this;
     for(RMTableRPG pg=rshape; pg!=null; pg=pg._nextPage) slist.addChild(pg);
     return slist;
 }

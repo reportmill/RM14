@@ -50,8 +50,7 @@ public RMShape rpgAll()
     }
     
     // If only one page generated, return it, otherwise return ShapeList
-    if(_nextPage==null) return this;
-    ReportOwner.ShapeList slist = new ReportOwner.ShapeList();
+    ReportOwner.ShapeList slist = new ReportOwner.ShapeList(); //if(_nextPage==null) return this;
     for(RMTableRPG pg=this; pg!=null; pg=pg._nextPage) slist.addChild(pg);
     return slist;
 }
