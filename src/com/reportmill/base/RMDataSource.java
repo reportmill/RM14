@@ -72,6 +72,7 @@ protected Map createDataset()
     }
     
     // Get bytes (if null, set stuff and bail)
+    if(sfile!=null) sfile.refresh();
     byte bytes[] = sfile!=null? sfile.getBytes() : null;
     if(bytes==null) {
         _schema = new Schema("root"); _schema.addEntity(new Entity("root"));
