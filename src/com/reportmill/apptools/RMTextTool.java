@@ -168,9 +168,9 @@ public void respondUI(SwingEvent anEvent)
         
         // If KeyEvent, reroute to Editor.TextEditor
         if(anEvent.isKeyEvent()) {
-            ted.processKeyEvent(anEvent.getKeyEvent()); anEvent.getKeyEvent().consume();
+            ted.processKeyEvent(anEvent.getKeyEvent()); anEvent.consume();
             if(anEvent.isKeyPressed()) _textArea.hideCursor();
-            if(anEvent.isKeyTyped()) _textArea.setSel(ted.getSelStart(), ted.getSelEnd());
+            _textArea.setSel(ted.getSelStart(), ted.getSelEnd());
         }
         
         // If MouseEvent, update Editor.TextEditor selection
