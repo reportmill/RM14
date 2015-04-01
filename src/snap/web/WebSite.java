@@ -746,24 +746,6 @@ public synchronized void deleteRow(Row aRow) throws Exception
 protected abstract void deleteRowImpl(Row aRow) throws Exception;
 
 /**
- * Bulk import.
- */
-public void bulkImport(Map <String, List<Map>> theMaps) throws Exception
-{
-    // Create an importer
-    WebSiteImporter importer = new WebSiteImporter(this);
-    
-    // Iterate over imported entities and entity maps and add to importer
-    for(String entityName : theMaps.keySet()) { List <Map> maps = theMaps.get(entityName);
-        for(Map map : maps)
-            importer.createRow(entityName, map); }
-    
-    // Tell importer to put objects and flush site
-    importer.saveRows();
-    flush();
-}
-
-/**
  * Returns a file property for key.
  */
 public Object getProp(String aKey)  { return _props.get(aKey); }
