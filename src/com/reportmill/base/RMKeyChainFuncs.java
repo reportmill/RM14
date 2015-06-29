@@ -4,6 +4,7 @@ import com.reportmill.text.*;
 import java.lang.reflect.*;
 import java.math.BigDecimal;
 import java.util.*;
+import snap.util.*;
 
 /**
  * This class represents an RM function call (method plus args) and defines a bunch of built-in functions.
@@ -36,26 +37,25 @@ public static RMKeyChainFuncs getFunctionCall(Object aRoot, Object anObj, RMKeyC
 
     // Try to find method on anObj that takes a single keyChain 
     // (if found, set args to first argument for one arg funcs, or argument list for multiple arg funcs)
-    Method method = snap.util.SnapUtils.getMethod(anObj, name, RMKeyChain.class);
+    Method method = SnapUtils.getMethod(anObj, name, RMKeyChain.class);
     if(method!=null)
-        args = new Object[] { argList.getChildCount()==1? argList.getChild(0) : argList };
+        args = ArrayUtils.add(args, argList.getChildCount()==1? argList.getChild(0) : argList, 0);
     
     // Try to find method on anObj that takes args
     if(method==null) {
         
         // Create a Class array of the same size as the argument list loaded with Object.class
-        Class argTypes[] = new Class[argList.getChildCount()];
-        Arrays.fill(argTypes, Object.class);
+        Class argTypes[] = new Class[argList.getChildCount()]; Arrays.fill(argTypes, Object.class);
         
         // Look for method with given args
-        method = snap.util.SnapUtils.getMethod(anObj, name, argTypes);
+        method = SnapUtils.getMethod(anObj, name, argTypes);
         
         // If object doesn't implement the method, see if we have a Category implementation.
         // A category takes the target object as the first argument.
         if(method==null) {
-            method = getMethod(name, RMArrayUtils.add(argTypes, RMClassUtils.getClass(anObj), 0));
+            method = getMethod(name, ArrayUtils.add(argTypes, ClassUtils.getClass(anObj), 0));
             if(method!=null)
-                args = new Object[] { anObj };
+                args = ArrayUtils.add(args, anObj, 0);
         }
         
         // If object doesn't implement method, try to find method for registered functions that takes args
@@ -64,7 +64,7 @@ public static RMKeyChainFuncs getFunctionCall(Object aRoot, Object anObj, RMKeyC
         
         // If method not found, try again with var-arg Object array
         if(method==null) {
-            method = getMethod(name, Array.newInstance(Object.class,0).getClass());
+            method = getMethod(name, Object[].class);
             if(method!=null)
                 args = new Object[] { args };
         }
@@ -100,7 +100,7 @@ private static Method getMethod(String aName, Class ... argClasses)
 /**
  * Adds a class to the list of classes that RM queries for functions.
  */
-public static void addFunctionClass(Class aClass)  { _funcClasses = RMArrayUtils.add(_funcClasses, aClass); }
+public static void addFunctionClass(Class aClass)  { _funcClasses = ArrayUtils.add(_funcClasses, aClass); }
 
 /**
  * Returns whether given string is empty (or null).
@@ -110,22 +110,22 @@ public boolean isEmpty(Object anObject)  { return anObject==null || anObject.toS
 /**
  * Returns the given value as a double rounded up to the nest largest integer.
  */
-public static long ceil(Object val)  { return (long)Math.ceil(RMUtils.doubleValue(val)); }
+public static long ceil(Object val)  { return (long)Math.ceil(SnapUtils.doubleValue(val)); }
 
 /**
  * Returns the given value as a double truncated down to the nest smallest integer.
  */
-public static long floor(Object val)  { return (long)Math.floor(RMUtils.doubleValue(val)); }
+public static long floor(Object val)  { return (long)Math.floor(SnapUtils.doubleValue(val)); }
 
 /**
  * Returns the given value as a double rounded to the nearest integer.
  */
-public static long round(Object val)  { return Math.round(RMUtils.doubleValue(val)); }
+public static long round(Object val)  { return Math.round(SnapUtils.doubleValue(val)); }
 
 /**
  * Returns the absolute value of the given value.
  */
-public static double abs(Object val)  { return Math.abs(RMUtils.doubleValue(val)); }
+public static double abs(Object val)  { return Math.abs(SnapUtils.doubleValue(val)); }
 
 /**
  * Returns the maximum value of the two given values.
@@ -148,7 +148,7 @@ public static Object min(Object arg1, Object arg2)
  */
 public static Double pow(Object arg1, Object arg2)
 {
-    double f1 = RMUtils.doubleValue(arg1), f2 = RMUtils.doubleValue(arg2);
+    double f1 = SnapUtils.doubleValue(arg1), f2 = SnapUtils.doubleValue(arg2);
     return Math.pow(f1, f2);
 }
 
@@ -209,8 +209,8 @@ public static RMXString RMImage(Object aSource)
 }
 
 /** Returns the trueVal if condition is true, otherwise null. */
-public static Object RMConditional(Object v, Object t) { return RMUtils.boolValue(v)? t : null; }
-public static Object RMConditional(Object v, Object t, Object f) { return RMUtils.boolValue(v)? t : f; }
+public static Object RMConditional(Object v, Object t) { return SnapUtils.boolValue(v)? t : null; }
+public static Object RMConditional(Object v, Object t, Object f) { return SnapUtils.boolValue(v)? t : f; }
 
 /**
  * Returns true if given object string starts with given string.
@@ -229,11 +229,34 @@ public static boolean endsWith(Object anObj, Object aString)
 }
 
 /**
+ * Returns the first index of given pattern in given string.
+ */
+public static int indexOf(String aStr, Object aPtrn)  { return indexOf(aStr, aPtrn, 0); }
+
+/**
+ * Returns the first index of given pattern in given string.
+ */
+public static int indexOf(String aStr, Object aPtrn, Object aStart)
+{
+    String ptrn = aPtrn instanceof String? (String)aPtrn : null; if(ptrn==null) return -1;
+    int start = SnapUtils.intValue(aStart);
+    return aStr.indexOf(ptrn, start);
+}
+
+/**
+ * Returns the last index of given pattern in given string.
+ */
+public static int lastIndexOf(String aStr, Object aPtrn)
+{
+    return aPtrn instanceof String? aStr.lastIndexOf((String)aPtrn) : -1;
+}
+
+/**
  * Returns the substring of the given string from the given index onward.
  */
 public static String substring(Object aString, Object start)
 {
-    return aString.toString().substring(RMUtils.intValue(start));
+    return aString.toString().substring(SnapUtils.intValue(start));
 }
 
 /**
@@ -241,10 +264,10 @@ public static String substring(Object aString, Object start)
  */
 public static String substring(Object aString, Object start, Object end)
 {
-    String keyString = aString.toString();
-    int s = RMUtils.intValue(start);
-    int e = Math.min(RMUtils.intValue(end), keyString.length());
-    return keyString.substring(s, e);
+    String string = aString.toString();
+    int s = SnapUtils.intValue(start);
+    int e = Math.min(SnapUtils.intValue(end), string.length());
+    return string.substring(s, e);
 }
 
 /**
@@ -266,7 +289,7 @@ public static String join(Object aList, Object aKeyChain, Object aDelimiter)
         List list = (List)aList, joinParts = new ArrayList(list.size());
         for(int i=0, iMax=list.size(); i<iMax; i++)
             joinParts.add(RMKeyChain.getValue(list.get(i), aKeyChain));
-        return RMListUtils.joinStrings(joinParts, aDelimiter.toString());
+        return ListUtils.joinStrings(joinParts, aDelimiter.toString());
     }
     
     // Return null if object isn't list
@@ -276,14 +299,14 @@ public static String join(Object aList, Object aKeyChain, Object aDelimiter)
 /**
  * Returns the unicode character string for the given unicode value.
  */
-public static Object RMUnicode(Object num) { char c[] = { (char)RMUtils.intValue(num) }; return new String(c); }
+public static Object RMUnicode(Object num) { char c[] = { (char)SnapUtils.intValue(num) }; return new String(c); }
 
 /**
  * Returns the unicode string for the given range of unicode values.
  */
 public static Object RMUnicodeRange(Object c1, Object c2)
 {
-    int i1 = RMUtils.intValue(c1), i2 = RMUtils.intValue(c2), charCount = Math.max(i2 - i1 + 1, 0);
+    int i1 = SnapUtils.intValue(c1), i2 = SnapUtils.intValue(c2), charCount = Math.max(i2 - i1 + 1, 0);
     char chars[] = new char[charCount];
     for(int i=0; i<charCount; i++) chars[i] = (char)(i1+i);
     return new String(chars);
@@ -314,7 +337,7 @@ public static Object RMAllFontGlyphs(Object fontName)
  */
 public static Object RMAllFonts(Object aSize)
 {
-    int size = RMMath.clamp(RMUtils.intValue(aSize), 8, 80);
+    int size = SnapMath.clamp(SnapUtils.intValue(aSize), 8, 80);
     RMXString string = new RMXString();
     for(String fontName : RMFontUtils.getFontNames()) { RMFont font = RMFont.getFont(fontName, size);
         string.addChars(fontName + "\n", font); }
@@ -390,7 +413,7 @@ public static boolean endsWith(String aString, Object post)  { return endsWith((
 /**
  * Returns a number for a given string.
  */
-public static Number number(String aString)  { return RMUtils.numberValue(aString); }
+public static Number number(String aString)  { return SnapUtils.numberValue(aString); }
 
 /**
  * Returns the given string padded by the given string to be the given length (category method).
@@ -402,22 +425,15 @@ public static String pad(String aString, Object aLength)  { return pad(aString, 
  */
 public static String pad(String aString, Object aPad, Object aLength)
 {
-    // Get length as int
-    int length = RMUtils.intValue(aLength);
-    
-    // If string is already given length or greater, just return it
-    if(aString.length()>=length)
+    // Get length as int (just return if string already given length)
+    int len = SnapUtils.intValue(aLength);
+    if(aString.length()>=len)
         return aString;
     
-    // Create string buffer
-    StringBuffer string = new StringBuffer(aString);
-    
-    // Add pad
-    while(string.length()<length)
-        string.append(aPad);
-    
-    // Return string
-    return string.toString();
+    // Create string buffer, add pad and return
+    StringBuffer sb = new StringBuffer(aString);
+    while(sb.length()<len) sb.append(aPad);
+    return sb.toString();
 }
 
 /**
@@ -426,14 +442,14 @@ public static String pad(String aString, Object aPad, Object aLength)
 public static String padLeft(String aString, Object aPad, Object aLength)
 {
     // Get length as int (if string is already given length or greater, just return it)
-    int length = RMUtils.intValue(aLength);
+    int length = SnapUtils.intValue(aLength);
     if(aString.length()>=length)
         return aString;
     
     // Create string buffer, add pad, return string
-    StringBuffer string = new StringBuffer(aString);
-    while(string.length()<length) string.insert(0, aPad);
-    return string.toString();
+    StringBuffer sb = new StringBuffer(aString);
+    while(sb.length()<length) sb.insert(0, aPad);
+    return sb.toString();
 }
 
 /**
@@ -454,7 +470,7 @@ public static String fix(String aString, Object aLength, Object aPad)
  */
 public static String wrap(String aString, Object aLength)
 {
-    return RMStringUtils.wrap(aString, RMUtils.intValue(aLength));
+    return StringUtils.wrap(aString, SnapUtils.intValue(aLength));
 }
 
 /**
