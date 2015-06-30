@@ -558,7 +558,7 @@ protected double computePrefWidth(double aHeight)
 {
     // If font scaling, return current size
     if(_wraps==WRAP_SCALE) return getWidth();
-    if(length()==0) return getMarginLeft() + getMarginRight();
+    if(length()==0) return 0; // Zero instead of getMarginLeft() + getMarginRight() so empty texts are hidden
     
     // Get text layout and update layout bounds for given size
     RMTextLayout layout = new RMTextLayout();
@@ -576,7 +576,7 @@ protected double computePrefWidth(double aHeight)
 protected double computePrefHeight(double aWidth)
 {
     if(_wraps==WRAP_SCALE) return getHeight();
-    if(length()==0) return getMarginTop() + getMarginBottom();
+    if(length()==0) return 0; // Zero instead of getMarginTop()+getMarginBottom() so empty texts are hidden
     RMTextLayout layout = getTextLayout();
     return Math.ceil(getMarginTop() + layout.getHeightToFit() + getMarginBottom());
 }

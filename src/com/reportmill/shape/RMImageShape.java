@@ -152,7 +152,7 @@ public void setPreserveRatio(boolean aValue)
 /**
  * Returns the preferred width.
  */
-public double computePrefWidth(double aHeight)
+protected double computePrefWidth(double aHeight)
 {
     RMImageData id = getImageData(); if(id==null) return 0;
     double pw = id.getImageWidth(), ph = id.getImageHeight();
@@ -163,7 +163,7 @@ public double computePrefWidth(double aHeight)
 /**
  * Returns the preferred height.
  */
-public double computePrefHeight(double aWidth)
+protected double computePrefHeight(double aWidth)
 {
     RMImageData id = getImageData(); if(id==null) return 0;
     double pw = id.getImageWidth(), ph = id.getImageHeight();
@@ -194,6 +194,7 @@ public RMShape rpgShape(ReportOwner aRptOwner, RMShape aParent)
     // Create clone, set new ImageData and return
     RMImageShape clone = (RMImageShape)clone();
     clone.setImageData(idata); 
+    clone.setPrefHeight(getHeight()); // Probably need a GrowShapeToFit attribute to allow RPG image shape to grow
     return clone;
 }
 
