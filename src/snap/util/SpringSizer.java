@@ -49,10 +49,8 @@ public Box[] getChildBoxes()
     for(int i=0, iMax=_layout.getChildCount(_parent); i<iMax; i++) { Object child = _layout.getChild(_parent, i);
         _cboxes[i] = new Box(child); }
     
-    // Declare local variable for children who need to grow
+    // Iterate over children to get list of those that need to grow
     List <Box> childrenToGrow = null;
-    
-    // Iterate over children for given shape to find any who need to grow
     for(Box box : _cboxes)
         if(box.needsToGrow()) {
             if(childrenToGrow==null) childrenToGrow = new ArrayList();
@@ -73,21 +71,17 @@ public Box[] getChildBoxes()
         //  the required height of it's parent (self), and set all shapes to heightStretches
         for(int i=0, iMax=childrenToGrow.size(); i<iMax; i++) { Box child = childrenToGrow.get(i);
             
-            // Get child's autosize string and child's height and best height
-            String asize = child._asize;
+            // Get child's height, best height and difference
             double childHeight = child.getHeight();
             double childBestHeight = Math.max(childHeight, child._bh);
-            
-            // Get amount needed to grow
             double heightGrowth = childBestHeight - childHeight;
             
-            // Declare variable for total height that stretches for this child
-            double stretchingHeight = childHeight;
-
-            // Set all childrenToGrow to only heightStretches
+            // Get child's autosize string and reset child to only heightStretches
+            String asize = child._asize;
             if(asize.charAt(5)=='-') asize = child._asize = "---,-~-";
 
-            // Add top/bottom margin to stretching height if it stretches
+            // Get child StretchingHeight and add top/bottom margin to stretching height if it stretches
+            double stretchingHeight = childHeight;
             if(asize.charAt(4)=='~') stretchingHeight += child.getY();
             if(asize.charAt(6)=='~') stretchingHeight += pheight - child.getMaxY();
 
@@ -105,10 +99,8 @@ public Box[] getChildBoxes()
         // For each child in childrenToGrow adjust springs for those children and those above and below them
         for(int i=0, iMax=childrenToGrow.size(); i<iMax; i++) { Box child = childrenToGrow.get(i);
             
-            // Get child's autosize string
-            String asize = child._asize;
-
             // If child heightStrches but not topMarginStrches, have shapes above setOnlyBottomAndRightMarginStrchs
+            String asize = child._asize;
             if(asize.charAt(5)=='~' && asize.charAt(4)=='-') {
                 List <Box> childrenAbove = childrenWithPositionRelativeToChild(Position.Above, child);
                 for(int k=0, kMax=ListUtils.size(childrenAbove); k<kMax; k++)
@@ -129,8 +121,7 @@ public Box[] getChildBoxes()
         // Trim all childrenToGrow that have met BestHeight
         for(int i=childrenToGrow.size()-1;  i>=0; i--) { Box child = childrenToGrow.get(i);
             if(!child.needsToGrow())
-                childrenToGrow.remove(i);
-        }
+                childrenToGrow.remove(i); }
 
         // Reset everyone's springs to their defaults
         for(Box child : _cboxes) child._asize = child._asize0;
@@ -169,10 +160,8 @@ class Box extends com.reportmill.base.RMRect {
  */
 List <Box> childrenWithPositionRelativeToChild(Position aPosition, Box aChild)
 {
-    // Declare list of children 
+    // Iterate over child boxes and get those that hasPositionRelativeToPeer
     List <Box> hits = null;
-    
-    // Iterate over child boxes and add
     for(Box child : _cboxes) {
         if(child==aChild) continue; // If given child, skip
         if(hasPositionRelativeToPeer(child, aPosition, aChild)) { // If child has relative position, add to list
@@ -209,9 +198,9 @@ static boolean hasPositionRelativeToPeer(Box aShape, Position aPosition, Box aPe
     // If bounds widths intersect
     if(aShape.widthsIntersect(aPeer)) {
         if(aPosition==Position.Above) { // Check position above
-            if(aShape.getMaxY() <= aPeer.y+10)
+            if(aShape.getMaxY() <= Math.min(aPeer.getMidY(),aPeer.getY()+10))
                 return true; }
-        else if(aShape.y >= aPeer.getMaxY()-10) // Check position below
+        else if(aShape.getY() >= Math.max(aPeer.getMidY(),aPeer.getMaxY()-10)) // Check position below
             return true;
     }
     
