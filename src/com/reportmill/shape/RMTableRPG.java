@@ -1,6 +1,7 @@
 package com.reportmill.shape;
 import com.reportmill.base.*;
 import java.util.*;
+import snap.util.ListUtils;
 
 /**
  * Performs RPG for a table.
@@ -99,7 +100,7 @@ protected RMGroup getGroup(RMTable aTable)
 {
     List dataset = _rptOwner.getKeyChainListValue(aTable.getDatasetKey()); // Get dataset
     if(dataset==null) dataset = new ArrayList();
-    dataset = RMListUtils.getFilteredList(dataset, aTable.getFilterKey()); // Apply FilterKey
+    dataset = ListUtils.getFilteredList(dataset, aTable.getFilterKey()); // Apply FilterKey
     return aTable.getGrouper().groupObjects(dataset); // Do grouping
 }
 
@@ -139,6 +140,10 @@ protected boolean addRows(RMGroup aGroup, RMTableRowRPG aParentRPG, RMTableRowRP
     RMTableRow detailsRow = _table.getRow(aGroup.getKey() + " Details");
     RMTableRow summaryRow = _table.getRow(aGroup.getKey() + " Summary");
     
+    // If we previously hit page break (presumably on last detail row of group), return for new page
+    if(_doPageBreak) {
+        _lastRow = new RMTableRowRPG(); _lastRow._group = aGroup; return false; }
+
     // Add header row for group, if header row exists
     if(headerRow!=null && (!aGroup.isEmpty() || headerRow.getPrintEvenIfGroupIsEmpty())) {
         
@@ -217,14 +222,12 @@ protected boolean addRows(RMGroup aGroup, RMTableRowRPG aParentRPG, RMTableRowRP
         theLastRow = null;  //_rptOwner.popDataStack(); 
 
         // Check for PageBreak: If we're at PageBreakGroupIndex or DetailsRow.PageBreakKey evals true, set DoPageBreak
-        if(i+1<iMax) {
-            int pbreakGroupIndex = _table.getPageBreakGroupIndex();
-            if(pbreakGroupIndex>=0 && pbreakGroupIndex>=aGroup.getParentCount()) _doPageBreak = true;
-            String pbreakKey = detailsRow!=null? detailsRow.getPageBreakKey() : null;
-            if(pbreakKey!=null && RMKeyChain.getBoolValue(childGroup, pbreakKey)) _doPageBreak = true;
-            if(_doPageBreak) {
-                _lastRow = new RMTableRowRPG(); _lastRow._group = aGroup.getGroup(i+1); return false; }
-        }
+        int pbreakGroupIndex = _table.getPageBreakGroupIndex();
+        if(pbreakGroupIndex>=0 && pbreakGroupIndex>=aGroup.getParentCount()) _doPageBreak = true;
+        String pbreakKey = detailsRow!=null? detailsRow.getPageBreakKey() : null;
+        if(pbreakKey!=null && RMKeyChain.getBoolValue(childGroup, pbreakKey)) _doPageBreak = true;
+        if(_doPageBreak && i+1<iMax) {
+            _lastRow = new RMTableRowRPG(); _lastRow._group = aGroup.getGroup(i+1); return false; }
     }
     
     // Add summary rows for group
@@ -313,7 +316,7 @@ void removeRow(RMTableRowRPG aRow)
 {
     for(int i=aRow.getChildRPGCount()-1; i>=0; i--) removeRow(aRow._childRPGs.get(i));
     aRow.removeFromParent();
-    RMListUtils.removeId(aRow._parentRPG._childRPGs, aRow);
+    ListUtils.removeId(aRow._parentRPG._childRPGs, aRow);
 }
 
 /**
