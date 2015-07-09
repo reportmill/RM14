@@ -1,5 +1,5 @@
 package com.reportmill.shape;
-import com.reportmill.base.*;
+import com.reportmill.base.RMAWTUtils;
 import java.awt.Color;
 import java.util.*;
 import snap.util.*;
@@ -48,7 +48,7 @@ public RMTable getParentTable(RMTable aTable)
     // Iterate over tables keys in table map
     for(Object table : _tableMap.keySet()) {
         List tables = _tableMap.get(table);
-        if(RMListUtils.containsId(tables, aTable))
+        if(ListUtils.containsId(tables, aTable))
             return table==this? null : (RMTable)table;
     }
     
@@ -62,7 +62,7 @@ public RMTable getParentTable(RMTable aTable)
 public int indexOf(RMTable aTable)
 {
     List peers = getPeerTables(aTable);
-    return RMListUtils.indexOfId(peers, aTable);
+    return ListUtils.indexOfId(peers, aTable);
 }
 
 /**
@@ -80,8 +80,8 @@ public List <RMTable> getPeerTables(RMTable aTable)
 public RMTable getPeerTablePrevious(RMTable aTable)
 {
     List <RMTable> tables = getPeerTables(aTable);
-    int index = RMListUtils.indexOfId(tables, aTable);
-    return RMListUtils.get(tables, index - 1);
+    int index = ListUtils.indexOfId(tables, aTable);
+    return ListUtils.get(tables, index - 1);
 }
 
 /**
@@ -90,8 +90,8 @@ public RMTable getPeerTablePrevious(RMTable aTable)
 public RMTable getPeerTableNext(RMTable aTable)
 {
     List <RMTable> tables = getPeerTables(aTable);
-    int index = RMListUtils.indexOfId(tables, aTable);
-    return RMListUtils.get(tables, index + 1);
+    int index = ListUtils.indexOfId(tables, aTable);
+    return ListUtils.get(tables, index + 1);
 }
 
 /**
@@ -112,7 +112,7 @@ public List <RMTable> getChildTables()  { return getChildTables(this); }
 /**
  * Returns the number of child tables for the given parent table.
  */
-public int getChildTableCount(Object aTable)  { return RMListUtils.size(getChildTables(aTable)); }
+public int getChildTableCount(Object aTable)  { return ListUtils.size(getChildTables(aTable)); }
 
 /**
  * Returns the specific child table of the given table at the given index.
@@ -148,7 +148,7 @@ public String getDatasetKey()
     
     // Iterate over parents to get combined dataset key
     for(RMTable table=getParentTable(_mainTable); table!=null; table=getParentTable(table))
-        datasetKey = RMStringUtils.add(table.getDatasetKey(), datasetKey, ".");
+        datasetKey = StringUtils.add(table.getDatasetKey(), datasetKey, ".");
     
     // Return dataset key
     return datasetKey;
@@ -234,7 +234,7 @@ public void removeTable(RMTable aTable)
     int index = peerTables.indexOf(aTable);
     
     // Remove any child tables of aTable
-    for(int i=0, iMax=RMListUtils.size(childTables); i<iMax; i++)
+    for(int i=0, iMax=ListUtils.size(childTables); i<iMax; i++)
         removeTable(childTables.get(0));
     
     // Remove aTable
@@ -247,7 +247,7 @@ public void removeTable(RMTable aTable)
         if(!peerTables.isEmpty()) {
             if(index < peerTables.size())
                 setMainTable(peerTables.get(index));
-            else setMainTable(RMListUtils.getLast(peerTables));
+            else setMainTable(ListUtils.getLast(peerTables));
         }
 
         // Choose parent if previous peer isn't available
@@ -359,7 +359,7 @@ protected void toXMLChildTables(XMLArchiver anArchiver, XMLElement anElement, RM
     List <RMTable> childTables = getChildTables(aParentTable);
     
     // Iterate over child tables and archive
-    for(int i=0, iMax=RMListUtils.size(childTables); i<iMax; i++) { RMTable table = childTables.get(i);
+    for(int i=0, iMax=ListUtils.size(childTables); i<iMax; i++) { RMTable table = childTables.get(i);
         
         
         XMLElement tableXML = table.toXML(anArchiver); // Archive table to xml
@@ -392,11 +392,23 @@ protected void fromXMLChildTables(XMLArchiver anArchiver, XMLElement anElement, 
         XMLElement tableXML = anElement.get(i);
         RMTable table = (RMTable)anArchiver.fromXML(tableXML, this);
         addChildTable(table, aParentTable);
+        if(!SnapMath.equals(table.getWidth(), getWidth()) && anArchiver.getVersion()<14) fixWidths(table);
         fromXMLChildTables(anArchiver, tableXML, table);
     }
 }
 
 /** Editor method - indicates that table group children (tables) super select immediately. */
 public boolean childrenSuperSelectImmediately()  { return true; }
+
+/** Fix for old table groups that were resized and saved without viewing individual tables. */
+private void fixWidths(RMTable t) {
+    t.setWidth(getWidth()); for(int i=0,iMax=t.getChildCount();i<iMax;i++) fixWidths(t.getRow(i)); }
+private void fixWidths(RMTableRow aRow) {
+    if(aRow.getAlternates()!=null)
+        for(RMShape alt : aRow.getAlternates().values()) if(alt!=aRow) fixWidths((RMTableRow)alt);
+    double rw = aRow.getWidth(), dw = getWidth() - rw; aRow.setWidth(getWidth());
+    if(aRow.isStructured())
+        for(RMShape child : aRow.getChildren()) { double cw = child.getWidth(); child.setWidth(cw+cw/rw*dw); }
+}
 
 }

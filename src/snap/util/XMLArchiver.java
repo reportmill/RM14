@@ -15,31 +15,34 @@ import snap.web.WebURL;
 public class XMLArchiver {
 
     // The URL of the source the archiver is reading from
-    WebURL                     _surl;
+    WebURL                    _surl;
 
     // Root element for unarchival
-    XMLElement                   _root;
+    XMLElement                _root;
     
     // The root object to be used in unarchival
-    Object                      _rootObject;
-
-    // Unarchival keeps track of read elements to guarantee that each element results in one instance
-    Map <XMLElement, Object>     _readElements = new HashMap();
-    
-    // RXArchiver manages list of objects that are archived by reference
-    List                        _references = new ArrayList();
-    
-    // RXArchiver manages archival of shared BLOBs external to normal element hierarchy
-    List <Resource>             _resources = new ArrayList();
+    Object                    _rootObject;
     
     // The class loader to be used if classes are needed
-    ClassLoader                 _classLoader;
+    ClassLoader               _classLoader;
+    
+    // The version of unarchived object
+    double                    _version;
+
+    // Unarchival keeps track of read elements to guarantee that each element results in one instance
+    Map <XMLElement, Object>  _readElements = new HashMap();
+    
+    // RXArchiver manages list of objects that are archived by reference
+    List                      _references = new ArrayList();
+    
+    // RXArchiver manages archival of shared BLOBs external to normal element hierarchy
+    List <Resource>           _resources = new ArrayList();
     
     // The map of classes for unarchival
-    Map                         _classMap;
+    Map                       _classMap;
     
     // The stack of parents
-    Deque                       _parentStack = new ArrayDeque();
+    Deque                     _parentStack = new ArrayDeque();
     
 /**
  * An interface for objects that are archivable.
@@ -77,6 +80,16 @@ public ClassLoader getClassLoader()  { return _classLoader; }
  * Sets the archiver class loader.
  */
 public void setClassLoader(ClassLoader aClassLoader)  { _classLoader = aClassLoader; }
+
+/**
+ * Returns the version of the document.
+ */
+public double getVersion()  { return _version; }
+
+/**
+ * Sets the version of the document.
+ */
+public void setVersion(double aVersion)  { _version = aVersion; }
 
 /**
  * Returns the root xml.

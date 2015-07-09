@@ -875,6 +875,7 @@ protected void fromXMLShape(XMLArchiver anArchiver, XMLElement anElement)
     
     // Unarchive Version
     _version = anElement.getAttributeFloatValue("version", 8.0f);
+    anArchiver.setVersion(_version);
     
     // Unarchive Datasource, Font
     XMLElement dxml = anElement.get("datasource");
