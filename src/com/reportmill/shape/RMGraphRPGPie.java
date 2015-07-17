@@ -298,9 +298,6 @@ static class PieGraphShape2D extends RMParentShape implements PieGraphShape {
     
     /** Implements PieView method to just add wedge label line shape. */
     public void addWedgeLabelLine(RMLineShape aLine)  { addChild(aLine); }
-    
-    /** Override to make all children show. */
-    protected boolean isShowing(RMShape aChild)  { return true; }
 }
 
 /**

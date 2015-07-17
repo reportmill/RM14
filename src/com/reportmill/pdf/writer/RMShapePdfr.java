@@ -90,7 +90,7 @@ protected void writeShapeChildren(RMShape aShape, RMPDFWriter aWriter)
 {
     // Write children
     for(int i=0, iMax=aShape.getChildCount(); i<iMax; i++) { RMShape child = aShape.getChild(i);
-        if(child.isShowing())
+        if(child.isVisible())
             getPdfr(child).writePDF(child, aWriter);
     }
 }

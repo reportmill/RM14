@@ -585,11 +585,6 @@ public void resort()
 }
 
 /**
- * Override to make all 3D children show.
- */
-protected boolean isShowing(RMShape aChild)  { return true; }
-
-/**
  * Override to indicate that scene children are unhittable.
  */
 public boolean isHittable(RMShape aChild)  { return false; }

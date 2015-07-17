@@ -247,23 +247,9 @@ public void paintShape(RMShapePainter aPntr)
     super.paintShape(aPntr);
 }
 
-/**
- * Overrides shape implementation to start animator if it should be playing.
- */
-protected void shapeShown()
-{
-    if(isViewing() && getChildAnimator()!=null && !getChildAnimator().isRunning())
-        getChildAnimator().play();
-}
-
-/**
- * Overrides shape implementation to stop animator if it should be playing.
- */
-public void shapeHidden()
-{   
-    if(getChildAnimator()!=null && getChildAnimator().isRunning())
-        getChildAnimator().stop();
-}
+/** Overrides shape implementation to start animator if it should be playing. */
+//void shapeShown() { if(isViewing() && getChildAnim()!=null && !getChildAnim().isRunning()) getChildAnim().play(); }
+//void shapeHidden(){if(getChildAnimator()!=null && getChildAnimator().isRunning()) getChildAnimator().stop(); }
 
 /**
  * Report generation.

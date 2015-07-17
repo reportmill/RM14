@@ -628,9 +628,6 @@ public static class BarGraphShape2D extends RMParentShape implements BarGraphSha
     
     /** Add label axis label shape. */
     public void addLabelAxisLabel(RMShape anAxisLabel)  { addChild(anAxisLabel); }
-    
-    /** Override to make all children show. */
-    protected boolean isShowing(RMShape aChild)  { return true; }
 }
 
 }

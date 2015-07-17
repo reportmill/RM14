@@ -40,10 +40,8 @@ public void setContent(RMParentShape aShape)
     aShape.layout();
     
     // If old document, stop listening to shape changes and notify shapes hidden 
-    if(_content!=null) {
-        _content.removePropertyChangeListener(_viewer);
-        _content.setShowing(false);
-    }
+    if(_content!=null)
+        _content.removePropertyChangeListener(_viewer); //_content.setShowing(false);
     
     // Set new document and fire property change
     if(_content!=null) removeChild(_content);
@@ -52,8 +50,7 @@ public void setContent(RMParentShape aShape)
     firePropertyChange("Content", _content, _content = aShape, -1);
     
     // Start listening to shape changes and notify shapes shown
-    _content.addPropertyChangeListener(_viewer);
-    _content.setShowing(isShowing());
+    _content.addPropertyChangeListener(_viewer); //_content.setShowing(isShowing());
 }
 
 /**

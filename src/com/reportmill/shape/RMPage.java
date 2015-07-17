@@ -560,6 +560,16 @@ public void paintShape(RMShapePainter aPntr)
 }
 
 /**
+ * Paints shape children.
+ */
+public void paintShapeChildren(RMShapePainter aPntr)
+{
+    for(int i=0, iMax=getChildCount(); i<iMax; i++) { RMShape child = getChild(i);
+        if(child.isVisible() && isShowing(child))
+            child.paint(aPntr); }
+}
+
+/**
  * Returns a report page.
  */
 public RMShape rpgAll(ReportOwner anRptOwner, RMShape aParent)

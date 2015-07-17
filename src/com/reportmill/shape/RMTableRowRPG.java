@@ -1,7 +1,7 @@
 package com.reportmill.shape;
 import com.reportmill.base.*;
-import com.reportmill.shape.RMShapeTable.*;
 import java.util.*;
+import snap.util.SnapMath;
 
 /**
  * Report generation shape for RMTableRow.
@@ -145,13 +145,13 @@ public void deleteVerticalSpansOfHiddenShapes()
     
     // Collect hidden shape spans
     for(RMShape child : getChildren())
-        if(!child.isShowing())
+        if(!child.isVisible())
             spans.addSpan(new Span(child.getFrameY(), getShapeBelowFrameY(this, child)));
     
     // Remove visible shape spans
     if(spans.size()>0)
         for(RMShape child : getChildren())
-            if(child.isShowing())
+            if(child.isVisible())
                 spans.removeSpan(new Span(child.getFrameY(), getShapeBelowFrameY(this, child)));
     
     // Sort spans and reverse
@@ -189,9 +189,8 @@ public static double getShapeBelowFrameY(RMParentShape aParent, RMShape aChild)
 public void shiftShapesBelowHiddenShapesUp()
 {
     // If no hidden shapes, just return
-    boolean visible = true;
-    for(int i=0, iMax=getChildCount(); i<iMax && visible; i++) visible = getChild(i).isShowing();
-    if(visible) return;
+    boolean vsbl = true;
+    for(int i=0, iMax=getChildCount(); i<iMax && vsbl; i++) vsbl = getChild(i).isVisible(); if(vsbl) return;
     
     // Get max frame y
     float maxFrameY = RMKeyChain.getFloatValue(getChildren(), "max.FrameMaxY");
@@ -201,13 +200,13 @@ public void shiftShapesBelowHiddenShapesUp()
     
     // Shift shapes for each hidden shape (from bottom up)
     for(int i=shapes.size()-1; i>=0; i--) { RMShape shape = shapes.get(i);
-        if(!shape.isShowing())
+        if(!shape.isVisible())
             shiftShapesBelowHiddenRect(shapes, shape.getFrame());
     }
     
     // Get new max frame y and remove bottom of shape
     float maxFrameY2 = RMKeyChain.getFloatValue(getChildren(), "max(Visible? FrameMaxY : 0)");
-    if(!RMMath.equals(maxFrameY, maxFrameY2))
+    if(!SnapMath.equals(maxFrameY, maxFrameY2))
         setHeight(getHeight() + maxFrameY2 - maxFrameY);
     
     // Reset layout
@@ -221,7 +220,7 @@ public void shiftShapesBelowHiddenRect(List <RMShape> theShapes, RMRect aRect)
 {
     // Get rect for region below given rect
     RMRect belowRect = aRect.clone();
-    belowRect.y = aRect.getMaxY(); belowRect.height = getHeight() - belowRect.y;
+    belowRect.y = aRect.getMaxY(); belowRect.height = getHeight() - belowRect.getY();
     
     // Iterate over shapes and get shape rects, minX/maxX/maxY and sort rects into static and floating lists
     List <RMRect> staticRects = new ArrayList();
@@ -232,8 +231,7 @@ public void shiftShapesBelowHiddenRect(List <RMShape> theShapes, RMRect aRect)
     for(RMShape shape : theShapes) {
         
         // If shape not visible, just continue
-        if(!shape.isShowing())
-            continue;
+        if(!shape.isVisible()) continue;
         
         // Get rect and add to list
         RMRect shapeRect = shape.getFrame();
@@ -297,6 +295,91 @@ protected double computePrefHeight(double aWidth)
     if(!_row2.isStructured()) return super.computePrefHeight(aWidth);
     double max = getHeight(); for(RMShape child : getChildren()) max = Math.max(max, child.getPrefHeight());
     return max;
+}
+
+/**
+ * A class to represent an interval 
+ */
+public static class Span implements Comparable {
+
+    /** Creates a new span. */
+    public Span(double aStart, double anEnd)  { this.start = aStart; this.end = anEnd; }  double start, end;
+    
+    /** Returns the span length. */
+    public double getLength()  { return end - start; }
+    
+    /** Returns whether given value is contained in the span (inclusive). */
+    public boolean contains(double aValue)  { return SnapMath.lte(start, aValue) && SnapMath.lte(aValue, end); }
+    
+    /** Returns whether given span intersects this span. */
+    public boolean intersects(Span aSpan)
+    {
+        return SnapMath.equals(start, aSpan.start) || SnapMath.equals(end, aSpan.end) ||
+               SnapMath.lt(aSpan.start, end) && SnapMath.gt(aSpan.end, start);
+    }
+    
+    /** Returns string representation of span. */
+    public String toString()  { return "Span { start: " + start + ", end: " + end + " }"; }
+
+    /** Comparable implementation. */
+    public int compareTo(Object aSpan)  { return new Double(start).compareTo(((Span)aSpan).start); }
+}
+
+/**
+ * A class to represent a list of spans.
+ */
+public static class SpanList extends ArrayList <Span> {
+
+    /** Adds a span to a list of spans, either by extending an existing span or actually adding it to the list. */
+    public void addSpan(Span aSpan)
+    {
+        // If empty span, just return
+        if(SnapMath.lte(aSpan.end, aSpan.start)) return;
+        
+        // Iterate over spans and extends any overlapping span (and return)
+        for(Span span : this) {
+            
+            // If given span starts inside loop span and ends after, extend current span, remove from list and re-add
+            if(span.contains(aSpan.start) && !span.contains(aSpan.end)) {
+                span.end = aSpan.end; this.remove(span); addSpan(span); return; }
+            
+            // If given span starts before loop span and ends inside, extend current span, remove from list and re-add
+            if(!span.contains(aSpan.start) && span.contains(aSpan.end)) {
+                span.start = aSpan.start; this.remove(span); addSpan(span); return; }
+            
+            // If loop span contains given span, just return
+            if(span.contains(aSpan.start) && span.contains(aSpan.end))
+                return;
+        }
+        
+        // Since no overlapping span, add span
+        add(aSpan);
+    }
+    
+    /** Removes a span from a list of spans, either by reducing a span or by removing a span. */
+    public void removeSpan(Span aSpan)
+    {
+        // Iterate over spans and reduce any that need to be reduced
+        for(Span span : this) {
+            
+            // If given span starts in loop span and ends outside, reduce loop span to given span start
+            if(span.contains(aSpan.start) && !span.contains(aSpan.end))
+                span.end = aSpan.start;
+            
+            // If given span starts outside loop span and ends in span, reset loop span start to given span end
+            if(!span.contains(aSpan.start) && span.contains(aSpan.end))
+                span.start = aSpan.end;
+            
+            // If loop span contains given span, remove given span and add two spans
+            if(span.contains(aSpan.start) && span.contains(aSpan.end)) {
+                this.remove(span); addSpan(new Span(span.start, aSpan.start));
+                addSpan(new Span(aSpan.end, span.end)); return; }
+            
+            // If given span contains loop span, remove it and re-run
+            if(aSpan.contains(span.start) && aSpan.contains(span.end)) {
+                this.remove(span); removeSpan(aSpan); return; }
+        }
+    }
 }
 
 }

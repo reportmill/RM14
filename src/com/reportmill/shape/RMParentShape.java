@@ -146,7 +146,7 @@ public RMRect getBoundsOfChildren()
     
     // Iterate over (visible) children and union child frames
     for(int i=0, iMax=getChildCount(); i<iMax; i++) { RMShape child = getChild(i);
-        if(!child.isShowing()) continue;
+        if(!child.isVisible()) continue;
         if(rect==null) rect = child.getFrame();
         else rect.unionEvenIfEmpty(child.getFrame());
     }
@@ -315,17 +315,9 @@ protected double computePrefHeight(double aWidth)
 }
 
 /**
- * Returns whether given child shape is showing in this parent.
- */
-protected boolean isShowing(RMShape aChild)
-{
-    return aChild.getFrameX()<getWidth()+1 && aChild.getFrameY()<getHeight()+1;
-}
-
-/**
  * Returns whether given child shape is hittable.
  */
-protected boolean isHittable(RMShape aChild)  { return isShowing(); }
+protected boolean isHittable(RMShape aChild)  { return aChild.isVisible(); }
 
 /**
  * Override to trigger layout.

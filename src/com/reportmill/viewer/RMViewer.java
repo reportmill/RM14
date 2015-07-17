@@ -78,8 +78,7 @@ public RMViewer()
     setFocusable(true);
     
     // Install hierarchy listener to set Viewer Shown state
-    addHierarchyListener(new HierarchyListener() {
-        public void hierarchyChanged(HierarchyEvent e) { setShown(isShowing()); }});
+    //addHierarchyListener(e -> setShown(isShowing());
 
     // Set background to light gray
     setBackground(Color.lightGray);
@@ -213,31 +212,11 @@ public void stop()
     animator.stop();
 }
 
-/**
- * Returns whether viewer was shown.
- */
-public boolean getShown()  { return _shown; } boolean _shown;
-
-/**
- * Sets whether viewer was shown.
- */
-protected void setShown(boolean aValue)
-{
-    // Set value and call viewerShown()/viewerHidden() (just return if already set)
-    if(aValue==_shown) return;
-    _shown = aValue;
-    if(_shown) viewerShown(); else viewerHidden();
-}
-
-/**
- * Called when viewer is shown.
- */
-protected void viewerShown()  { _vshape.setShowing(true); play(); }
-
-/**
- * Called when viewer is hidden.
- */
-protected void viewerHidden()  { stop(); _vshape.setShowing(false); }
+/** Called when viewer is shown/hidden. */
+//public boolean getShown()  { return _shown; } boolean _shown;
+//protected void setShown(boolean v) { if(v==_shown) return; _shown=v; if(_shown) viewerShown(); else viewerHidden(); }
+//protected void viewerShown()  { _vshape.setShowing(true); play(); }
+//protected void viewerHidden()  { stop(); _vshape.setShowing(false); }
 
 /**
  * Returns the bounds of the viewer document.

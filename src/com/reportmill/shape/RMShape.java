@@ -407,7 +407,7 @@ public RMRect getBoundsMarkedDeep()
     
     // Iterate over (visible) children and union with their BoundsMarkedDeep (converted to this shape coords)
     for(int i=0, iMax=getChildCount(); i<iMax; i++) { RMShape child = getChild(i);
-        if(!child.isShowing()) continue;
+        if(!child.isVisible()) continue;
         RMRect childBounds = child.getBoundsMarkedDeep();
         childBounds = child.convertRectToShape(childBounds, this);
         bounds.unionEvenIfEmpty(childBounds);
@@ -687,30 +687,10 @@ public void setAutosizing(String aValue)  { setLayoutInfo(aValue); }
  */
 public String getAutosizingDefault()  { return "--~,--~"; }
 
-/**
- * Returns whether this shape is visible in its parent.
- */
-public boolean isShowing()  { return isVisible() && (_parent==null || _parent.isShowing(this)); }
-
-/**
- * Sets whether shape is showing.
- */
-public void setShowing(boolean aValue)
-{
-    if(aValue) shapeShown();
-    else shapeHidden();
-    for(int i=0, iMax=getChildCount(); i<iMax; i++) getChild(i).setShowing(aValue);
-}
-
-/**
- * Notifies shape that it or one of it's ancestors was made visible.
- */
-protected void shapeShown()  { }
-
-/**
- * Notifies shape that it or one of it's ancestors was made non-visible or removed from hierarchy.
- */
-protected void shapeHidden()  { }
+/** Returns whether this shape is visible in its parent. */
+//public boolean isShowing()  { return isVisible() && _parent!=null && _parent.isShowing()); }
+//void setShowing(bool v) { if(v) shapeShown(); else shapeHidden(); for(RMShape c : getChildren()) c.setShowing(v); }
+//protected void shapeShown()  { } protected void shapeHidden()  { }
 
 /**
  * Returns whether this shape is hittable in its parent.
@@ -2269,12 +2249,6 @@ public void paintShapeAll(RMShapePainter aPntr)
     // Have shape paint only itself
     pntr.sendPaintShape(this);
     
-    // If child clip is present, apply it
-    if(getChildClipShape()!=null) {
-        if(pntr==aPntr) pntr = pntr.clone();
-        pntr.clip(getChildClipShape());
-    }
-        
     // Have shape paint children
     paintShapeChildren(pntr);
         
@@ -2282,8 +2256,7 @@ public void paintShapeAll(RMShapePainter aPntr)
     paintShapeOver(aPntr);
     
     // If graphics copied, dispose
-    if(pntr!=aPntr)
-        pntr.dispose();
+    if(pntr!=aPntr) pntr.dispose();
 }
 
 /**
@@ -2303,11 +2276,9 @@ public void paintShape(RMShapePainter aPntr)
  */
 public void paintShapeChildren(RMShapePainter aPntr)
 {
-    // Iterate over children and if visible, paint
     for(int i=0, iMax=getChildCount(); i<iMax; i++) { RMShape child = getChild(i);
-        if(child.isShowing())
-            child.paint(aPntr);
-    }
+        if(child.isVisible())
+            child.paint(aPntr); }
 }
 
 /**
@@ -2328,67 +2299,6 @@ public boolean getStrokeOnTop()  { return false; }
  * Returns clip shape for shape.
  */
 public Shape getClipShape()  { return null; }
-
-/**
- * Returns clip shape to be used for children.
- */
-public Shape getChildClipShape()  { return null; }
-
-/**
- * Returns the visible bounds in shape coords, by intersecting this shape's bounds with ancester clip and child clip.
- */
-public Shape getVisbileBounds()  { return getVisibleBounds(getBoundsInside()); }
-
-/**
- * Returns the visible bounds of given rect in shape coords, by intersecting rect with ancester clip and child clip.
- */
-public Shape getVisibleBounds(RMRect aRect)
-{
-    // Get visible bounds in viewer coords
-    Shape visibleBounds = getVisibleBounds(aRect, null);
-
-    // Convert back to shape
-    visibleBounds = getTransformFromShape(null).awt().createTransformedShape(visibleBounds);
-    
-    // Return shape
-    return visibleBounds;
-}
-
-/**
- * Returns the visible bounds in given ancestor coords, by intersecting this shape's bounds with ancester clip and child clip.
- */
-public Shape getVisibleBounds(RMShape anAncestor)  { return getVisibleBounds(getBoundsInside(), anAncestor); }
-
-/**
- * Returns the visible bounds of given rect in given ancestor coords, by intersecting the rect with ancester clip and child clip.
- */
-public Shape getVisibleBounds(RMRect aRect, RMShape anAncestor)
-{
-    // Get bounds
-    Shape visibleBounds = aRect;
-    
-    // Iterate up parents
-    for(RMShape shape=this, parent=getParent(); shape!=anAncestor && parent!=null; shape=parent, parent=parent.getParent()) {
-        
-        // Transform visible bounds shape to parent
-        visibleBounds = shape.getTransformToShape(parent).awt().createTransformedShape(visibleBounds);
-        
-        // Intersect with child clip
-        if(parent.getChildClipShape()!=null) {
-            visibleBounds = new Area(visibleBounds);
-            ((Area)visibleBounds).intersect(new Area(parent.getChildClipShape()));
-        }
-        
-        // Itersect with shape clip
-        if(parent.getClipShape()!=null) {
-            visibleBounds = new Area(visibleBounds);
-            ((Area)visibleBounds).intersect(new Area(parent.getClipShape()));
-        }
-    }
-    
-    // Return shape
-    return visibleBounds;
-}
 
 /**
  * Called to update shape anim.

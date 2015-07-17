@@ -404,33 +404,21 @@ public boolean childrenSuperSelectImmediately()  { return _structured; }
 public void paintShape(RMShapePainter aPntr)
 {
     // Do normal version (just return if not editing)
-    super.paintShape(aPntr); if(!aPntr.isEditing()) return;
+    super.paintShape(aPntr); if(!aPntr.isEditing() || !isStructured()) return;
     
-    // Get table row bounds
+    // Iterate over children sorted by X and draw divider lines
+    aPntr.setColor(Color.darkGray); aPntr.setStroke(RMAWTUtils.Stroke1); aPntr.setAntialiasing(false);
     RMRect bounds = getBoundsInside();
-    
-    // Clip to table row bounds
-    aPntr.clip(bounds);
-    
-    // Turn anti-aliasing off to get sharper lines
-    aPntr.setAntialiasing(false);    
-
-    // If in structured mode, draw column boundary lines
-    if(isStructured() && getChildCount()>0) {
-        
-        // Set gray color and normal stroke
-        aPntr.setColor(Color.darkGray);
-        aPntr.setStroke(RMAWTUtils.Stroke1);
-        
-        // Iterate over children sorted by X and draw divider lines
-        List <RMShape> children = RMSort.sortedList(getChildren(), "getFrameX");
-        for(RMShape child : children)
-            aPntr.drawLine(child.getX(), bounds.y, child.getX(), bounds.getMaxY());
-    }
-    
-    // Turn anti-aliasing back on
+    List <RMShape> children = RMSort.sortedList(getChildren(), "getFrameX");
+    for(RMShape child : children)
+        aPntr.drawLine(child.getX(), bounds.y, child.getX(), bounds.getMaxY());
     aPntr.setAntialiasing(true);
 }
+
+/**
+ * Returns clip shape for shape.
+ */
+public Shape getClipShape()  { return !isStructured()? getBoundsInside() : null; }
 
 /**
  * XML archival.
