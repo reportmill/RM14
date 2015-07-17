@@ -152,7 +152,7 @@ class Box extends com.reportmill.base.RMRect {
     }
     
     /** Returns whether box needs to grow. */
-    boolean needsToGrow()  { return getHeight() + .005 < _bh; }
+    boolean needsToGrow()  { return getHeight() + .005 < _bh && getHeight()>0; }
 }
 
 /**
