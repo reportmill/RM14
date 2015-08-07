@@ -276,6 +276,9 @@ public void shiftShapesBelowHiddenRect(List <RMShape> theShapes, RMRect aRect)
 /** Override to make selectable. */
 public boolean superSelectable()  { return true; }
 
+/** Override to paint table stroke on top. */
+public boolean getStrokeOnTop()  { return true; }
+
 /**
  * Override to handle structured row.
  */
