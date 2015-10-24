@@ -37,7 +37,10 @@ public RMShape getShape(Object aSource, Archivable aRootObj)
     // Create archiver, read, set source and return
     setRootObject(aRootObj);
     RMShape shape = (RMShape)readObject(url!=null? url : bytes);
-    if(shape instanceof RMParentShape) ((RMParentShape)shape).setSourceURL(url);
+    if(shape instanceof RMParentShape) { RMParentShape pshp = (RMParentShape)shape;
+        pshp.setSourceURL(url);
+        pshp.layout();
+    }
     return shape;
 }
 
