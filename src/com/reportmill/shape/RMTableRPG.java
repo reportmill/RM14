@@ -170,7 +170,8 @@ protected boolean addRows(RMGroup aGroup, RMTableRowRPG aParentRPG, RMTableRowRP
     }
     
     // Add details rows for group
-    for(int i=0, iMax=aGroup.size(); i<iMax; i++) { RMGroup childGroup = aGroup.getGroup(i);
+    int added = 0;
+    for(int i=0, iMax=aGroup.size(); i<iMax; i++,added++) { RMGroup childGroup = aGroup.getGroup(i);
     
         // Get parentRPG so we can reset if details row is present
         RMTableRowRPG parentRPG = aParentRPG;
@@ -205,18 +206,18 @@ protected boolean addRows(RMGroup aGroup, RMTableRowRPG aParentRPG, RMTableRowRP
             
             // Add DetailsRow RowRPG
             if(!addRow(rowRPG, aParentRPG)) {
-                return false; }  //_rptOwner.popDataStack(); 
+                break; }  //_rptOwner.popDataStack(); 
             parentRPG = rowRPG;
         }
         
         // Recurse
         if(!childGroup.isLeaf()) {
             if(!addRows(childGroup, parentRPG, theLastRow)) {
-                return false; }}  //_rptOwner.popDataStack(); 
+                break; }}  //_rptOwner.popDataStack(); 
         
         // Recurse hook (for RMTableGroupRPG)
         else if(!addRowsExtra(childGroup, parentRPG, theLastRow)) {
-            return false; }  //_rptOwner.popDataStack(); 
+            break; }  //_rptOwner.popDataStack(); 
         
         // Remove child group and clear LastRow
         theLastRow = null;  //_rptOwner.popDataStack(); 
@@ -227,13 +228,49 @@ protected boolean addRows(RMGroup aGroup, RMTableRowRPG aParentRPG, RMTableRowRP
         String pbreakKey = detailsRow!=null? detailsRow.getPageBreakKey() : null;
         if(pbreakKey!=null && RMKeyChain.getBoolValue(childGroup, pbreakKey)) _doPageBreak = true;
         if(_doPageBreak && i+1<iMax) {
-            _lastRow = new RMTableRowRPG(); _lastRow._group = aGroup.getGroup(i+1); return false; }
+            _lastRow = new RMTableRowRPG(); _lastRow._group = aGroup.getGroup(i+1); break; }
+    }
+    
+    // Add Running summary (if grouping didn't finish and one is available)
+    if(added<aGroup.size()) {
+        
+        // If no Running Summary row, just return false
+        if(summaryRow==null || !summaryRow.hasVersion("Running")) return false;
+        
+        // Get first real group on page and its index
+        RMGroup pageStartRowGroup = aGroup; int pageStartRowIndex = 0;
+        for(int i=0, iMax=getChildCount(); i<iMax; i++) { RMTableRowRPG row = (RMTableRowRPG)getChild(i);
+            if(row.getGroup().getParentCount()>pageStartRowGroup.getParentCount()) {
+                pageStartRowGroup = row.getGroup(); pageStartRowIndex = i; }}
+            
+        // Try to add Running summary by progressively removing last row until there is room
+        while(getChildCount()>pageStartRowIndex) {
+            RMTableRowRPG oldLastRow = _lastRow; _lastRow = (RMTableRowRPG)getChildLast();
+            RMGroup group = new RMGroup.Running(aGroup, pageStartRowGroup, oldLastRow.getGroup());
+            RMTableRowRPG row = new RMTableRowRPG(); row.rpgAll(_rptOwner, summaryRow, group, "Running");
+            if(addRow(row, aParentRPG)) { _lastRow = oldLastRow; break; }
+            removeRow(_lastRow);
+            while(_lastRow.isSummary()) removeRow(_lastRow=(RMTableRowRPG)getChildLast());
+            while(!isSatisfied(_lastRow._parentRPG, -1)) removeRow(_lastRow=(RMTableRowRPG)getChildLast());
+        }
+        
+        // Running summary always returns false
+        return false;
     }
     
     // Add summary rows for group
     if(summaryRow!=null && (!aGroup.isEmpty() || summaryRow.getPrintEvenIfGroupIsEmpty())) {
+        
+        // Get summary row group: If Running is present, reset group to page groups
+        RMGroup group = aGroup;
+        if(summaryRow.hasVersion("Running")) {
+            for(int i=0, iMax=getChildCount(); i<iMax; i++) { RMTableRowRPG row = (RMTableRowRPG)getChild(i);
+                if(row.getGroup().getParentCount()>group.getParentCount()) group = row.getGroup(); }
+            group = new RMGroup.Running(aGroup, group, null); }
+        
+        // Add summary row
         if(headerRow==null && detailsRow==null) summaryRow.setNumberOfChildrenToStayWith(0); // Hack
-        RMTableRowRPG row = new RMTableRowRPG(); row.rpgAll(_rptOwner, summaryRow, aGroup, null);
+        RMTableRowRPG row = new RMTableRowRPG(); row.rpgAll(_rptOwner, summaryRow, group, null);
         if(theLastRow!=null && theLastRow._row==summaryRow && theLastRow._split!=null) {
             row = theLastRow._split; theLastRow = null; }
         if(!addRow(row, aParentRPG))

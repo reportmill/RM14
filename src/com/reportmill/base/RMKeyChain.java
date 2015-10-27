@@ -421,14 +421,24 @@ public static <T> T getValue(Object anObj, Object aKeyChain, Class <T> aClass)
 }
 
 /**
- * Returns whether given key is used anywhere in expression. Current version is really hard coded to require key to
- * be isolated (not a part of a key chain).
+ * Returns whether given key has a Page/PageMax key reference.
  */
-public boolean anyKeyReferencesKey(String aKey)
+public boolean hasPageReference()
+{
+    if(_hasPageReference==null)
+        _hasPageReference = anyKeyReferencesKey("Page") && !toString().contains("Page.") ||
+            anyKeyReferencesKey("PageMax") || anyKeyReferencesKey("PageBreak") || anyKeyReferencesKey("PageBreakMax") ||
+            anyKeyReferencesKey("PageBreakPage") || anyKeyReferencesKey("PageBreakPageMax");
+    return _hasPageReference;
+}
+
+/**
+ * Returns whether given key is present anywhere in expression.
+ */
+private boolean anyKeyReferencesKey(String aKey)
 {
     // If operator is key, return if key is equals to key chain value
-    if(getOp()==Op.Key)
-        return aKey.equals(getValue());
+    if(getOp()==Op.Key) return aKey.equals(getValue());
     
     // Iterate over children and forward on
     for(int i=0, iMax=getChildCount(); i<iMax; i++)
@@ -437,18 +447,6 @@ public boolean anyKeyReferencesKey(String aKey)
     
     // Return false since key chain type not applicable
     return false;
-}
-
-/**
- * Returns whether given key has a Page/PageMax key reference.
- */
-public boolean hasPageReference()
-{
-    if(_hasPageReference==null)
-        _hasPageReference = anyKeyReferencesKey("Page") || anyKeyReferencesKey("PageMax") ||
-            anyKeyReferencesKey("PageBreak") || anyKeyReferencesKey("PageBreakMax") ||
-            anyKeyReferencesKey("PageBreakPage") || anyKeyReferencesKey("PageBreakPageMax");
-    return _hasPageReference;
 }
 
 /**
