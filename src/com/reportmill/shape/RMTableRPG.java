@@ -228,7 +228,7 @@ protected boolean addRows(RMGroup aGroup, RMTableRowRPG aParentRPG, RMTableRowRP
         String pbreakKey = detailsRow!=null? detailsRow.getPageBreakKey() : null;
         if(pbreakKey!=null && RMKeyChain.getBoolValue(childGroup, pbreakKey)) _doPageBreak = true;
         if(_doPageBreak && i+1<iMax) {
-            _lastRow = new RMTableRowRPG(); _lastRow._group = aGroup.getGroup(i+1); break; }
+            _lastRow = new RMTableRowRPG(); _lastRow._group = aGroup.getGroup(i+1); added++; break; }
     }
     
     // Add Running summary (if grouping didn't finish and one is available)
