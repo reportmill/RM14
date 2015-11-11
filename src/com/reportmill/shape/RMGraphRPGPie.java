@@ -30,7 +30,7 @@ public RMGraphRPGPie(RMGraph aGraph, ReportOwner anRptOwner)
  */
 protected RMParentShape createGraphShape()
 {
-    return _graph.getDraw3D()? new PieGraphShape3D(_graph) : new PieGraphShape2D();
+    return _graph.getDraw3D()? new PieGraphShape3D(_graph) : new PieGraphShape2D(_graph);
 }
 
 /**
@@ -283,6 +283,9 @@ public interface PieGraphShape extends RMGraphRPG.GraphShape {
  * A BarGraphShape implementation.
  */
 static class PieGraphShape2D extends RMParentShape implements PieGraphShape {
+
+    /** Creates a new PieGraphShape2D. */
+    public PieGraphShape2D(RMGraph aGraph)  { copyShape(aGraph); }
 
     /** Returns the RMGraphRPG. */
     public RMGraphRPG getGraphRPG()  { return _grpg; } RMGraphRPG _grpg;

@@ -596,15 +596,15 @@ public interface BarGraphShape extends RMGraphRPG.GraphShape {
  */
 public static class BarGraphShape2D extends RMParentShape implements BarGraphShape {
 
+    /** Creates a new BarGraphShape2D. */
+    public BarGraphShape2D(RMGraph aGraph)  { copyShape(aGraph); }
+
     /** Returns the RMGraphRPG. */
     public RMGraphRPG getGraphRPG()  { return _grpg; } RMGraphRPG _grpg;
     
     /** Sets the RMGraphRPG. */
     public void setGraphRPG(RMGraphRPG aGRPG)  { _grpg = aGRPG; }
     
-    /** Creates a new BarGraphShape2D. */
-    public BarGraphShape2D(RMGraph aGraph)  { copyShape(aGraph); }
-
     /** Add grid line major. */
     public void addGridLineMajor(RMLineShape aLine)  { addChild(aLine); }
     

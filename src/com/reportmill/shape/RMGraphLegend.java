@@ -1,5 +1,7 @@
 package com.reportmill.shape;
+import com.reportmill.base.*;
 import com.reportmill.text.*;
+import java.util.*;
 import snap.util.*;
 
 /**
@@ -73,33 +75,39 @@ protected void layoutChildren()
     
     // Get Graph/GraphRPG
     RMGraph graph = getParent().getChildWithClass(RMGraph.class);
-    RMGraphRPG graphRPG = graph==null? getGraphRPG() : null;
+    RMGraphRPG graphRPG = getGraphRPG(); if(graphRPG==null || graphRPG.getSeriesCount()==0) return;
+    boolean isPreview = graph!=null; if(graph==null) graph = graphRPG._graph;
+    boolean isPie = graph.getType()==RMGraph.Type.Pie;
     
-    // Get graph and iterate over series
-    if(graph!=null) for(int i=0, iMax=Math.max(graph.getKeyCount(), 1); i<iMax; i++) {
-        RMRectShape box = new RMRectShape(); box.setSize(16, 12); box.setColor(graph.getColor(i));
-        addChild(box);
-        RMTextShape label = _textShape.clone(); label.setText("Series " + (i+1));
-        addChild(label, (i+1)%getColumnCount()==0? "N" : null);
+    // Get strings and groups
+    List <String> strings = new ArrayList();
+    List <RMGroup> groups = new ArrayList();
+    
+    // If pie, add for each item
+    if(isPie) { RMGraphSeries series = graphRPG.getSeries(0); String ltext = StringUtils.min(getLegendText());
+        for(int i=0,iMax=series.getItemCount();i<iMax;i++) { RMGraphSeries.Item item = series.getItem(i);
+            strings.add(ltext!=null? ltext : ("Item " + (i+1))); groups.add(item._group); }
+    }
+
+    // If more than one series, add item for each series
+    else for(int i=0, iMax=graphRPG.getSeriesCount(); i<iMax; i++) { RMGraphSeries series = graphRPG.getSeries(i);
+        strings.add(series.getTitle()); groups.add(series._group); }
+    
+    // Iterate over strings and add legend items
+    double x = 2, y = 2;
+    for(int i=0,iMax=strings.size();i<iMax; i++) {
+        String text = strings.get(i); RMGroup group = groups.get(i);
+        RMRectShape box = new RMRectShape(); box.setColor(graph.getColor(i)); box.setBounds(x,y,16,12); x += 18;
+        RMTextShape label = _textShape.clone(); label.setText(text);
+        if(!isPreview) label.getXString().rpgClone(graphRPG._rptOwner, group, null, false);
+        double pw = label.getPrefWidth(), ph = label.getPrefHeight(); label.setBounds(x,y,pw,ph);
+        addChild(box); addChild(label); x = 2; y += ph+2;
     }
     
-    // If no graph, do GraphRPG
-    else if(graphRPG!=null) { graph = graphRPG._graph;
-        for(int i=0, iMax=graphRPG.getSeriesCount(); i<iMax; i++) { RMGraphSeries series = graphRPG.getSeries(i);
-            RMRectShape box = new RMRectShape(); box.setSize(16, 12); box.setColor(graph.getColor(i));
-            addChild(box);
-            RMTextShape label = _textShape.clone(); label.setText(graph.getSeries(i).getTitle());
-            label.getXString().rpgClone(graphRPG._rptOwner, series._group, null, false);
-            addChild(label, (i+1)%getColumnCount()==0? "N" : null);
-        }
-    }
-    
-    // Do normal version
-    super.layoutChildren();
-    
-    // Reszie
-    if(getBestWidth()>getWidth()) setWidth(getBestWidth());
-    if(getBestHeight()>getHeight()) setHeight(getBestHeight());
+    // Resize
+    RMRect bounds = getBoundsOfChildren();
+    if(bounds.getMaxX()>getWidth()) setWidth(bounds.getMaxX());
+    if(bounds.getMaxY()>getHeight()) setHeight(bounds.getMaxX());
 }
 
 /**
