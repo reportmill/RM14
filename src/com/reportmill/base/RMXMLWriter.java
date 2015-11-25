@@ -19,6 +19,9 @@ public class RMXMLWriter {
     // Used to create a schema
     RMSchemaMaker           _schemaMaker;
     
+    // The maximum number of items to write for lists/array relationships.
+    int                     _breadthLimit = 100;
+    
     // Describes entities and properties of object graph
     Schema                  _schema;
     
@@ -74,10 +77,24 @@ public void ignoreMember(Class aClass, String aName)  { getSchemaMaker().addIgno
 /** Tells writer to ignore any member with the given classname - member combination. */
 public void ignoreMember(String aClassName, String aName)  { getSchemaMaker().addIgnoreMember(aClassName, aName); }
 
-/** Writes given Java dataset to given path as XML, out to three levels deep, which is default degree of separation. */
+/**
+ * Returns the maximum number of items to write for lists/array relationships.
+ */
+public int getBreadthLimit()  { return _breadthLimit; }
+
+/**
+ * Sets the maximum number of items to write for lists/array relationships.
+ */
+public void setBreadthLimit(int aLimit)  { _breadthLimit = aLimit; }
+
+/**
+ * Writes given Java dataset to given path as XML, out to three levels deep, which is default degree of separation.
+ */
 public void writeObject(Object anObj, String aPath)  { writeObject(anObj, aPath, 5); }
 
-/** Writes given Java dataset to given path as XML, out to given degree of separation. */
+/**
+ * Writes given Java dataset to given path as XML, out to given degree of separation.
+ */
 public void writeObject(Object anObj, String aPath, int dos)  { writeObject(anObj, null, aPath, dos); }
 
 /**
@@ -101,7 +118,7 @@ public void writeObject(Object anObj, Object userInfo, String aPath, int degreeO
 }
 
 /**
- * Returns an xml RXElement tree for given Java dataset and optional userInfo, out to given degree of separation.
+ * Returns an xml XMLElement tree for given Java dataset and optional userInfo, out to given degree of separation.
  */
 public XMLElement getXML(Object anObj, Object userInfo, int degreeOfSeparation)
 {
@@ -224,7 +241,7 @@ private void writeXMLDeep(Object anObject, XMLElement anElement, Entity anEntity
         
         // If value is List, iterate over items and create element for each, add to parent and recursively write deep
         if(value instanceof List) { List list = (List)value;
-            for(Object item : list) {
+            for(int j=0,jMax=Math.min(list.size(),_breadthLimit); j<jMax; j++) { Object item = list.get(j);
                 XMLElement e = new XMLElement(property.getName());
                 anElement.add(e);
                 writeXML(item, e, relationEntity);
