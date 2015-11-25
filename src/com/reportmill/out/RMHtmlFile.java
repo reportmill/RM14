@@ -24,10 +24,23 @@ public class RMHtmlFile {
     // A map of files
     Map <String,byte[]>    _files = new HashMap();
 
+    // Whether to show border around page
+    boolean                _showBorder = true;
+
 /**
  * Creates a new RMHtmlFile for given document.
  */
 public RMHtmlFile(RMDocument aDoc)  { _doc = aDoc; }
+
+/**
+ * Returns whether to show border around page(s).
+ */
+public boolean getShowBorder()  { return _showBorder; }
+
+/**
+ * Sets whether to show border around page(s).
+ */
+public void setShowBorder(boolean aValue)  { _showBorder = aValue; }
 
 /**
  * Returns document as HTML XML.
@@ -44,8 +57,9 @@ public XMLElement getXML()
     // Create element for HTML and body and add pages
     XMLElement html = new XMLElement("html");
     XMLElement body = new XMLElement("body"); html.addElement(body);
+    XMLElement div = new XMLElement("div"); body.addElement(div);
     for(int i=0;i<_doc.getPageCount(); i++) { RMPage page = _doc.getPage(i);
-        XMLElement pageXML = toXML(page); body.addElement(pageXML); }
+        XMLElement pageXML = toXML(page); div.addElement(pageXML); }
     return html;
 }
 
@@ -64,6 +78,11 @@ public String getString()
  * Returns bytes.
  */
 public byte[] getBytes()  { return getString().getBytes(); }
+
+/**
+ * Returns bytes for top level div tag.
+ */
+public byte[] getDivBytes()  { return getXML().get("body").get("div").getBytes(); }
 
 /**
  * Writes HTML to file.
@@ -314,12 +333,14 @@ private static class RMPageHpr <T extends RMPage> extends RMShapeHpr <T> {
         anXML.add("width", (int)aShape.getWidth());
         anXML.add("height", (int)aShape.getHeight());
         
-        XMLElement border = new XMLElement("rect");
-        border.add("width", (int)aShape.getWidth());
-        border.add("height", (int)aShape.getHeight());
-        border.add("fill", "white");
-        border.add("stroke", "black");
-        anXML.addElement(border);
+        if(aWriter.getShowBorder()) {
+            XMLElement border = new XMLElement("rect");
+            border.add("width", (int)aShape.getWidth());
+            border.add("height", (int)aShape.getHeight());
+            border.add("fill", "white");
+            border.add("stroke", "black");
+            anXML.addElement(border);
+        }
     }
 }
 
