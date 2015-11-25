@@ -1,5 +1,6 @@
 package com.reportmill.shape;
 import com.reportmill.base.*;
+import com.reportmill.base.RMTypes.AlignX;
 import com.reportmill.graphics.*;
 import com.reportmill.text.*;
 import java.util.*;
@@ -316,6 +317,35 @@ public RMRect getBarBounds(int aSeriesIndex, int anItemIndex)
 }
 
 /**
+ * Returns the width available for a bar label.
+ */
+public double getBarLabelMaxWidth()
+{
+    // Get series count and series item count
+    int seriesCount = getSeriesCount(); if(seriesCount==0) return _graph.getWidth();
+    int seriesItemCount = getSeries(0).getItemCount();
+    
+    // Get number of graph sections and number of items in each graph section
+    int sectionCount = _meshed? seriesItemCount : seriesCount;
+    int sectionItemCount = _meshed? seriesCount : seriesItemCount;
+    
+    // Get graph width and height
+    double width = isVertical()? _graph.getWidth() : _graph.getHeight();
+    
+    // Get section width
+    double sectionWidth = width/sectionCount;
+
+    // Get number of bars per section
+    int sectionBarCount = _stacked || _layered? 1 : sectionItemCount;
+    
+    // Make sure section bar count is at least as many bars as minimum section bar count
+    sectionBarCount = Math.max(sectionBarCount, _graph.getBars().getBarCount());
+    
+    // Calculate bar width
+    return Math.round(sectionWidth/sectionBarCount*.95);
+}
+
+/**
  * Adds the value axis labels to the graph area.
  */
 private void addValueAxisLabels()
@@ -423,6 +453,11 @@ private void addLabelAxisLabel(RMRect aRect, RMGroup aGroup)
     label.getXString().rpgClone(_rptOwner, aGroup, null, false); // Do rpg on label string
     label.setBestSize();  // Resize label to best size
 
+    // If label width greater than available width for bar, grow height
+    double labelMaxWidth = getBarLabelMaxWidth();
+    if(label.getWidth()>labelMaxWidth && isVertical() && label.getRoll()==0) {
+        label.setWidth(labelMaxWidth); label.setHeight(label.getBestHeight()); label.setAlignmentX(AlignX.Center); }
+
     // Get point by graph that we want label to be aligned with
     RMPoint point2 = isVertical()? new RMPoint(aRect.getMidX(), aRect.getMaxY() + 5) : new RMPoint(aRect.x - 5, aRect.getMidY());
     
@@ -485,6 +520,11 @@ public void addLabel(RMTextShape aLabel, RMGraphPartSeries.LabelPos aPosition, R
     
     // Resize label to best size
     label.setBestSize();
+
+    // If label width greater than available width for bar, grow height
+    double labelMaxWidth = getBarLabelMaxWidth();
+    if(label.getWidth()>labelMaxWidth && isVertical() && label.getRoll()==0) {
+        label.setWidth(labelMaxWidth); label.setHeight(label.getBestHeight()); label.setAlignmentX(AlignX.Center); }
 
     // Get bar rect
     RMRect barRect = seriesItem.getBar().getFrame();
