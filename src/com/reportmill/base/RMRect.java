@@ -321,8 +321,7 @@ public RMPoint getPerimeterPointForRadial(double anAngle, boolean doEllipse)
     //    x = a cos(n)
     //    y = b sin(n)
     // Define the ellipse a & b axis length constants as half the rect width & height
-    double a = width/2;
-    double b = height/2;
+    double a = width/2, b = height/2; if(a==0 || b==0) return new RMPoint();
     
     // If not elliptical, change a & b to min length so we use normal circle instead of elliptical radians 
     if(!doEllipse)
