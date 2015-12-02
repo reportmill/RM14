@@ -182,7 +182,7 @@ public static Object getValue(Object aRoot, Object anObj, RMKeyChain aKeyChain)
     if(anObj==null) return null;
     
     // If list, use aggregator
-    if(anObj instanceof List && !RMGroup.isLeaf((List)anObj))
+    if(anObj instanceof List && !RMGroup.isLeaf(anObj) && !RMGroup.isTopNOthers(anObj))
         return RMKeyChainAggr.getValue(aRoot, (List)anObj, aKeyChain);
     
     // If object implements getKeyChainValue, just forward on to it

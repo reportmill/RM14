@@ -372,7 +372,7 @@ static public boolean shouldRecurse(List aList, RMKeyChain aKeyChain)
     
     // Don't recurse if first element of aList is not a list (or if it's a Leaf RMGroup)
     Object first = aList.get(0);
-    if(!(first instanceof List) || RMGroup.isLeaf((List)first))
+    if(!(first instanceof List) || RMGroup.isLeaf(first))
         return false;
   
     // If aKeyChain is null, recurse (can't hurt, although probably only useful for countDeep)

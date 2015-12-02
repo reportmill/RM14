@@ -493,11 +493,12 @@ public static String getKey(List aList)
 /**
  * Returns whether the given List is an RMGroup instance that also isLeaf.
  */
-public static boolean isLeaf(List aList)
-{
-    if(!(aList instanceof RMGroup)) return false; // If list isn't group, just return false
-    return ((RMGroup)aList).isLeaf(); // Return whether group is leaf
-}
+public static boolean isLeaf(Object aList)  { return aList instanceof RMGroup && ((RMGroup)aList).isLeaf(); }
+
+/**
+ * Returns whether the given List is an RMGroup instance that also top n others.
+ */
+public static boolean isTopNOthers(Object aList) { return aList instanceof RMGroup && ((RMGroup)aList).isTopNOthers(); }
 
 /**
  * Custom implementation of valueForKey to handle group heritage keys.
@@ -553,9 +554,9 @@ public Object getKeyValue(String aKey)
 public Object getKeyChainValue(Object aRoot, RMKeyChain aKeyChain)
 {
     // If this is TopNOthers, we really want to turn keys for Numbers into aggregates (everything else to "Others")
-    if(_isTopNOthers) { // && RMKeyChainAggr.getAggrMethod(aKeyChain.getChildString(0))==null) {
-        Object val = RMKeyChain.getValue(get(0), aKeyChain);
-        if(val instanceof Number) // If evaluates to Number, return total of keyChain
+    if(_isTopNOthers) { // && RMKeyChainAggr.getAggrMethod(aKC.getChildString(0))==null) {
+        Object val = RMKeyChain.getValueImpl(aRoot, this, aKeyChain); String kstr = aKeyChain.toString();
+        if(val instanceof Number && !kstr.equals("Row")) // If evaluates to Number, return total of keyChain
             return RMKeyChainAggr.total(this, aKeyChain);
         else if(val instanceof String) // If evaluates to String, return "Others"
             return "Others";
@@ -563,7 +564,7 @@ public Object getKeyChainValue(Object aRoot, RMKeyChain aKeyChain)
     }
     
     // If isLeaf and KeyChain.Op is FunctionCall, evaluate keyChain on first object
-    else if(isLeaf() && aKeyChain.getOp()==RMKeyChain.Op.FunctionCall)
+    if(isLeaf() && aKeyChain.getOp()==RMKeyChain.Op.FunctionCall)
         return RMKeyChain.getValue(aRoot, get(0), aKeyChain);
 
     // Otherwise, do normal version
@@ -614,7 +615,9 @@ public RMGroup cloneDeep()
 {
     // Get normal clone (just return if leaf), and clone children
     RMGroup clone = clone(); if(isLeaf()) return clone;
-    for(int i=0, iMax=size(); i<iMax; i++) clone.set(i, getGroup(i).cloneDeep()); // Iterate over children and clone
+    for(int i=0, iMax=size(); i<iMax; i++) {
+        RMGroup grp = getGroup(i).cloneDeep(); grp._parent = clone;
+        clone.set(i, grp); }
     return clone; // Return clone
 }
 
