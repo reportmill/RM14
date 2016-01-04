@@ -19,9 +19,6 @@ public class RMXMLWriter {
     // Used to create a schema
     RMSchemaMaker           _schemaMaker;
     
-    // The maximum number of items to write for lists/array relationships.
-    int                     _breadthLimit = 100;
-    
     // Describes entities and properties of object graph
     Schema                  _schema;
     
@@ -80,12 +77,12 @@ public void ignoreMember(String aClassName, String aName)  { getSchemaMaker().ad
 /**
  * Returns the maximum number of items to write for lists/array relationships.
  */
-public int getBreadthLimit()  { return _breadthLimit; }
+public int getBreadthLimit()  { return getSchemaMaker().getBreadthLimit(); }
 
 /**
  * Sets the maximum number of items to write for lists/array relationships.
  */
-public void setBreadthLimit(int aLimit)  { _breadthLimit = aLimit; }
+public void setBreadthLimit(int aLimit)  { getSchemaMaker().setBreadthLimit(aLimit); }
 
 /**
  * Writes given Java dataset to given path as XML, out to three levels deep, which is default degree of separation.
@@ -241,7 +238,7 @@ private void writeXMLDeep(Object anObject, XMLElement anElement, Entity anEntity
         
         // If value is List, iterate over items and create element for each, add to parent and recursively write deep
         if(value instanceof List) { List list = (List)value;
-            for(int j=0,jMax=Math.min(list.size(),_breadthLimit); j<jMax; j++) { Object item = list.get(j);
+            for(int j=0,jMax=Math.min(list.size(),getBreadthLimit()); j<jMax; j++) { Object item = list.get(j);
                 XMLElement e = new XMLElement(property.getName());
                 anElement.add(e);
                 writeXML(item, e, relationEntity);

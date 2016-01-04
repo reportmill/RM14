@@ -12,6 +12,9 @@ public class RMSchemaMaker {
     // Defines limit of recursion, since object graphs can be arbitrarily large
     int                    _degreeOfSeparation = 3;
     
+    // The maximum number of items to write for lists/array relationships.
+    int                    _breadthLimit = 100;
+    
     // Whether to only use getX/isX accessor methods (as opposed to any method returning a value)
     boolean                _useGetAndIsMethodsOnly = true;
     
@@ -51,6 +54,16 @@ public RMSchemaMaker()
  * Returns the degree of separation.
  */
 public int getDegreeOfSeparation()  { return _degreeOfSeparation; }
+
+/**
+ * Returns the maximum number of items to write for lists/array relationships.
+ */
+public int getBreadthLimit()  { return _breadthLimit; }
+
+/**
+ * Sets the maximum number of items to write for lists/array relationships.
+ */
+public void setBreadthLimit(int aLimit)  { _breadthLimit = aLimit; }
 
 /**
  * Returns whether to only use getX/isX accessor methods (as opposed to any method returning a value).
@@ -290,7 +303,7 @@ public void getProperty(Object aValue, Class aClass, String aKey, int aDepth, En
         // Handle List (RelationList)
         if(value instanceof List) { List list = (List)value;
             property.setType(Property.Type.RelationList);
-            for(Object item : list) {
+            for(int i=0,iMax=Math.min(list.size(),getBreadthLimit()); i<iMax; i++) { Object item = list.get(i);
                 Entity entity = getEntity(item, null, relationKey, aDepth+1, anEntity.getSchema());
                 if(entity!=null)
                     property.setRelationEntityName(entity.getName());
