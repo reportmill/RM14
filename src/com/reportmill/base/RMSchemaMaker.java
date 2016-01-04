@@ -9,8 +9,8 @@ import snap.web.*;
  */
 public class RMSchemaMaker {
 
-    // Defines limit of recursion, since object graphs can be arbitrarily large
-    int                    _degreeOfSeparation = 3;
+    // The limit of recursion for relationships
+    int                    _depthLimit = 3;
     
     // The maximum number of items to write for lists/array relationships.
     int                    _breadthLimit = 100;
@@ -51,9 +51,9 @@ public RMSchemaMaker()
 }
 
 /**
- * Returns the degree of separation.
+ * Returns the limit of recursion for relationships.
  */
-public int getDegreeOfSeparation()  { return _degreeOfSeparation; }
+public int getDepthLimit()  { return _depthLimit; }
 
 /**
  * Returns the maximum number of items to write for lists/array relationships.
@@ -119,14 +119,14 @@ public void addIgnoreMember(String aClassName, String aMemberName)
 /**
  * This code returns a schema for a given object graph of Java primitives (Map, List, String, Number, Date).
  */
-public Schema getSchema(Object anObject, String aName, int aDegreeOfSeparation)
+public Schema getSchema(Object anObject, String aName, int aDepthLimit)
 {
     // Get schema name and create new schema
     String sname = aName!=null? aName : "Root";
     Schema schema = new Schema(sname);
     
-    // Clear processed list, set degree of separation
-    _processed.clear(); _degreeOfSeparation = aDegreeOfSeparation;
+    // Clear processed list, set DepthLimit
+    _processed.clear(); _depthLimit = aDepthLimit;
     
     // Configure entity for object and return schema
     getEntity(anObject, null, aName, 0, schema);
@@ -143,8 +143,8 @@ private Entity getEntity(Object anObject, Class aClass, String aKey, int aDepth,
     // If object is null, just return
     if(anObject==null) return null;
     
-    // If depth exceeds degreeOfSeparation, just return null
-    if(aDepth>getDegreeOfSeparation())
+    // If depth exceeds DepthLimit, just return null
+    if(aDepth>getDepthLimit())
         return null;
 
     // Get local reference to object, potentially converted from non-standard type (eg, WebObjects/NSArray)
