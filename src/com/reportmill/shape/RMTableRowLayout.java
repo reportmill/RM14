@@ -1,5 +1,6 @@
 package com.reportmill.shape;
 import java.util.*;
+import snap.util.SnapMath;
 
 /**
  * A shape layout implementation that handles layout of structured table rows.
@@ -26,23 +27,20 @@ protected void layoutChildren()
     if(parent.getChildCount()==0) return; // Just return if no children
     
     // Layout all children edge to edge, by iterating over children and setting successive x values
-    List <RMShape> children = parent.getChildren(); float width = 0;
+    List <RMShape> children = parent.getChildren(); double width = 0;
     for(RMShape child : children) {
         child.setBounds(width, 0, child.getWidth(), parent.getHeight());
         width += child.getWidth();
     }
     
-    // If children over-ran right border, while width greater than parent width, trim trailing columns
-    int i = parent.getChildCount() - 1;
-    while(width>parent.getWidth() && i>=0) { RMShape child = parent.getChild(i);
-        double dw = width - parent.getWidth();
-        double ow = child.getWidth(), nw = Math.max(8, ow - dw); dw = ow - nw;
-        child.setWidth(nw); width -= dw; i--;
+    // If total width doesn't equal parent width, divy up and add to each child by ratio of their current sizes
+    double pwidth = parent.getWidth();
+    if(!SnapMath.equals(width,pwidth)) { double extra = pwidth - width, x = 0;
+        for(RMShape child : children) {
+            double ow = child.getWidth(), nw = ow + ow/width*extra;
+            child.setX(x); child.setWidth(nw); x += nw;
+        }
     }
-
-    // Otherwise, if there is remaining width, add to last child
-    if(width<parent.getWidth()) { RMShape child = parent.getChildLast();
-        child.setWidth(child.getWidth() + parent.getWidth() - width); }
     
     // Sync Structure With Alternates
     if(parent.getSyncStructureWithAlternates() && parent.getAlternates()!=null)
