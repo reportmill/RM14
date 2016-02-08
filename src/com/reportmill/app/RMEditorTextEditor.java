@@ -7,6 +7,7 @@ import java.awt.datatransfer.*;
 import java.awt.event.*;
 import java.awt.geom.Point2D;
 import java.beans.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import snap.util.Undoer;
@@ -366,39 +367,40 @@ public void moveTableRowColumn(MouseEvent anEvent)
         tableRow.undoerSetUndoTitle("Reorder columns");
         editor.setSelectedShape(shape); return; }
     
-    // Get event point in table row coords
-    RMPoint point = editor.convertPointToShape(anEvent.getPoint(), tableRow);
+    // Get event x in TableRow coords and whether point is in TableRow
+    RMPoint point = editor.convertPointToShape(anEvent.getPoint(), tableRow); point.y = 2;
+    boolean inRow = tableRow.contains(point);
     
-    // Set selected column x to new event point x and get whether in bounds
-    shape.setX(point.getX());
-    boolean shapeIn = shape.getFrame().intersectsRect(tableRow.getBoundsInside());
-    
-    // If in bounds, force layout, reset location
-    if(shapeIn) {
-        tableRow.setNeedsLayout(true); tableRow.layout();
-        shape.setX(point.getX());
+    // Handle MouseDragged: layout children by X (if outside row, skip drag shape)
+    if(anEvent.getID()==MouseEvent.MOUSE_DRAGGED) {
+        List <RMShape> children = new ArrayList(tableRow.getChildren()); RMSort.sort(children, "Frame.X"); float x = 0;
+        for(RMShape child : children) {
+            if(child==shape) { if(inRow) child.setX(point.x-child.getWidth()/2); else { child.setX(9999); continue; }}
+            else child.setX(x); x += child.getWidth(); }
         tableRow.setNeedsLayout(false);
     }
     
-    // Otherwise, remove from row, force layout, add back, reset layout
-    else {
-        int index = shape.indexOf(); tableRow.getChildren().remove(shape);
-        tableRow.setNeedsLayout(true); tableRow.layout();
-        tableRow.getChildren().add(index, shape);
-        tableRow.setNeedsLayout(false);
-    }
-    
-    // On MouseReleased, reset children
-    if(anEvent.getID()==MouseEvent.MOUSE_RELEASED) {
+    // Handle MouseReleased: reset children
+    else if(anEvent.getID()==MouseEvent.MOUSE_RELEASED) {
 
-        // If shape is outside bounds of tableRow, remove it
-        if(!shapeIn) {
+        // If shape in row, set new index
+        if(inRow) {
+            int iold = shape.indexOf();
+            int inew = 0; while(inew<tableRow.getChildCount() && tableRow.getChild(inew).getX()<=shape.getX()) inew++;
+            if(iold!=inew) {
+                tableRow.removeChild(iold); if(inew>iold) inew--;
+                tableRow.addChild(shape, inew);
+            }
+        }
+        
+        // If shape is outside row, remove it
+        else {
             tableRow.removeChild(shape);
             editor.setSuperSelectedShape(tableRow);
         }
 
         // Do layout again to snap shape back into place
-        tableRow.relayout();
+        tableRow.layout();
     }
 }
 

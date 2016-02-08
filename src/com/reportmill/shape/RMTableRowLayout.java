@@ -1,5 +1,4 @@
 package com.reportmill.shape;
-import com.reportmill.base.*;
 import java.util.*;
 
 /**
@@ -26,11 +25,8 @@ protected void layoutChildren()
     RMTableRow parent = getParent(); if(!parent.isStructured()) { super.layoutChildren(); return; }
     if(parent.getChildCount()==0) return; // Just return if no children
     
-    // Get table row children and sort by FrameMidX
-    List <RMShape> children = parent.getChildren(); RMSort.sort(children, "Frame.MidX");
-    
     // Layout all children edge to edge, by iterating over children and setting successive x values
-    float width = 0;
+    List <RMShape> children = parent.getChildren(); float width = 0;
     for(RMShape child : children) {
         child.setBounds(width, 0, child.getWidth(), parent.getHeight());
         width += child.getWidth();
