@@ -5,7 +5,7 @@ package snap.parse;
 import java.lang.reflect.Modifier;
 import java.util.*;
 import snap.parse.ParseRule.Op;
-import snap.util.ListUtils;
+import snap.util.*;
 import snap.web.*;
 
 /**
@@ -163,8 +163,8 @@ private static String getPatQuoted(String aStr)
 public static ParseRule loadRule(Class aClass, String aName)
 {
     String name = aName!=null? aName : aClass.getSimpleName() + ".txt";
-    WebFile file = WebURL.getURL(aClass, name).getFile(); if(file==null) return null;
-    try { return new ParseRuleParser().parse(file.getText()).getCustomNode(ParseRule.class); }
+    String rtext = SnapUtils.getText(aClass.getResource(name)); if(rtext==null) return null;
+    try { return new ParseRuleParser().parse(rtext).getCustomNode(ParseRule.class); }
     catch(ParseException e) { throw new RuntimeException(e); }
 }
 

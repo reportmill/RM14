@@ -288,6 +288,15 @@ public static String getTempDir()
 }
 
 /**
+ * Returns text for a source.
+ */
+public static String getText(Object aSource)
+{
+    byte bytes[] = getBytes(aSource); if(bytes==null) return null;
+    return StringUtils.getString(bytes);
+}
+
+/**
  * Returns a byte array from a File, String path, InputStream, URL, byte[], etc.
  */
 public static byte[] getBytes(Object aSource)
@@ -296,6 +305,8 @@ public static byte[] getBytes(Object aSource)
     if(aSource instanceof InputStream) return getBytes((InputStream)aSource);
     WebURL url = null; try { url = WebURL.getURL(aSource); } catch(Exception e) { }
     if(url!=null && url.getFile()!=null) return url.getFile().getBytes();
+    if(aSource instanceof URL) try { return URLUtils.getBytes((URL)aSource); }
+    catch(IOException e) { e.printStackTrace(); }
     return null;
 }
 
