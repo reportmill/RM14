@@ -291,7 +291,7 @@ public Object fromXML(XMLArchiver anArchiver, XMLElement anElement)
     // Legacy: If Fill is ImageFill and no ImageData+Key or ImageFill.ImageData, set ImageData from IFill and clear fill
     if(getFill() instanceof RMImageFill) { RMImageFill ifill = (RMImageFill)getFill();
         XMLElement fill = anElement.get("fill"); RMImageData idata = ifill.getImageData();
-        if(getImageData()==null) { // && getKey()==null) {
+        if(getImageData()==null && !ifill.isTiled()) { // && getKey()==null) {
             int fs = fill.getAttributeIntValue("fillstyle", 0); // Stretch=0, Tile=1, Fit=2, FitIfNeeded=3
             if(fs==0) { setImageData(idata); setFill(null); setGrowToFit(true); setPreserveRatio(false); }
             else if(fs==2) { setImageData(idata); setFill(null); setGrowToFit(true); setPreserveRatio(true); }

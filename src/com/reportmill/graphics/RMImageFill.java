@@ -262,7 +262,7 @@ public Object fromXML(XMLArchiver anArchiver, XMLElement anElement)
     // Unarchive Tile, legacy FillStyle (Stretch=0, Tile=1, Fit=2, FitIfNeeded=3)
     if(anElement.hasAttribute("Tile")) setTiled(anElement.getAttributeBooleanValue("Tile"));
     else if(anElement.hasAttribute("fillstyle")) { int fs = anElement.getAttributeIntValue("fillstyle");
-        if(fs==1) setTiled(true); }
+        if(fs!=1) setTiled(false); }
     
     // Unarchive X, Y, Roll, ScaleX, ScaleY
     _x = anElement.getAttributeFloatValue("x");
