@@ -30,7 +30,8 @@ public void paintShape(RMShapePainter aPntr)
     super.paintShape(aPntr);
     
     // Paint dashed box around bounds
-    if(aPntr.isEditing() && getStroke()==null && getFill()==null && getEffect()==null) {
+    if(aPntr.isEditing() && getStroke()==null && getFill()==null && getEffect()==null &&
+        (aPntr.isSelected(this) || aPntr.isSuperSelected(this))) {
         aPntr.setColor(Color.lightGray); aPntr.setStroke(new BasicStroke(1f, 0, 0, 1, new float[] { 3, 2 }, 0));
         aPntr.setAntialiasing(false); aPntr.draw(getBoundsInside()); aPntr.setAntialiasing(true);
     }

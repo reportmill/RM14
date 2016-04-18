@@ -61,7 +61,7 @@ public static RMParentShape groupShapes(List <? extends RMShape> theShapes, RMPa
     // If no group shape, create one
     if(groupShape==null) {
         groupShape = new RMSpringShape();
-        groupShape.setBounds(getBoundsOfChildren(parent, shapes).inset(-5));
+        groupShape.setBounds(getBoundsOfChildren(parent, shapes));
     }
 
     // Add groupShape to the current parent (with no transform)

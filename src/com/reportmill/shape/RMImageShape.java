@@ -205,7 +205,7 @@ public void paintShape(RMShapePainter aPntr)
 {
     super.paintShape(aPntr);
     RMImageData id = getImageData();
-    if(id==null) { if(!aPntr.isEditing()) return; else id = RMImageData.EMPTY; }
+    if(id==null) { if(getFill()!=null || !aPntr.isEditing()) return; else id = RMImageData.EMPTY; }
     Rectangle2D ibounds = getImageBounds();
     id.paint(aPntr, ibounds.getX(), ibounds.getY(), ibounds.getWidth(), ibounds.getHeight());
 }
