@@ -20,10 +20,10 @@ public class FormatPanel extends SwingOwner {
     Date                          _sampleDate = new Date();
     
     // Sample positive number to be used to display number formats
-    Float                         _sampleNumberPos = new Float(9999.99f);
+    Float                         _sampleNumberPos = 1234.567f;
     
     // Sample negative number to be used to display number formats
-    Float                         _sampleNumberNeg = new Float(-9999.99f);
+    Float                         _sampleNumberNeg = 1234.567f;
 
 /** Initializes _numberFormats and _dateFormats lists. */
 static

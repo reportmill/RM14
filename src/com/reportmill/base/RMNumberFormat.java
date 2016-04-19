@@ -84,16 +84,6 @@ public RMNumberFormat(RMNumberFormat aFormat)
 }
 
 /**
- * Creates new decimal format symbols.
- */
-protected DecimalFormatSymbols createDecimalFormatSymbols()
-{
-    if(_defaultLocale!=null)
-        return new DecimalFormatSymbols(_defaultLocale);
-    return getDecimalFormatSymbols();
-}
-
-/**
  * Returns the String that is substituted when this format is asked to provide stringForObjectValue(null).
  */
 public String getNullString()  { return _nullString; }
@@ -289,9 +279,6 @@ public void setFormatString(String aFormat)
     if(_negativeInRed)
         aFormat = RMStringUtils.delete(aFormat, "[Red]");
     
-    // If Locale or DefaultFormatSymbols are set, just return
-    if(_defaultLocale!=null) return;
-
     // Try to discern decimal and grouping separator chars
     //   1. We start from end of positive portion
     //   2. We assume 0x0 or 0x# indicates decimal sep (x). If decimal sep wasn't preceded by 0, format could
