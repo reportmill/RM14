@@ -91,8 +91,8 @@ public static void writeImageFill(RMImageFill anImageFill, RMPath aPath, RMRect 
         double height = anImageFill.getImageHeight();
         
         // Get starting x and y
-        double startX = anImageFill.getX(); while(startX>bounds.x) startX -= width;
-        double startY = anImageFill.getY(); while(startY>bounds.y) startY -= height;
+        double startX = bounds.x + anImageFill.getX(); while(startX>bounds.x) startX -= width;
+        double startY = bounds.y + anImageFill.getY(); while(startY>bounds.y) startY -= height;
 
         // Iterate left to right over shape width and top to bottom over shape height
         for(double x=startX, xMax=bounds.getMaxX(); x<xMax; x+=width) {
