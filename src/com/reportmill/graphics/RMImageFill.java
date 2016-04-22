@@ -64,7 +64,7 @@ public boolean isTiled()  { return _tiled; }
 /**
  * Sets whether to tile fill image.
  */
-public void setTiled(boolean aValue)  { _tiled = aValue; }
+protected void setTiled(boolean aValue)  { _tiled = aValue; }
 
 /**
  * Returns the X location (offset) of the image fill image.

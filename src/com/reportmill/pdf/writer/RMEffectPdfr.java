@@ -39,7 +39,7 @@ public static void writeBlurEffect(RMShape aShape, RMBlurEffect aBlurEffect, RMP
     
     // Get effect image and image fill
     BufferedImage effectImage = aBlurEffect.getCachedImage(aShape);
-    RMImageFill ifill = new RMImageFill(effectImage); ifill.setTiled(false);
+    RMImageFill ifill = new RMImageFill(effectImage);
     
     // Get bounds for image fill
     RMRect bounds = new RMRect(-aBlurEffect.getRadius()*2, -aBlurEffect.getRadius()*2,
@@ -56,7 +56,7 @@ public static void writeShadowEffect(RMShape aShape, RMShadowEffect aShadow, RMP
 {
     // Get effect image and image fill
     BufferedImage effectImage = aShadow.getCachedImage(aShape);
-    RMImageFill ifill = new RMImageFill(effectImage); ifill.setTiled(false);
+    RMImageFill ifill = new RMImageFill(effectImage);
     
     // Get bounds for image fill
     RMRect bounds = new RMRect(-aShadow.getRadius()*2 + aShadow.getDX(), -aShadow.getRadius()*2 + aShadow.getDY(),
@@ -86,7 +86,7 @@ public static void writeRefectionEffect(RMShape aShape, RMReflectionEffect aRefl
         aReflection.setEnabled(true);
     
         // Create new image fill for image
-        RMImageFill ifill = new RMImageFill(reflectImage); ifill.setTiled(false);
+        RMImageFill ifill = new RMImageFill(reflectImage);
         
         // Get bounds of reflected image
         bounds = new RMRect(bounds.getX(), bounds.getMaxY() + aReflection.getGapHeight(),
@@ -107,7 +107,7 @@ public static void writeEmbossEffect(RMShape aShape, RMEmbossEffect anEmbossEffe
 {
     // Get effect image and image fill
     BufferedImage effectImage = anEmbossEffect.getCachedImage(aShape);
-    RMImageFill ifill = new RMImageFill(effectImage); ifill.setTiled(false);
+    RMImageFill ifill = new RMImageFill(effectImage);
     
     // Get bounds for image fill
     RMRect bounds = new RMRect(0, 0, effectImage.getWidth(), effectImage.getHeight());
