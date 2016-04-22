@@ -18,7 +18,7 @@ public class RMFillTool extends SwingOwner {
     static RMStroke     _strokes[] = { new RMStroke(), new RMBorderStroke(), new RMDoubleStroke() };
     
     // List of known fills
-    static RMImageFill  _imageFill = new RMImageFill(RMFillTool.class.getResource("Clouds.jpg"));
+    static RMImageFill  _imageFill = new RMImageFill(RMFillTool.class.getResource("Clouds.jpg"), true);
     static RMFill       _fills[] = { new RMFill(), new RMGradientFill(), _imageFill };
     
 /**

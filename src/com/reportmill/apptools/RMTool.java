@@ -844,7 +844,7 @@ private void dropImageFile(RMShape aShape, String aPath, RMPoint aPoint)
             case 0: while(!RMTool.getTool(aShape).getAcceptsChildren(aShape)) aShape = aShape.getParent(); break;
             
             // Handle Create Texture
-            case 1: aShape.setFill(new RMImageFill(aPath));
+            case 1: aShape.setFill(new RMImageFill(aPath, true));
             
             // Handle Cancel
             case 2: return;

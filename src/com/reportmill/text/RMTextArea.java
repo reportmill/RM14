@@ -33,6 +33,10 @@ public RMTextArea()
     enableEvents(AWTEvent.MOUSE_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK | AWTEvent.KEY_EVENT_MASK);
     enableEvents(AWTEvent.FOCUS_EVENT_MASK);
     
+    // Suppress Tab key handling
+    setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, java.util.Collections.EMPTY_SET);
+    setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, java.util.Collections.EMPTY_SET);
+    
     // Indicate that we want to accept focus with mouse presses
     setRequestFocusEnabled(true);
     
@@ -278,9 +282,6 @@ public void showCursor()
  * Hides the cursor.
  */
 public void hideCursor()  { if(getCursor()!=RMAWTUtils.getHiddenCursor()) setCursor(RMAWTUtils.getHiddenCursor()); }
-
-/** Overrides JComponent method so we get VK_TAB events. */
-public boolean isManagingFocus()  { return true; }
 
 /**
  * Overrides JComponent to paint text editor text.

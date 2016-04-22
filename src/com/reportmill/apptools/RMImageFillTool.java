@@ -20,11 +20,9 @@ public void resetUI()
     // Update TiledCheckBox
     setNodeValue("TiledCheckBox", fill.isTiled());
     
-    // Update XSpinner, YSpinner, RollSpinner, ScaleSpinner, ScaleXSpinner and ScaleYSpinner
+    // Update XSpinner, YSpinner, ScaleXSpinner and ScaleYSpinner
     setNodeValue("XSpinner", fill.getX());
     setNodeValue("YSpinner", fill.getY());
-    setNodeValue("RollSpinner", fill.getRoll());
-    setNodeValue("ScaleSpinner", fill.getScaleX());
     setNodeValue("ScaleXSpinner", fill.getScaleX());
     setNodeValue("ScaleYSpinner", fill.getScaleY());
 }
@@ -42,16 +40,11 @@ public void respondUI(SwingEvent anEvent)
     if(anEvent.equals("TiledCheckBox"))
         fill = fill.deriveFill(RMImageFill.ATTRIBUTE_TILED, anEvent.getBooleanValue()? 1 : 0);
     
-    // Handle XSpinner, YSpinner, RollSpinner, ScaleXSpinner, ScaleXSpinner, ScaleYSpinner
+    // Handle XSpinner, YSpinner, ScaleXSpinner, ScaleXSpinner, ScaleYSpinner
     if(anEvent.equals("XSpinner"))
         fill = fill.deriveFill(RMImageFill.ATTRIBUTE_X, anEvent.getFloatValue());
     if(anEvent.equals("YSpinner"))
         fill = fill.deriveFill(RMImageFill.ATTRIBUTE_Y, anEvent.getFloatValue());
-    if(anEvent.equals("RollSpinner"))
-        fill = fill.deriveFill(RMImageFill.ATTRIBUTE_ROLL, anEvent.getFloatValue());
-    if(anEvent.equals("ScaleSpinner")) {
-        fill = fill.deriveFill(RMImageFill.ATTRIBUTE_SCALE_X, anEvent.getFloatValue());
-        fill = fill.deriveFill(RMImageFill.ATTRIBUTE_SCALE_Y, anEvent.getFloatValue()); }
     if(anEvent.equals("ScaleXSpinner"))
         fill = fill.deriveFill(RMImageFill.ATTRIBUTE_SCALE_X, anEvent.getFloatValue());
     if(anEvent.equals("ScaleYSpinner"))

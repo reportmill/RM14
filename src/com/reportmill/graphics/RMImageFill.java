@@ -12,16 +12,13 @@ public class RMImageFill extends RMFill {
     RMImageData        _imageData = RMImageData.EMPTY;
     
     // Whether to tile fill image
-    boolean            _tiled = true;
+    boolean            _tiled;
     
     // X location (offset) of image fill
     double             _x;
     
     // Y location (offset) of image fill
     double             _y;
-    
-    // Rotation of image fill
-    double             _roll;
     
     // Scale X of image fill
     double             _scaleX = 1;
@@ -33,7 +30,6 @@ public class RMImageFill extends RMFill {
     public static final String ATTRIBUTE_TILED = "tiled";
     public static final String ATTRIBUTE_X = "x";
     public static final String ATTRIBUTE_Y = "y";
-    public static final String ATTRIBUTE_ROLL = "roll";
     public static final String ATTRIBUTE_SCALE_X = "scale-x";
     public static final String ATTRIBUTE_SCALE_Y = "scale-y";
 
@@ -45,7 +41,15 @@ public RMImageFill()  { }
 /**
  * Creates an image fill from an image source.
  */
-public RMImageFill(Object aSource)  { this(); _imageData = RMImageData.getImageData(aSource); }
+public RMImageFill(Object aSource)  { this(aSource, false); }
+
+/**
+ * Creates an image fill from an image source with an option to tile.
+ */
+public RMImageFill(Object aSource, boolean isTiled)
+{
+    _imageData = RMImageData.getImageData(aSource); setTiled(isTiled);
+}
 
 /**
  * Returns the image data associated with this image fill.
@@ -71,11 +75,6 @@ public double getX()  { return _x; }
  * Returns the Y location (offset) of the image fill image.
  */
 public double getY()  { return _y; }
-
-/**
- * Returns the rotation of the image fill image.
- */
-public double getRoll()  { return _roll; }
 
 /**
  * Returns the scale x of the image fill image.
@@ -107,7 +106,6 @@ public RMImageFill deriveFill(String aName, Number aValue)
     if(aName.equals(ATTRIBUTE_TILED)) copy._tiled = aValue.intValue()>0;
     if(aName.equals(ATTRIBUTE_X)) copy._x = aValue.floatValue();
     if(aName.equals(ATTRIBUTE_Y)) copy._y = aValue.floatValue();
-    if(aName.equals(ATTRIBUTE_ROLL)) copy._roll = aValue.floatValue();
     if(aName.equals(ATTRIBUTE_SCALE_X)) copy._scaleX = aValue.floatValue();
     if(aName.equals(ATTRIBUTE_SCALE_Y)) copy._scaleY = aValue.floatValue();
     return copy;
@@ -143,23 +141,23 @@ public void paint(RMShapePainter aPntr, RMShape aShape)
     // Get shape bounds
     RMRect bounds = aShape.getBoundsInside();
     
-    // If rolled or scaled, translate to shape center, rotate, scale and return
-    if(getRoll()!=0 || getScaleX()!=1 || getScaleY()!=1) {
+    // If scaled, translate to shape center, scale and return
+    if(getScaleX()!=1 || getScaleY()!=1) {
         
         // Get shape width and height
         double width = aShape.getWidth();
         double height = aShape.getHeight();
         
-        // Get transform width translate to shape center, rotate and scale, and translate back
+        // Get transform width translate to shape center, scale, and translate back
         RMTransform t = new RMTransform();
         t.translate(-width/2, -height/2);
-        t.rotate(getRoll()); t.scale(getScaleX(), getScaleY());
+        t.scale(getScaleX(), getScaleY());
         t.translate(width/2, height/2);
         
         // Apply transform to graphics
         aPntr.transform(t.awt());
         
-        // Transform bounds to enclose rotated and scaled image space
+        // Transform bounds to enclose scaled image space
         bounds = t.invert().transform(bounds);
         
         // If not TILE, scale enclosing bounds by image fill scale
@@ -206,11 +204,10 @@ public boolean equals(Object anObj)
     if(!super.equals(anObj)) return false;
     RMImageFill other = (RMImageFill)anObj;
     
-    // Check ImageData, FillStyle, X, Y, Roll, ScaleX, ScaleY, ImageMargins
+    // Check ImageData, FillStyle, X, Y, ScaleX, ScaleY, ImageMargins
     if(!RMUtils.equals(other._imageData, _imageData)) return false;
     if(other._tiled!=_tiled) return false;
     if(other._x!=_x || other._y!=_y) return false;
-    if(other._roll!=_roll) return false;
     if(other._scaleX!=_scaleX || other._scaleY!=_scaleY) return false;
     return true; // Return true since all checks passed
 }
@@ -230,12 +227,11 @@ public XMLElement toXML(XMLArchiver anArchiver)
     }
     
     // Archive Tile
-    if(!isTiled()) e.add("Tile", _tiled);
+    if(isTiled()) { e.add("Tile", _tiled); e.add("fillstyle", 1); }
     
-    // Archive X, Y, Roll, ScaleX, ScaleY
+    // Archive X, Y, ScaleX, ScaleY
     if(_x!=0) e.add("x", _x);
     if(_y!=0) e.add("y", _y);
-    if(_roll!=0) e.add("roll", _roll);
     if(_scaleX!=1) e.add("scale-x", _scaleX);
     if(_scaleY!=1) e.add("scale-y", _scaleY);
     
@@ -261,12 +257,12 @@ public Object fromXML(XMLArchiver anArchiver, XMLElement anElement)
     
     // Unarchive Tile, legacy FillStyle (Stretch=0, Tile=1, Fit=2, FitIfNeeded=3)
     if(anElement.hasAttribute("Tile")) setTiled(anElement.getAttributeBooleanValue("Tile"));
-    else { int fs = anElement.getAttributeIntValue("fillstyle", 0); if(fs!=1) setTiled(false); }
+    else if(anElement.hasAttribute("fillstyle")) { int fs = anElement.getAttributeIntValue("fillstyle", 0);
+       if(fs==1) setTiled(true); }
     
-    // Unarchive X, Y, Roll, ScaleX, ScaleY
+    // Unarchive X, Y, ScaleX, ScaleY
     _x = anElement.getAttributeFloatValue("x");
     _y = anElement.getAttributeFloatValue("y");
-    _roll = anElement.getAttributeFloatValue("roll");
     _scaleX = anElement.getAttributeFloatValue("scale-x", 1);
     _scaleY = anElement.getAttributeFloatValue("scale-y", 1);
     

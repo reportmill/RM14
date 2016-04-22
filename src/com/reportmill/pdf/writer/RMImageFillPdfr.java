@@ -54,24 +54,23 @@ public static void writeImageFill(RMImageFill anImageFill, RMPath aPath, RMRect 
         pdfPage.appendln(" W n");
     }
 
-    // If rolled or scaled, translate to shape center, rotate, scale and return
-    if(anImageFill.getRoll()!=0 || anImageFill.getScaleX()!=1 || anImageFill.getScaleY()!=1) {
+    // If scaled, translate to shape center, scale and return
+    if(anImageFill.getScaleX()!=1 || anImageFill.getScaleY()!=1) {
         
         // Get shape width and height
         double width = bounds.getWidth();
         double height = bounds.getHeight();
 
-        // Get transform with translate to shape center, rotate and scale, and translate back
+        // Get transform with translate to shape center, scale, and translate back
         RMTransform t = new RMTransform();
         t.translate(-width/2, -height/2);
-        t.rotate(anImageFill.getRoll());
         t.scale(anImageFill.getScaleX(), anImageFill.getScaleY());
         t.translate(width/2, height/2);
         
         // Apply transform
         pdfPage.transform(t);
                 
-        // Transform bounds to enclose rotated and scaled image space
+        // Transform bounds to enclose scaled image space
         bounds = t.invert().transform(bounds);
         
         // If not STYLE_TILE, scale enclosing bounds by image fill scale
