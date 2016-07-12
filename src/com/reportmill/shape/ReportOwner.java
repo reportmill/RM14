@@ -121,6 +121,10 @@ public Object peekDataStack()  { return RMListUtils.getLast(_dataStack); }
  */
 public RMDocument generateReport()
 {
+    // If objects and user info is null, add a bogus object so keychain assignments will work (probably silly)
+    if(_dataStack.size()==0) addModelObject(new Object());
+
+    // Generate report and return    
     RMDocument doc = (RMDocument)rpg(getTemplate(), null); doc._reportOwner = this;
     return doc;
 }
