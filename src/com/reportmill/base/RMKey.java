@@ -9,6 +9,15 @@ public class RMKey extends snap.util.Key {
 /**
  * Returns a value for given object and key.
  */
+public static Object getValue(Object anObj, String aKey)
+{
+    if(anObj instanceof Get) return ((Get)anObj).getKeyValue(aKey);
+    return getValueImpl(anObj, aKey);
+}
+
+/**
+ * Returns a value for given object and key.
+ */
 public static Object getValueImpl(Object anObj, String aKey)
 {
     Object obj = ReportMill.convertFromAppServerType(anObj); if(obj==null) return null;
