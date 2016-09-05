@@ -15,8 +15,8 @@ public class RMGraphLegend extends RMFlowShape {
     // The number of columns in legend
     int             _colCount = 1;
     
-    // The text shape
-    RMTextShape     _textShape = new RMTextShape(createXString());
+    // The font
+    RMFont          _font;
     
 /**
  * Returns the graph that owns this legend.
@@ -56,14 +56,19 @@ public void setColumnCount(int aValue)
 }
 
 /**
- * Override to forward to TextShape.
+ * Returns whether font has been set.
  */
-public RMFont getFont()  { return _textShape.getFont(); }
+public boolean isFontSet()  { return _font!=null; }
 
 /**
- * Override to forward to TextShape.
+ * Return current font.
  */
-public void setFont(RMFont aFont)  { _textShape.setFont(aFont); }
+public RMFont getFont()  { return _font!=null? _font : RMFont.Helvetica10; }
+
+/**
+ * Set current font.
+ */
+public void setFont(RMFont aFont)  { _font = aFont; }
 
 /**
  * Override to layout legend.
@@ -98,7 +103,7 @@ protected void layoutChildren()
     for(int i=0,iMax=strings.size();i<iMax; i++) {
         String text = strings.get(i); RMGroup group = groups.get(i);
         RMRectShape box = new RMRectShape(); box.setColor(graph.getColor(i)); box.setBounds(x,y,16,12); x += 18;
-        RMTextShape label = _textShape.clone(); label.setText(text);
+        RMTextShape label = new RMTextShape(); label.setText(text); label.setFont(getFont());
         if(!isPreview) label.getXString().rpgClone(graphRPG._rptOwner, group, null, false);
         double pw = label.getPrefWidth(), ph = label.getPrefHeight(); label.setBounds(x,y,pw,ph);
         addChild(box); addChild(label); x = 2; y += ph+2;
@@ -130,12 +135,6 @@ public XMLElement toXMLShape(XMLArchiver anArchiver)
     // Archive LegendText, ColumnCount
     if(getLegendText()!=null && getLegendText().length()>0) e.add("text", getLegendText());
     if(getColumnCount()>1) e.add("ColumnCount", getColumnCount());
-    
-    // Archive TextShape
-    XMLElement tsxml = _textShape.toXML(anArchiver); tsxml.setName("TextShape");
-    if(tsxml.getAttributeCount()>0) e.addElement(tsxml);
-    
-    // Return xml element
     return e;
 }
 
@@ -150,10 +149,9 @@ public void fromXMLShape(XMLArchiver anArchiver, XMLElement anElement)
     // Unarchive LegendText, ColumnCount
     setLegendText(anElement.getAttributeValue("text"));
     if(anElement.hasAttribute("ColumnCount")) setColumnCount(anElement.getAttributeIntValue("ColumnCount"));
-    
-    // Unarchive TextShape
-    XMLElement tsxml = anElement.getElement("TextShape");
-    if(tsxml!=null) _textShape.fromXML(anArchiver, tsxml);
 }
+
+/** Override to suppress child archival. */
+protected void toXMLChildren(XMLArchiver anArchiver, XMLElement anElement)  { }
 
 }
