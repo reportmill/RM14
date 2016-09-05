@@ -24,14 +24,6 @@ public class RMGraphLegend extends RMFlowShape {
 public RMGraph getGraph()  { return getParent()!=null? getParent().getChildWithClass(RMGraph.class) : null; }
 
 /**
- * Overrides RMText method to create an xstring that defaults to Arial 10.
- */
-private RMXString createXString()
-{
-    return new RMXString() { public RMFont getDefaultFont() { return RMFont.Helvetica10; } };
-}
-
-/**
  * Returns the legend text.
  */
 public String getLegendText()  { return _legendText; }
