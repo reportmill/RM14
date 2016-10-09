@@ -54,6 +54,7 @@ public class RMParagraph implements Cloneable, RMTypes, XMLArchiver.Archivable {
     
     // Default paragraph
     public static final RMParagraph DEFAULT = new RMParagraph();
+    public static final RMParagraph CENTERED = DEFAULT.deriveAligned(RMTypes.AlignX.Center);
 
     // Constants for tab types
     public static final char TAB_LEFT = 'L';

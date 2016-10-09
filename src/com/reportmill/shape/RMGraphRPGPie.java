@@ -50,9 +50,12 @@ protected void configure()
     RMGraphPartLabelAxis labelAxis = _graph.getLabelAxis();
     
     // Get wedge label string
-    RMXString barLabelString = labelAxis.getShowAxisLabels()? labelAxis.getXString().clone() : null;
-    if(barLabelString!=null)
-        barLabelString.setText(labelAxis.getItemKey());
+    RMXString barLabelString = null;
+    if(labelAxis.getShowAxisLabels()) {
+        String itemKey = labelAxis.getItemKey();
+        barLabelString = new RMXString(itemKey, labelAxis.getFont());
+        barLabelString.setParagraph(RMParagraph.CENTERED, 0, barLabelString.length());
+    }
     
     // Get wedge prototype
     RMOvalShape prototype = new RMOvalShape(); prototype.setStrokeColor(RMColor.black);

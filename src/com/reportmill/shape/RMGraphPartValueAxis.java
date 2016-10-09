@@ -1,12 +1,13 @@
 package com.reportmill.shape;
-import com.reportmill.base.*;
+import com.reportmill.base.RMFormat;
+import com.reportmill.base.RMNumberFormat;
 import com.reportmill.text.*;
 import snap.util.*;
 
 /**
  * This shape is used by graph area to hold attributes of the value axis.
  */
-public class RMGraphPartValueAxis extends RMTextShape {
+public class RMGraphPartValueAxis extends RMShape {
 
     // Whether to draw axis labels
     boolean       _showAxisLabels = true;
@@ -26,21 +27,12 @@ public class RMGraphPartValueAxis extends RMTextShape {
     // The number of axis steps
     int           _axisCount = 0;
     
-    // Default cell paragraph (aligned center)
-    static RMParagraph _defaultParagraph = RMParagraph.DEFAULT.deriveAligned(RMTypes.AlignX.Center);
-
-/**
- * Overrides RMText method to create an xstring that defaults to Arial 10.
- */
-public RMXString createXString()
-{
-    return new RMXString() {
-        public RMFont getDefaultFont() { return RMFont.Helvetica10; }
-        public RMParagraph getDefaultParagraph() { return _defaultParagraph; }
-        public RMFormat getDefaultFormat() { return RMNumberFormat.BASIC; }
-    };
-}
-
+    // The font
+    RMFont        _font;
+    
+    // The format
+    RMFormat      _format = RMNumberFormat.BASIC;
+    
 /**
  * Returns whether the graph draws axis labels.
  */
@@ -102,6 +94,39 @@ public int getAxisCount()  { return _axisCount; }
 public void setAxisCount(int aValue)  { _axisCount = aValue; }
 
 /**
+ * Returns whether font has been set.
+ */
+public boolean isFontSet()  { return _font!=null; }
+
+/**
+ * Return current font.
+ */
+public RMFont getFont()  { return _font!=null? _font : RMFont.Helvetica10; }
+
+/**
+ * Set current font.
+ */
+public void setFont(RMFont aFont)
+{
+    _font = aFont;
+    RMParentShape par = getParent(); if(par!=null) { par.repaint(); par.relayout(); }
+}
+
+/**
+ * Returns the format for the shape.
+ */
+public RMFormat getFormat()  { return _format; }
+
+/**
+ * Sets the format for the shape.
+ */
+public void setFormat(RMFormat aFormat)
+{
+    _format = aFormat;
+    RMParentShape par = getParent(); if(par!=null) { par.repaint(); par.relayout(); }
+}
+    
+/**
  * XML archival.
  */
 public XMLElement toXML(XMLArchiver anArchiver)
@@ -116,6 +141,10 @@ public XMLElement toXML(XMLArchiver anArchiver)
     if(_axisMin!=Float.MIN_VALUE) e.add("axis-min", _axisMin);
     if(_axisMax!=Float.MIN_VALUE) e.add("axis-max", _axisMax);
     if(_axisCount>0) e.add("axis-count", _axisCount);
+    
+    // Archive format
+    if(getFormat()!=RMNumberFormat.BASIC)
+        e.add(getFormat().toXML(anArchiver));
     
     // Return xml element
     return e;
@@ -136,6 +165,11 @@ public Object fromXML(XMLArchiver anArchiver, XMLElement anElement)
     if(anElement.hasAttribute("axis-min")) setAxisMin(anElement.getAttributeFloatValue("axis-min"));
     if(anElement.hasAttribute("axis-max")) setAxisMax(anElement.getAttributeFloatValue("axis-max"));
     if(anElement.hasAttribute("axis-count")) setAxisCount(anElement.getAttributeIntValue("axis-count"));
+    
+    // Unarchive format
+    XMLElement fxml = anElement.getElement("format");
+    if(fxml!=null)
+        setFormat((RMFormat)anArchiver.fromXML(fxml, RMNumberFormat.class, null));
 
     // Return this graph
     return this;

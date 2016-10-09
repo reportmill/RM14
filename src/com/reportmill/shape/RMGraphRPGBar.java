@@ -357,9 +357,9 @@ private void addValueAxisLabels()
     double width = _graph.getWidth();
     double height = _graph.getHeight();
     
-    // Get format from value axis (defaults to basic)
+    // Get format
     RMFormat format = valueAxis.getFormat();
-
+    
     // Create shape for value axis and configure
     RMPolygonShape axis = new RMPolygonShape(); axis.copyShape(_graph);
     double axisX = isVertical()? -5 : 0;
@@ -389,12 +389,12 @@ private void addValueAxisLabels()
     for(int i=0, iMax=getIntervalCount(); i<iMax; i++) { Float interval = getInterval(i);
 
         // Get string for intervalNumber
-        String string = format.formatRM(interval).toString();
-        RMXString xstring = valueAxis.getXString().clone();
-        xstring.addChars(string);
+        String str = format.formatRM(interval).toString();
+        RMXString xstr = new RMXString(str, valueAxis.getFont());
+        xstr.setParagraph(RMParagraph.CENTERED, 0, xstr.length());
         
         // Create new text for label, copy value axis text shape attributes and size to fit
-        RMTextShape label = new RMTextShape(xstring);
+        RMTextShape label = new RMTextShape(xstr);
         label.copyShape(valueAxis);
         label.setBestSize();
         
@@ -448,8 +448,9 @@ private void addLabelAxisLabel(RMRect aRect, RMGroup aGroup)
 {
     // Create label for group: Get label axis, get label (a clone), set text, do RPG and set best size
     RMGraphPartLabelAxis labelAxis = _graph.getLabelAxis();
-    RMTextShape label = (RMTextShape)labelAxis.cloneDeep(); // Create new RMText with attributes of label axis
-    label.setText(labelAxis.getItemKey()); // Set key in text
+    RMTextShape label = new RMTextShape(labelAxis.getItemKey()); // Create new RMText with attributes of label axis
+    label.setFont(labelAxis.getFont());
+    label.getXString().setParagraph(RMParagraph.CENTERED, 0, label.length());
     label.getXString().rpgClone(_rptOwner, aGroup, null, false); // Do rpg on label string
     label.setBestSize();  // Resize label to best size
 
@@ -459,7 +460,8 @@ private void addLabelAxisLabel(RMRect aRect, RMGroup aGroup)
         label.setWidth(labelMaxWidth); label.setHeight(label.getBestHeight()); label.setAlignmentX(AlignX.Center); }
 
     // Get point by graph that we want label to be aligned with
-    RMPoint point2 = isVertical()? new RMPoint(aRect.getMidX(), aRect.getMaxY() + 5) : new RMPoint(aRect.x - 5, aRect.getMidY());
+    RMPoint point2 = isVertical()? new RMPoint(aRect.getMidX(), aRect.getMaxY() + 5) :
+        new RMPoint(aRect.x - 5, aRect.getMidY());
     
     // Get angle of label bounds perimeter point radial that we want to sync to
     double angle = -labelAxis.getRoll();

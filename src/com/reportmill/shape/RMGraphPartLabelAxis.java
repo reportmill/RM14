@@ -1,12 +1,11 @@
 package com.reportmill.shape;
-import com.reportmill.base.*;
 import com.reportmill.text.*;
 import snap.util.*;
 
 /**
  * This shape is used by graph area to hold attributes of the value axis.
  */
-public class RMGraphPartLabelAxis extends RMTextShape {
+public class RMGraphPartLabelAxis extends RMShape {
 
     // Whether to show axis labels
     boolean       _showAxisLabels = true;
@@ -17,9 +16,9 @@ public class RMGraphPartLabelAxis extends RMTextShape {
     // The label axis item key
     String        _itemKey = "@Row@";
     
-    // Default cell paragraph (aligned center)
-    static RMParagraph _defaultParagraph = RMParagraph.DEFAULT.deriveAligned(RMTypes.AlignX.Center);
-
+    // The font
+    RMFont        _font;
+    
 /**
  * Returns whether the graph shows axis labels.
  */
@@ -51,13 +50,22 @@ public String getItemKey()  { return _itemKey; }
 public void setItemKey(String aKey)  { _itemKey = aKey; }
 
 /**
- * Overrides RMText method to create an xstring that is aligned center by default.
+ * Returns whether font has been set.
  */
-public RMXString createXString()
+public boolean isFontSet()  { return _font!=null; }
+
+/**
+ * Return current font.
+ */
+public RMFont getFont()  { return _font!=null? _font : RMFont.Helvetica10; }
+
+/**
+ * Set current font.
+ */
+public void setFont(RMFont aFont)
 {
-    return new RMXString() {
-        public RMParagraph getDefaultParagraph() { return _defaultParagraph; }
-    };
+    _font = aFont;
+    RMParentShape par = getParent(); if(par!=null) { par.repaint(); par.relayout(); }
 }
 
 /**
