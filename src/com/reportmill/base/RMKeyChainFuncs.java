@@ -118,9 +118,19 @@ public static long ceil(Object val)  { return (long)Math.ceil(SnapUtils.doubleVa
 public static long floor(Object val)  { return (long)Math.floor(SnapUtils.doubleValue(val)); }
 
 /**
- * Returns the given value as a double rounded to the nearest integer.
+ * Returns the given double value rounded to the nearest whole number.
  */
 public static long round(Object val)  { return Math.round(SnapUtils.doubleValue(val)); }
+
+/**
+ * Returns the given double value rounded to given number of decimal places.
+ */
+public static double round(Object aVal, Object places)
+{
+    double val = SnapUtils.doubleValue(aVal);
+    double pwr = Math.pow(10, SnapUtils.intValue(places));
+    return Math.round(val*pwr)/pwr;
+}
 
 /**
  * Returns the absolute value of the given value.

@@ -97,14 +97,15 @@ protected void layoutChildren()
         RMRectShape box = new RMRectShape(); box.setColor(graph.getColor(i)); box.setBounds(x,y,16,12); x += 18;
         RMTextShape label = new RMTextShape(); label.setText(text); label.setFont(getFont());
         if(!isPreview) label.getXString().rpgClone(graphRPG._rptOwner, group, null, false);
-        double pw = label.getPrefWidth(), ph = label.getPrefHeight(); label.setBounds(x,y,pw,ph);
+        //double pw = label.getPrefWidth(), ph = label.getPrefHeight(); label.setBounds(x,y,pw,ph);
+        label.setBounds(x,y,getWidth()-x-2,8); label.setBestHeight(); double ph = label.getHeight();
         addChild(box); addChild(label); x = 2; y += ph+2;
     }
     
     // Resize
-    RMRect bounds = getBoundsOfChildren();
-    if(bounds.getMaxX()>getWidth()) setWidth(bounds.getMaxX());
-    if(bounds.getMaxY()>getHeight()) setHeight(bounds.getMaxX());
+    //RMRect bounds = getBoundsOfChildren();
+    //if(bounds.getMaxX()>getWidth()) setWidth(bounds.getMaxX());
+    //if(bounds.getMaxY()>getHeight()) setHeight(bounds.getMaxX());
 }
 
 /**
