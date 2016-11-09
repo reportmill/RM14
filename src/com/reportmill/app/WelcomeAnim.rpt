@@ -88,16 +88,16 @@
     </scene3d>
     <text x="116" y="5" width="199" height="29" opacity="0.6">
       <effect color="#fcfffb" type="shadow" radius="5" dx="2" dy="2" />
-      <font name="Futura Condensed Medium" size="18" />
+      <font name="Arial Black" size="18" />
       <pgraph align="center" />
       <outline color="#000000" />
       <string>ReportMill 14</string>
     </text>
-    <shape x="62" y="28.85" width="294" height="80.148">
+    <shape x="40" y="40" width="338" height="80.148">
       <effect type="reflection" reflection-height="1" fade-height="0.5" />
-      <text y="13.358" width="294" height="53.432" scaley="1.5" asize="~~~,~~~">
+      <text y="6" width="338" height="54" scaley="1.8" asize="~~~,~~~">
         <effect type="emboss" radius="4" />
-        <font name="Futura Condensed Extra Bold" size="50" />
+        <font name="Arial Black" size="48" />
         <outline color="#fcffff" />
         <string>RMStudio 14</string>
       </text>
