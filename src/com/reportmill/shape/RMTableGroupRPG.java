@@ -48,8 +48,10 @@ public RMShape rpgAll()
             if(!RMKeyChain.getBoolValue(_rptOwner, key))
                 continue; }
         
-        // If StartingPageBreak, add page
-        if(table.getStartingPageBreak() && i>0) getPageLast().addPage();
+        // If StartingPageBreak on successive page, add page
+        if(table.getStartingPageBreak() && i>0) {  // assuming there are objects or first row prints when empty
+            if(getGroup(table).size()>0 || table.getChildCount()>0 && table.getRow(0).getPrintEvenIfGroupIsEmpty())
+                getPageLast().addPage(); }
         
         // Do table RPG
         rpgTable(table);
