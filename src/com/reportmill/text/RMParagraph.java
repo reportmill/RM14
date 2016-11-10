@@ -359,8 +359,9 @@ public XMLElement toXML(XMLArchiver anArchiver)
     if(_leftIndentFirst!=_leftIndent) e.add("left-indent-0", _leftIndentFirst);
     if(_rightIndent!=0) e.add("right-indent", _rightIndent);
         
-    // Archive LineSpacing, LineHeightMin, LineHeightMax, ParagraphSpacing
+    // Archive LineSpacing, LineGap, LineHeightMin, LineHeightMax, ParagraphSpacing
     if(_lineSpacing!=1) e.add("line-space", _lineSpacing);
+    if(_lineGap!=0) e.add("line-gap", _lineGap);
     if(_lineHeightMin!=0) e.add("min-line-ht", _lineHeightMin);
     if(_lineHeightMax!=Float.MAX_VALUE) e.add("max-line-ht", _lineHeightMax);
     if(_paragraphSpacing!=0) e.add("pgraph-space", _paragraphSpacing);
@@ -384,8 +385,9 @@ public Object fromXML(XMLArchiver anArchiver, XMLElement anElement)
     _leftIndentFirst = anElement.getAttributeFloatValue("left-indent-0", (float)_leftIndent);
     _rightIndent = anElement.getAttributeFloatValue("right-indent");
     
-    // Archive LineSpacing, LineHeightMin, LineHeightMax, ParagraphSpacing
+    // Archive LineSpacing, LineGap, LineHeightMin, LineHeightMax, ParagraphSpacing
     _lineSpacing = anElement.getAttributeFloatValue("line-space", 1);
+    _lineGap = anElement.getAttributeFloatValue("line-gap");
     _lineHeightMin = anElement.getAttributeFloatValue("min-line-ht");
     _lineHeightMax = anElement.getAttributeFloatValue("max-line-ht", Float.MAX_VALUE);
     _paragraphSpacing = anElement.getAttributeFloatValue("pgraph-space");
