@@ -109,8 +109,10 @@ protected boolean addRowsExtra(RMGroup aGroup, RMTableRowRPG aParentRPG, RMTable
             
             // If Table.StartingPageBreak, set LastRow+Group and return
             if(ctable.getStartingPageBreak() && i>0) {
-                _lastRow = new RMTableRowRPG(); _lastRow._group = group; 
-                _childTables.put(_table, ctable); _groups.put(ctable, group); return false;
+                if(group.size()>0 || ctable.getChildCount()>0 && ctable.getRow(0).getPrintEvenIfGroupIsEmpty()) {
+                    _lastRow = new RMTableRowRPG(); _lastRow._group = group; 
+                    _childTables.put(_table, ctable); _groups.put(ctable, group); return false;
+                }
             }
         }
         
