@@ -10,14 +10,6 @@ public class PDFXTable {
     // List of entries
     List   _entries = new Vector(16);
     
-    // Map of entry names
-    Map    _names = new Hashtable();
-    
-/**
- * Creates an empty xref table.
- */
-public PDFXTable() { }
-
 /**
  * Returns the number of entries in xref table.
  */
@@ -62,16 +54,6 @@ public int indexOfEntry(Object obj)
 }
 
 /**
- * Sets the name for a given entry object.
- */
-public void setNameForObject(String aName, Object anObj)
-{
-    if(indexOfEntry(anObj)>0)
-        _names.put(aName, anObj);
-    else throw new RuntimeException("object not present in xref table");
-}
-
-/**
  * Returns a reference string for the entry object at the given index.
  */
 public String getRefString(int index)
@@ -91,15 +73,6 @@ public String getRefString(Object anObj)
     if(index==-1)
         throw new RuntimeException("object not present in xref table");
     return getRefString(index);
-}
-
-/**
- * Returns a reference string for the given entry object name.
- */
-public String getRefStringForName(String aName)
-{
-    Object obj = _names.get(aName);
-    return obj==null? null : getRefString(obj);
 }
 
 }
