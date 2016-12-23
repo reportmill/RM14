@@ -487,7 +487,9 @@ public RMParentShape rpgAll(ReportOwner anRptOwner, RMShape aParent)
     RMGraph.Type type = getType();
     if(type==RMGraph.Type.Bar || type==RMGraph.Type.BarH) return new RMGraphRPGBar(this, anRptOwner).getGraphShape();
     if(type==RMGraph.Type.Pie) return new RMGraphRPGPie(this, anRptOwner).getGraphShape();
-    return new RMGraphRPGLine(this, anRptOwner).getGraphShape(); // Type Area, Line, Scatter
+    RMParentShape rpg = new RMGraphRPGLine(this, anRptOwner).getGraphShape(); // Type Area, Line, Scatter
+    rpgBindings(anRptOwner, rpg);
+    return rpg;
 }
 
 /**
