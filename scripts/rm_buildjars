@@ -21,6 +21,6 @@ echo "Creating RMStudio14.jar"
 jar cmf MANIFEST.MF RMStudio14.jar com snap
 
 echo "Creating RMStudio14.jar.pack.gz"
-pack200 -r RMStudio14.jar
-jarsigner -storepass rmkeystore RMStudio14.jar RMCertKey13
+#pack200 -r RMStudio14.jar
+#jarsigner -storepass rmkeystore RMStudio14.jar RMCertKey13
 pack200 RMStudio14.jar.pack.gz RMStudio14.jar
