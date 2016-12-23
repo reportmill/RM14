@@ -357,44 +357,25 @@ public static Object RMAllFonts(Object aSize)
 /**
  * Returns string format of given date, using given date format string (category method).
  */
-public static String format(Date aDate, Object stringObj)
+public static String format(Object anObj, Object aString)
 {
-    String formatString = stringObj.toString();
-    RMDateFormat fmt = new RMDateFormat(formatString);
-    return (String)fmt.formatRM(aDate);
-}
+    // Get format string (just return if not string)
+    String fmtStr = aString instanceof String? (String)aString : null; if(fmtStr==null) return null;
+    
+    // If number, get number format and return formatted string
+    if(anObj instanceof Number) {
+        RMFormat fmt = new RMNumberFormat(fmtStr);
+        return (String)fmt.formatRM(anObj);
+    }
 
-/**
- * Returns string format of given number using given decimal format string (category method).
- */
-public static String format(Number aNumber, Object aFormatString)
-{
-    String formatString = aFormatString.toString();
-    RMNumberFormat fmt = new RMNumberFormat(formatString);
-    return (String)fmt.formatRM(aNumber);
-}
+    // If dte, get date format and return formatted string
+    if(anObj instanceof Date) {
+        RMFormat fmt = new RMDateFormat(fmtStr);
+        return (String)fmt.formatRM(anObj);
+    }
 
-/**
- * Returns string format of given Double using given decimal format string (category method).
- */
-public static String format(Double aDouble, Object aFormatString)  { return format((Number)aDouble, aFormatString); }
-
-/**
- * Returns string format of given Float using given decimal format string (category method).
- */
-public static String format(Float aFloat, Object aFormatString)  { return format((Number)aFloat, aFormatString); }
-
-/**
- * Returns string format of given Integer using given decimal format string (category method).
- */
-public static String format(Integer anInt, Object aFormatString)  { return format((Number)anInt, aFormatString); }
-
-/**
- * Returns string format of given BigDecimal using given decimal format string (category method).
- */
-public static String format(BigDecimal aDecimal, Object aFormatString)
-{
-    return format((Number)aDecimal, aFormatString);
+    // Return null
+    return null;
 }
 
 /** 
