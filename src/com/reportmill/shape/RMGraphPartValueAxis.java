@@ -169,7 +169,7 @@ public Object fromXML(XMLArchiver anArchiver, XMLElement anElement)
     // Unarchive format
     XMLElement fxml = anElement.getElement("format");
     if(fxml!=null)
-        setFormat((RMFormat)anArchiver.fromXML(fxml, RMNumberFormat.class, null));
+        setFormat(anArchiver.fromXML(fxml, RMNumberFormat.class, null));
 
     // Return this graph
     return this;

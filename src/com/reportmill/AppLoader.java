@@ -28,7 +28,8 @@ public class AppLoader {
 public static void main(final String args[])
 {
     // Re-invoke on Swing thread
-    if(!SwingUtilities.isEventDispatchThread()) { SwingUtilities.invokeLater(() -> main(args)); return; }
+    Runnable run = new Runnable() { public void run() { main(args); }};
+    if(!SwingUtilities.isEventDispatchThread()) { SwingUtilities.invokeLater(run); return; }
     
     // Invoke real main with exception handler
     try { main1(args); }
@@ -62,7 +63,8 @@ public static void main1(final String args[]) throws Exception
         throw new RuntimeException("Main Jar not found!");
     
     // Check for updates in background thread
-    new Thread(() -> checkForUpdatesSilent()).start();
+    Runnable run = new Runnable() { public void run() { checkForUpdatesSilent(); }};
+    new Thread(run).start();
     
     // Create URLClassLoader for main jar file, get App class and invoke main
     URLClassLoader ucl = new URLClassLoader(new URL[] { jar.toURI().toURL() });
@@ -129,8 +131,9 @@ private static void checkForUpdates() throws IOException, MalformedURLException
     updatePacked.delete();
     
     // Let the user know
-    String msg = "A new update is available. Restart application to apply";
-    SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(null, msg));
+    final String msg = "A new update is available. Restart application to apply";
+    Runnable run = new Runnable() { public void run() { JOptionPane.showMessageDialog(null, msg); }};
+    SwingUtilities.invokeLater(run);
 }
 
 /**
