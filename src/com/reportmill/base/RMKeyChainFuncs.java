@@ -2,7 +2,6 @@ package com.reportmill.base;
 import com.reportmill.shape.RMImageShape;
 import com.reportmill.text.*;
 import java.lang.reflect.*;
-import java.math.BigDecimal;
 import java.util.*;
 import snap.util.*;
 
