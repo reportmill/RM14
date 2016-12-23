@@ -28,8 +28,7 @@ public class AppLoader {
 public static void main(final String args[])
 {
     // Re-invoke on Swing thread
-    if(!SwingUtilities.isEventDispatchThread()) {
-        SwingUtilities.invokeLater(new Runnable() { public void run() { main(args); }}); return; }
+    if(!SwingUtilities.isEventDispatchThread()) { SwingUtilities.invokeLater(() -> main(args)); return; }
     
     // Invoke real main with exception handler
     try { main1(args); }
@@ -63,7 +62,7 @@ public static void main1(final String args[]) throws Exception
         throw new RuntimeException("Main Jar not found!");
     
     // Check for updates in background thread
-    new Thread(new Runnable() { public void run() { checkForUpdatesSilent(); }}).start();
+    new Thread(() -> checkForUpdatesSilent()).start();
     
     // Create URLClassLoader for main jar file, get App class and invoke main
     URLClassLoader ucl = new URLClassLoader(new URL[] { jar.toURI().toURL() });
@@ -116,7 +115,7 @@ private static void checkForUpdates() throws IOException, MalformedURLException
     // Get URL connection and lastModified time
     File jarFile = getAppFile(JarName);
     URL url = new URL(JarURL);
-    URLConnection connection = url.openConnection();
+    URLConnection connection = url.openConnection(); connection.setUseCaches(false);
     long mod0 = jarFile.lastModified(), mod1 = connection.getLastModified();
     if(mod0>=mod1) { System.out.println("No update available at " + JarURL + '(' + mod0 + '>' + mod1 + ')'); return; }
     
@@ -130,9 +129,8 @@ private static void checkForUpdates() throws IOException, MalformedURLException
     updatePacked.delete();
     
     // Let the user know
-    SwingUtilities.invokeLater(new Runnable() { public void run() {
-        JOptionPane.showMessageDialog(null, "A new update is available. Restart application to apply");
-    }});
+    String msg = "A new update is available. Restart application to apply";
+    SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(null, msg));
 }
 
 /**
