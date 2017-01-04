@@ -248,87 +248,37 @@ public Rectangle getBounds()  { return getBounds2D().getBounds(); }
  */
 public RMRect getBounds2D()
 {
-    // If bounds is not set, calculate bounds
-    if(_bounds==null)
-        _bounds = getBounds(false);
-    
-    // Return bounds
-    return _bounds;
-}
+    // If already set, just return
+    if(_bounds!=null) return _bounds;
 
-/**
- * Returns the bounds for the path with an option to ignore orphaned (consecutive) moveTos.
- * Used to have parameter for inRect.
- */
-private RMRect getBounds(boolean skipConsecutiveMoveTos) 
-{
-    // Create bounds rect
+    // Create bounds rect and declare loop variables for bounds min/max points and segment points
     RMRect bounds = new RMRect();
-    
-    // Declare variable for bounds min point and max point
-    double p1x = Double.MAX_VALUE;
-    double p1y = Double.MAX_VALUE;
-    double p2x = -Double.MAX_VALUE;
-    double p2y = -Double.MAX_VALUE;
-    
-    // Declare variables for last segment point and path segment points
-    double lastX = p1x;
-    double lastY = p1y;
-    RMPoint points[] = new RMPoint[3];
+    double p1x = Double.MAX_VALUE, p1y = Double.MAX_VALUE;
+    double p2x = -Double.MAX_VALUE, p2y = -Double.MAX_VALUE;
+    RMPoint pts[] = new RMPoint[3]; double lx = p1x, ly = p1y;
 
     // Iterate over path elements    
-    for(int i=0, iMax=getElementCount(); i<iMax; i++) { byte type = getElement(i, points);
+    for(int i=0, iMax=getElementCount(); i<iMax; i++) { byte type = getElement(i, pts);
 
         // Evaluate bounds expansion of segment based on type
         switch(type) {
 
-            // If MOVE_TO see if we need to skip this point
-            case MOVE_TO:
-                
-                // If skipping consecutive MOVE_TOs and next element is MOVE_TO (or path end), then break
-                if(skipConsecutiveMoveTos && (i+1==iMax || getElement(i+1)==MOVE_TO))
-                    break;
-            
-            // If MOVE_TO or LINE_TO, simply do min/max comparison for path point
-            case LINE_TO:
-                lastX = points[0].x;
-                lastY = points[0].y;
-                p1x = Math.min(p1x, lastX);
-                p1y = Math.min(p1y, lastY);
-                p2x = Math.max(p2x, lastX);
-                p2y = Math.max(p2y, lastY);
-                break;
+            // Handle MOVE_TO, LINE_TO: Simply do min/max compare for path point
+            case MOVE_TO: case LINE_TO: lx = pts[0].x; ly = pts[0].y;
+                p1x = Math.min(p1x, lx); p2x = Math.max(p2x, lx);
+                p1y = Math.min(p1y, ly); p2y = Math.max(p2y, ly); break;
 
-            // Handle QuadTo
+            // Handle QuadTo: Get bounds rect for segment and evaluate bounds expansion for curve end-point
             case QUAD_TO:
-                
-                // Get bounds rect for segment
-                RMQuadratic.getBounds(lastX, lastY, points[0].x, points[0].y, points[1].x, points[1].y, bounds);
-
-                // Evaluate bounds expansion for curve end-point
-                p1x = Math.min(p1x, bounds.x);
-                p1y = Math.min(p1y, bounds.y);
-                p2x = Math.max(p2x, (float)bounds.getMaxX());
-                p2y = Math.max(p2y, (float)bounds.getMaxY());
-                lastX = points[1].x;
-                lastY = points[1].y;
-                break;
+                RMQuadratic.getBounds(lx, ly, pts[0].x, pts[0].y, lx=pts[1].x, ly=pts[1].y, bounds);
+                p1x = Math.min(p1x, bounds.x); p2x = Math.max(p2x, bounds.getMaxX());
+                p1y = Math.min(p1y, bounds.y); p2y = Math.max(p2y, bounds.getMaxY()); break;
           
-            // Handle CurveTo
+            // Handle CurveTo: Get bounds rect for segment and evaluate bounds expansion for curve end-point
             case CURVE_TO:
-                
-                // Get bounds rect for segment
-                RMBezier.getBounds(lastX, lastY, points[0].x, points[0].y, points[1].x, points[1].y,
-                    points[2].x, points[2].y, bounds);
-
-                // Evaluate bounds expansion for curve end-point
-                p1x = Math.min(p1x, bounds.x);
-                p1y = Math.min(p1y, bounds.y);
-                p2x = Math.max(p2x, bounds.getMaxX());
-                p2y = Math.max(p2y, bounds.getMaxY());
-                lastX = points[2].x;
-                lastY = points[2].y;
-                break;
+                RMBezier.getBounds(lx, ly, pts[0].x, pts[0].y, pts[1].x, pts[1].y, lx=pts[2].x, ly=pts[2].y, bounds);
+                p1x = Math.min(p1x, bounds.x); p2x = Math.max(p2x, bounds.getMaxX());
+                p1y = Math.min(p1y, bounds.y); p2y = Math.max(p2y, bounds.getMaxY()); break;
 
             // Handle CLOSE or other
             default: break;
@@ -340,7 +290,7 @@ private RMRect getBounds(boolean skipConsecutiveMoveTos)
         bounds.setRect(p1x, p1y, p2x - p1x, p2y - p1y);
 
     // Return bounds rect
-    return bounds;
+    return _bounds = bounds;
 }
 
 /**

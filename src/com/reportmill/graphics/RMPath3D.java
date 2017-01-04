@@ -41,11 +41,7 @@ public RMPath3D() { }
 /**
  * Creates a 3D path from a 2D path with a depth.
  */
-public RMPath3D(RMPath aPath, double aDepth)
-{
-    // Add given 2D path at given depth
-    addPath(aPath, aDepth);
-}
+public RMPath3D(RMPath aPath, double aDepth)  { addPath(aPath, aDepth); }
 
 /**
  * Returns the number of elements in the path3d.
@@ -153,27 +149,20 @@ public void close()  { _elements.add(new Byte(CLOSE)); }
  */
 public void addPath(RMPath aPath, double aDepth)
 {
-    // Create points array for iterating over given path
-    RMPoint points[] = new RMPoint[3];
-    
     // Iterate over elements in given path
-    for(int i=0, iMax=aPath.getElementCount(); i<iMax; i++) {
-        
-        // Get current loop element type
-        int type = aPath.getElement(i, points);
+    RMPoint pts[] = new RMPoint[3];
+    for(int i=0, iMax=aPath.getElementCount(); i<iMax; i++) { int type = aPath.getElement(i, pts);
         
         // Handle types
         switch(type) {
             case MOVE_TO:
                 if(i+1<aPath.getElementCount() && aPath.getElement(i+1)!=MOVE_TO)
-                    moveTo(points[0].x, points[0].y, aDepth);
+                    moveTo(pts[0].x, pts[0].y, aDepth);
                 break;
-            case LINE_TO: lineTo(points[0].x, points[0].y, aDepth); break;
-            case QUAD_TO: quadTo(points[0].x, points[0].y, aDepth, points[1].x, points[1].y, aDepth); break;
+            case LINE_TO: lineTo(pts[0].x, pts[0].y, aDepth); break;
+            case QUAD_TO: quadTo(pts[0].x, pts[0].y, aDepth, pts[1].x, pts[1].y, aDepth); break;
             case CURVE_TO:
-                curveTo(points[0].x, points[0].y, aDepth, points[1].x, points[1].y, aDepth,
-                        points[2].x, points[2].y, aDepth);
-                break;
+                curveTo(pts[0].x, pts[0].y, aDepth, pts[1].x, pts[1].y, aDepth, pts[2].x, pts[2].y, aDepth); break;
             case CLOSE: close(); break;
         }
     }
@@ -211,12 +200,9 @@ public RMVector3D getNormal()
         // Create a new normal vector
         _normal = new RMVector3D(0, 0, 0);
         
-        // Calculate least-square-fit normal.
-        // This works for either convex or concave polygons.
-        // Reference is 
-        //   Newell's Method for Computing the Plane Equation of a Polygon.
+        // Calculate least-square-fit normal. Works for either convex or concave polygons.
+        // Reference is Newell's Method for Computing the Plane Equation of a Polygon.
         //   Graphics Gems III, David Kirk (Ed.), AP Professional, 1992.
-
         for(int pc=getPointCount(), i=0; i<pc; i++) {
             RMPoint3D cur = getPoint(i), next = getPoint((i+1)%pc);
             _normal.x += (cur.y - next.y) * (cur.z + next.z);
@@ -226,8 +212,7 @@ public RMVector3D getNormal()
  
         // Normalize the result
         _normal.normalize();
-        // swap the sign of the normal so it matches the right hand rule
-        _normal.negate();
+        _normal.negate(); // swap sign of normal so it matches right hand rule
     }
 
     // Return normal
@@ -265,13 +250,13 @@ private void reverse(int element, RMPoint3D lastPoint, RMPoint3D lastMoveTo)
     }
     
     // Get info for this element
-    RMPoint3D points[] = new RMPoint3D[3], lp = null, lmt = lastMoveTo;
-    int type = getElement(element, points);
+    RMPoint3D pts[] = new RMPoint3D[3], lp = null, lmt = lastMoveTo;
+    int type = getElement(element, pts);
     switch(type) {
-        case MOVE_TO: lmt = points[0];
-        case LINE_TO: lp = points[0]; break;
-        case QUAD_TO: lp = points[1]; break;
-        case CURVE_TO: lp = points[2]; break;
+        case MOVE_TO: lmt = pts[0];
+        case LINE_TO: lp = pts[0]; break;
+        case QUAD_TO: lp = pts[1]; break;
+        case CURVE_TO: lp = pts[2]; break;
         case CLOSE: lp = lastMoveTo;
     }
 
@@ -290,11 +275,10 @@ private void reverse(int element, RMPoint3D lastPoint, RMPoint3D lastMoveTo)
                 lineTo(lastPoint.x, lastPoint.y, lastPoint.z);
             break;
         case QUAD_TO:
-            quadTo(points[0].x, points[0].y, points[0].z, lastPoint.x, lastPoint.y, lastPoint.z);
+            quadTo(pts[0].x, pts[0].y, pts[0].z, lastPoint.x, lastPoint.y, lastPoint.z);
             break;
         case CURVE_TO:
-            curveTo(points[1].x, points[1].y, points[1].z, points[0].x, points[0].y, points[0].z,
-                    lastPoint.x, lastPoint.y, lastPoint.z);
+            curveTo(pts[1].x, pts[1].y, pts[1].z, pts[0].x, pts[0].y, pts[0].z, lastPoint.x, lastPoint.y, lastPoint.z);
             break;
         case CLOSE:
             moveTo(lastMoveTo.x, lastMoveTo.y, lastMoveTo.z);
@@ -316,9 +300,7 @@ public void transform(RMTransform3D xform)
         getPoint(i).transform(xform);
     
     // Remove center point from _points list and reset normal
-    _points.remove(_points.size()-1);
-    _normal = null;
-    _bbox=null;
+    _points.remove(_points.size()-1); _normal = null; _bbox = null;
 }
 
 /**
@@ -362,31 +344,22 @@ public RMPath getPath()
     // Create new path
     RMPath path = new RMPath();
     
-    // Create points array for iterating over this path3d
-    RMPoint3D points[] = new RMPoint3D[3];
-    
     // Iterate over this path3d
-    for(int i=0, iMax=getElementCount(); i<iMax; i++) {
-        
-        // Get type
-        int type = getElement(i, points);
+    RMPoint3D pts[] = new RMPoint3D[3];
+    for(int i=0, iMax=getElementCount(); i<iMax; i++) { int type = getElement(i, pts);
         
         // Do 2d operation
         switch(type) {
-            case MOVE_TO: path.moveTo(points[0].x, points[0].y); break;
-            case LINE_TO: path.lineTo(points[0].x, points[0].y); break;
-            case QUAD_TO: path.quadTo(points[0].x, points[0].y, points[1].x, points[1].y); break;
-            case CURVE_TO:
-                path.curveTo(points[0].x, points[0].y, points[1].x, points[1].y, points[2].x, points[2].y);
-                break;
+            case MOVE_TO: path.moveTo(pts[0].x, pts[0].y); break;
+            case LINE_TO: path.lineTo(pts[0].x, pts[0].y); break;
+            case QUAD_TO: path.quadTo(pts[0].x, pts[0].y, pts[1].x, pts[1].y); break;
+            case CURVE_TO: path.curveTo(pts[0].x, pts[0].y, pts[1].x, pts[1].y, pts[2].x, pts[2].y); break;
             case CLOSE: path.closePath();
         }
     }
     
     // Draw surface normals - handy for debugging
-    //RMPoint3D c=getCenter();
-    //RMVector3D norm=getNormal();
-    //path.moveTo(c.x, c.y); path.lineTo(c.x+norm.x*20, c.y+norm.y*20);
+    //RMPoint3D c = getCenter(); RMVector3D n = getNormal(); path.moveTo(c.x,c.y); path.lineTo(c.x+n.x*20,c.y+n.y*20);
     
     // Return path
     return path;
@@ -458,8 +431,7 @@ public RMPoint3D[] getBBox()
         _bbox[0] = new RMPoint3D(Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE);
         _bbox[1] = new RMPoint3D(-Float.MAX_VALUE, -Float.MAX_VALUE, -Float.MAX_VALUE);
         
-        for(int i=0, iMax=getPointCount(); i<iMax; i++) {
-            RMPoint3D pt = getPoint(i);
+        for(int i=0, iMax=getPointCount(); i<iMax; i++) { RMPoint3D pt = getPoint(i);
             _bbox[0].x = Math.min(_bbox[0].x, pt.x);
             _bbox[0].y = Math.min(_bbox[0].y, pt.y);
             _bbox[0].z = Math.min(_bbox[0].z, pt.z);
@@ -506,16 +478,10 @@ public double getZMax()  { return getBBox()[1].z; }
  */
 public Object clone()
 {
-    // Create new path 3d
+    // Create new path 3d, clone elements, points deep and return clone
     RMPath3D clone = new RMPath3D();
-    
-    // Clone elements
-    clone._elements = RMListUtils.clone(_elements); // really unnecessary, since Bytes are immutable
-    
-    // Clone points deep
+    clone._elements = RMListUtils.clone(_elements);
     clone._points = RMListUtils.cloneDeep(_points);
-    
-    // Return clone
     return clone;
 }
 
