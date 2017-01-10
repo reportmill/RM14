@@ -416,9 +416,9 @@ protected static RMTool[] createToolBarTools()
     tools.add(RMTool.getTool(RMOvalShape.class));
     tools.add(RMTool.getTool(RMTextShape.class));
     tools.add(RMTool.getTool(RMPolygonShape.class));
-    tools.add(RMTool.getTool(RMStarShape.class));    
+    //tools.add(RMTool.getTool(RMStarShape.class));    
     tools.add(new RMPolygonShapeTool.PencilTool());
-    tools.add(RMTool.getTool(RMFlowShape.class));
+    //tools.add(RMTool.getTool(RMFlowShape.class));
     return tools.toArray(new RMTool[0]);
 }
 

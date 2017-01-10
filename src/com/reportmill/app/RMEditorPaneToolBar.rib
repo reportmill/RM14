@@ -52,15 +52,13 @@
     <jlabel name="PreviewDropDown" x="98" y="21" width="10" height="10" image="tiny_triangle.png" align="center">
       <font name="Arial" size="11" />
     </jlabel>
-    <jtogglebutton name="RMSelectToolButton" x="112" y="5" width="25" height="25" ttip="Selection Tool" image="/com/reportmill/apptools/RMSelect.png" align="center" text-position="center" selected="true" bgroup="bg1" />
-    <jtogglebutton name="RMLineShapeToolButton" x="137" y="5" width="25" height="25" ttip="Line Tool" image="/com/reportmill/apptools/RMLineShape.png" align="center" bgroup="bg1" />
-    <jtogglebutton name="RMRectShapeToolButton" x="162" y="5" width="25" height="25" ttip="Rectangle Tool" image="/com/reportmill/apptools/RMRectShape.png" align="center" bgroup="bg1" />
-    <jtogglebutton name="RMOvalShapeToolButton" x="187" y="5" width="25" height="25" ttip="Oval Tool" image="/com/reportmill/apptools/RMOvalShape.png" align="center" bgroup="bg1" />
-    <jtogglebutton name="RMTextToolButton" x="212" y="5" width="25" height="25" ttip="Text Tool" image="/com/reportmill/apptools/RMText.png" align="center" bgroup="bg1" />
-    <jtogglebutton name="RMPolygonShapeToolButton" x="237" y="5" width="25" height="25" ttip="Polygon Tool" image="/com/reportmill/apptools/RMPolygonShape.png" align="center" bgroup="bg1" />
-    <jtogglebutton name="RMStarShapeToolButton" x="262" y="5" width="25" height="25" ttip="Star Tool" image="/com/reportmill/apptools/RMStarShape.png" align="center" bgroup="bg1" />
-    <jtogglebutton name="PencilToolButton" x="287" y="5" width="25" height="25" ttip="Pencil Tool" image="/com/reportmill/apptools/RMPencilShape.png" align="center" bgroup="bg1" />
-    <jtogglebutton name="RMFlowShapeToolButton" x="312" y="5" width="25" height="25" ttip="Flow Shape Tool" image="/com/reportmill/apptools/RMShape.png" align="center" bgroup="bg1" />
+    <jtogglebutton name="RMSelectToolButton" x="132" y="5" width="25" height="25" ttip="Selection Tool" image="/com/reportmill/apptools/RMSelect.png" align="center" text-position="center" selected="true" bgroup="bg1" />
+    <jtogglebutton name="RMLineShapeToolButton" x="157" y="5" width="25" height="25" ttip="Line Tool" image="/com/reportmill/apptools/RMLineShape.png" align="center" bgroup="bg1" />
+    <jtogglebutton name="RMRectShapeToolButton" x="182" y="5" width="25" height="25" ttip="Rectangle Tool" image="/com/reportmill/apptools/RMRectShape.png" align="center" bgroup="bg1" />
+    <jtogglebutton name="RMOvalShapeToolButton" x="207" y="5" width="25" height="25" ttip="Oval Tool" image="/com/reportmill/apptools/RMOvalShape.png" align="center" bgroup="bg1" />
+    <jtogglebutton name="RMTextToolButton" x="232" y="5" width="25" height="25" ttip="Text Tool" image="/com/reportmill/apptools/RMText.png" align="center" bgroup="bg1" />
+    <jtogglebutton name="RMPolygonShapeToolButton" x="257" y="5" width="25" height="25" ttip="Polygon Tool" image="/com/reportmill/apptools/RMPolygonShape.png" align="center" bgroup="bg1" />
+    <jtogglebutton name="PencilToolButton" x="282" y="5" width="25" height="25" ttip="Pencil Tool" image="/com/reportmill/apptools/RMPencilShape.png" align="center" bgroup="bg1" />
     <menubutton name="AddShapesMenuButton" x="370" y="2" width="36" height="32" ttip="Add Shapes" image="AddShapes.png" border="false" popup-x="15" popup-y="24" popup-width="180" popup-height="200">
       <jmenuitem name="AddTableButton" text="Table" image="/com/reportmill/apptools/RMTable.png" icon-text-gap="10" />
       <jmenuitem name="AddGraphButton" text="Graph" image="/com/reportmill/apptools/RMGraph.png" icon-text-gap="10" />
