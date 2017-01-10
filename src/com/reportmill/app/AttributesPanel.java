@@ -48,8 +48,8 @@ protected JComponent createUI()
     _tabPane.addTab("Keys", new JLabel());
     _tabPane.addTab("Color", new JLabel());
     _tabPane.addTab("Font", new JLabel());
-    _tabPane.addTab("Fmt", new JLabel());
-    _tabPane.addTab("Gallery", new JLabel());
+    _tabPane.addTab("Format", new JLabel());
+    //_tabPane.addTab("Gallery", new JLabel());
     _tabPane.setPreferredSize(new Dimension(275, 290));
     return _tabPane;
 }
@@ -110,6 +110,9 @@ public int getVisible()  { return isVisible()? _tabPane.getSelectedIndex() : -1;
  */
 public void setVisible(final int anIndex)
 {
+    if(anIndex==4 && _tabPane.getTabCount()==4)
+        _tabPane.addTab("Gal", new JLabel());
+        
     // If RMEditor is null, delay this call
     if(RMEditor.getMainEditor()==null) { runLater(new Runnable() { public void run() {
         setVisible(anIndex); }}); return; }

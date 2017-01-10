@@ -108,11 +108,11 @@
   </jmenu>
   <jmenu name="ToolsMenu" text="Tools">
     <jmenuitem name="InspectorMenuItem" text="Inspector..." />
-    <jmenuitem name="GalleryPanelMenuItem" text="Gallery Panel..." />
+    <jmenuitem name="KeysPanelMenuItem" text="Keys Panel..." key="meta K" />
     <jmenuitem name="ColorPanelMenuItem" text="Color Panel..." key="meta shift C" />
     <jmenuitem name="FontPanelMenuItem" text="Font Panel..." />
     <jmenuitem name="FormatPanelMenuItem" text="Format Panel..." key="meta F" />
-    <jmenuitem name="KeysPanelMenuItem" text="Keys Panel..." key="meta K" />
+    <jmenuitem name="GalleryPanelMenuItem" text="Gallery Panel..." />
     <jmenuitem />
     <jcheckboxmenuitem name="ShowRulersMenuItem" text="Show Rulers" key="meta R" />
     <jmenuitem />

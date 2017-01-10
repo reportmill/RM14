@@ -174,6 +174,12 @@ public void setVisible(final int anIndex)
         setNodeValue("OffscreenButton", true);
     }
     
+    // If index is 8, show _animation
+    if(anIndex==8) {
+        setInspector(_animation);
+        setNodeValue("OffscreenButton", true);
+    }
+    
     // If inspector panel isn't visible, set window visible
     if(!isVisible())
         getWindow().setVisible(SwingWindow.Pos.BOTTOM_RIGHT, -10, -5, "InspectorPanel", false);

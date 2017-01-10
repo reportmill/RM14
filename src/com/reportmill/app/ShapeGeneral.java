@@ -107,27 +107,6 @@ public void resetUI()
     // Reset BindingsText
     Binding binding = shape.getBinding(pname);
     setNodeValue("BindingsText", binding!=null? binding.getKey() : null);
-    
-    
-    // Reset Event checkboxes
-    setNodeValue("KeyPressedCheckBox", shape.isEnabled(KeyPressed));
-    setNodeValue("KeyReleasedCheckBox", shape.isEnabled(KeyReleased));
-    setNodeValue("KeyTypedCheckBox", shape.isEnabled(KeyTyped));
-    setNodeValue("KeyFinishedCheckBox", shape.isEnabled(KeyFinished));
-    setNodeValue("MousePressedCheckBox", shape.isEnabled(MousePressed));
-    setNodeValue("MouseDraggedCheckBox", shape.isEnabled(MouseDragged));
-    setNodeValue("MouseReleasedCheckBox", shape.isEnabled(MouseReleased));
-    setNodeValue("MouseClickedCheckBox", shape.isEnabled(MouseClicked));
-    setNodeValue("MouseFinishedCheckBox", shape.isEnabled(MouseFinished));
-    setNodeValue("MouseEnteredCheckBox", shape.isEnabled(MouseEntered));
-    setNodeValue("MouseMovedCheckBox", shape.isEnabled(MouseMoved));
-    setNodeValue("MouseExitedCheckBox", shape.isEnabled(MouseExited));
-    setNodeValue("DragEnterCheckBox", shape.isEnabled(DragEnter));
-    setNodeValue("DragOverCheckBox", shape.isEnabled(DragOver));
-    setNodeValue("DragExitCheckBox", shape.isEnabled(DragExit));
-    setNodeValue("DragDropCheckBox", shape.isEnabled(DragDrop));
-    setNodeValue("FocusGainedCheckBox", shape.isEnabled(UIEvent.Type.FocusGained));
-    setNodeValue("FocusLostCheckBox", shape.isEnabled(UIEvent.Type.FocusLost));
 }
 
 /**
@@ -164,21 +143,6 @@ public void respondUI(SwingEvent anEvent)
         // Reload table and reset selection
         _bindingsTableModel.fireTableDataChanged();
         _bindingsTable.setRowSelectionInterval(row, row);
-    }
-    
-    // Handle Event CheckBoxes
-    if(anEvent.equals("KeyPressedCheckBox") || anEvent.equals("KeyReleasedCheckBox") ||
-        anEvent.equals("KeyTypedCheckBox") || anEvent.equals("KeyFinishedCheckBox") ||
-        anEvent.equals("MousePressedCheckBox") || anEvent.equals("MouseDraggedCheckBox") ||
-        anEvent.equals("MouseReleasedCheckBox") || anEvent.equals("MouseClickedCheckBox") ||
-        anEvent.equals("MouseFinishedCheckBox") || anEvent.equals("MouseEnteredCheckBox") ||
-        anEvent.equals("MouseMovedCheckBox") || anEvent.equals("MouseExitedCheckBox") ||
-        anEvent.equals("DragEnterCheckBox") || anEvent.equals("DragOverCheckBox") ||
-        anEvent.equals("DragExitCheckBox") || anEvent.equals("DragDropCheckBox") ||
-        anEvent.equals("FocusGainedCheckBox") || anEvent.equals("FocusLostCheckBox")) {
-        UIEvent.Type eventType = UIEvent.Type.valueOf(anEvent.getName().replace("CheckBox", ""));
-        for(RMShape s : shapes)
-            s.setEnabled(eventType, anEvent.getBoolValue());
     }
 }
 

@@ -48,26 +48,5 @@
         </panel>
       </jtabbedpane>
     </panel>
-    <panel x="11" y="30" width="254" height="282" title="Events">
-      <font name="Arial" size="11" />
-      <jcheckbox name="KeyPressedCheckBox" x="5" y="5" width="125" height="22" text="Key Pressed" align="left" />
-      <jcheckbox name="KeyReleasedCheckBox" x="5" y="26" width="125" height="22" text="Key Released" align="left" />
-      <jcheckbox name="KeyTypedCheckBox" x="5" y="47" width="125" height="22" text="Key Typed" align="left" />
-      <jcheckbox name="KeyFinishedCheckBox" x="5" y="68" width="125" height="22" text="Key Finished" align="left" />
-      <jcheckbox name="MousePressedCheckBox" x="5" y="89" width="125" height="22" text="Mouse Pressed" align="left" />
-      <jcheckbox name="MouseDraggedCheckBox" x="5" y="110" width="125" height="22" text="Mouse Dragged" align="left" />
-      <jcheckbox name="MouseReleasedCheckBox" x="5" y="131" width="125" height="22" text="Mouse Released" align="left" />
-      <jcheckbox name="MouseClickedCheckBox" x="5" y="152" width="125" height="22" text="Mouse Clicked" align="left" />
-      <jcheckbox name="MouseFinishedCheckBox" x="5" y="173" width="125" height="22" text="Mouse Finished" align="left" />
-      <jcheckbox name="MouseEnteredCheckBox" x="5" y="194" width="125" height="22" text="Mouse Entered" align="left" />
-      <jcheckbox name="MouseMovedCheckBox" x="5" y="215" width="125" height="22" text="Mouse Moved" align="left" />
-      <jcheckbox name="MouseExitedCheckBox" x="5" y="236" width="125" height="22" text="Mouse Exited" align="left" />
-      <jcheckbox name="DragEnterCheckBox" x="130" y="5" width="125" height="22" text="Drag Enter" align="left" />
-      <jcheckbox name="DragOverCheckBox" x="130" y="26" width="125" height="22" text="Drag Over" align="left" />
-      <jcheckbox name="DragExitCheckBox" x="130" y="47" width="125" height="22" text="Drag Exit" align="left" />
-      <jcheckbox name="DragDropCheckBox" x="130" y="68" width="125" height="22" text="Drag Drop" align="left" />
-      <jcheckbox name="FocusGainedCheckBox" x="130" y="89" width="125" height="22" text="Focus Gained" align="left" />
-      <jcheckbox name="FocusLostCheckBox" x="130" y="110" width="125" height="22" text="Focus Lost" align="left" />
-    </panel>
   </jtabbedpane>
 </panel>
