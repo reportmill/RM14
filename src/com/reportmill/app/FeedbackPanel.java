@@ -49,17 +49,17 @@ public void sendFeedback()
     env.append("OS: " + System.getProperty("os.name") + " (" + System.getProperty("os.version") + ")");
     
     // Get to address
-    String toAddr = "support@reportmill.com";
+    final String toAddr = "support@reportmill.com";
     
     // Get from address
     String name = getNodeStringValue("UserText"); int nlen = name!=null? name.length() : 0;
     String email = getNodeStringValue("EmailText"); int elen = email!=null? email.length() : 0;
     if(nlen>0 && elen>0) email = name + " <" + email + '>';
     else if(nlen>0) email = name; else if(elen==0) email = "Anonymous";
-    String fromAddr = email;
+    final String fromAddr = email;
     
     // Get subject
-    String subject = "ReportMill Feedback";
+    final String subject = "ReportMill Feedback";
     
     // Get body
     StringBuffer sb = new StringBuffer();
@@ -70,10 +70,10 @@ public void sendFeedback()
     sb.append("Module: ").append(getNodeStringValue("ModuleComboBox")).append('\n').append('\n');
     sb.append("Title: ").append(getNodeStringValue("TitleText")).append('\n').append('\n');
     sb.append(getNodeStringValue("DescriptionText")).append('\n').append('\n').append(env);
-    String body = sb.toString();
+    final String body = sb.toString();
     
     // Get URL
-    String url = "http://reportmill.com/cgi-bin/SendMail.py";
+    final String url = "http://reportmill.com/cgi-bin/SendMail.py";
 
     // Send email in background thread
     new Thread() { public void run() {

@@ -68,26 +68,26 @@ public void uncaughtException(Thread t, Throwable aThrowable)
 public void sendException()
 {        
     // Get to address
-    String toAddr = "support@reportmill.com";
+    final String toAddr = "support@reportmill.com";
     
     // Get from address
     String name = getNodeStringValue("UserText"); int nlen = name!=null? name.length() : 0;
     String email = getNodeStringValue("EmailText"); int elen = email!=null? email.length() : 0;
     if(nlen>0 && elen>0) email = name + " <" + email + '>';
     else if(nlen>0) email = name; else if(elen==0) email = "Anonymous";
-    String fromAddr = email;
+    final String fromAddr = email;
     
     // Get subject
-    String subject = "ReportMill Exception Report";
+    final String subject = "ReportMill Exception Report";
     
     // Get body
     String scenario = getNodeStringValue("ScenarioText");
     if(scenario==null || scenario.length()==0) scenario = "<Not provided>";
     String btrace = getNodeStringValue("BacktraceText");
-    String body = String.format("%s\n\nFrom:\n%s\n\nUser Scenario:\n%s\n\n%s", subject, fromAddr, scenario, btrace);
+    final String body = String.format("%s\n\nFrom:\n%s\n\nUser Scenario:\n%s\n\n%s", subject, fromAddr, scenario, btrace);
     
     // Get url
-    String url = "http://reportmill.com/cgi-bin/SendMail.py";
+    final String url = "http://reportmill.com/cgi-bin/SendMail.py";
         
     // Send email in background thread
     new Thread() { public void run() {
