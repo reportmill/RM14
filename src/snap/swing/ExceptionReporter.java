@@ -1,6 +1,5 @@
 package snap.swing;
 import java.awt.Dimension;
-import java.util.*;
 import javax.swing.JTextArea;
 import snap.util.*;
 
@@ -9,22 +8,9 @@ import snap.util.*;
  */
 public class ExceptionReporter extends SwingOwner implements Thread.UncaughtExceptionHandler {
     
-    // The cgimail template URL
-    String         _url = "http://www.reportmill.com/cgi-bin/cgiemail/email/rm-exception.txt";
-    
     // Tells whether this exception reporter has been run before
     boolean        _done = false;
     
-/**
- * Returns the URL.
- */
-public String getURL()  { return _url; }
-
-/**
- * Sets the URL.
- */
-public void setURL(String aURL)  { _url = aURL; }
-
 /**
  * Creates a new exception reporter for given throwable.
  */
@@ -77,22 +63,47 @@ public void uncaughtException(Thread t, Throwable aThrowable)
 }
 
 /**
- * Send exception via cgiemail at reportmill.com.
+ * Send exception via SendMail.py at reportmill.com.
  */
 public void sendException()
 {        
-    // Set keys user-email, user-name, user-comment, and exception represent (they are used in cgiemail template)
-    final Map map = new HashMap();
-    map.put("user-name", getNodeStringValue("UserText"));
-    map.put("user-email", getNodeStringValue("EmailText"));
-    map.put("user-comment", getNodeStringValue("ScenarioText"));
-    map.put("exception", getNodeStringValue("BacktraceText"));
+    // Get to address
+    String toAddr = "support@reportmill.com";
+    
+    // Get from address
+    String name = getNodeStringValue("UserText"); int nlen = name!=null? name.length() : 0;
+    String email = getNodeStringValue("EmailText"); int elen = email!=null? email.length() : 0;
+    if(nlen>0 && elen>0) email = name + " <" + email + '>';
+    else if(nlen>0) email = name; else if(elen==0) email = "Anonymous";
+    String fromAddr = email;
+    
+    // Get subject
+    String subject = "ReportMill Exception Report";
+    
+    // Get body
+    String scenario = getNodeStringValue("ScenarioText");
+    if(scenario==null || scenario.length()==0) scenario = "<Not provided>";
+    String btrace = getNodeStringValue("BacktraceText");
+    String body = String.format("%s\n\nFrom:\n%s\n\nUser Scenario:\n%s\n\n%s", subject, fromAddr, scenario, btrace);
+    
+    // Get url
+    String url = "http://reportmill.com/cgi-bin/SendMail.py";
         
     // Send email in background thread
     new Thread() { public void run() {
-        Exception e = URLUtils.sendCGIEmail(_url, map);
-        if(e!=null) e.printStackTrace();
+        String str = sendMail(toAddr, fromAddr, subject, body, url);
+        if(str!=null) System.out.println("ExceptionReporter Response: " + str);
     }}.start();
+}
+
+/**
+ * Sends an email with given from, to, subject, body and SendMail url.
+ */
+public static String sendMail(String toAddr, String fromAddr, String aSubj, String aBody, String aURL)
+{
+    String text = String.format("To=%s\nFrom=%s\nSubject=%s\n%s", toAddr, fromAddr, aSubj, aBody);
+    Exception e = URLUtils.postText(aURL, text);
+    return e!=null? e.getMessage() : null;
 }
 
 }
