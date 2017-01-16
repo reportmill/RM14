@@ -1014,7 +1014,7 @@ protected void keyPressed(KeyEvent anEvent)
         case KeyEvent.VK_END: selectLineEnd(); break; // Handle end key
         case KeyEvent.VK_BACK_SPACE: delete(); break; // Handle backspace key
         case KeyEvent.VK_DELETE: deleteForward(); break; // Handle delete key
-        default: return; // Any other non-character key, just return
+        default: break;
     }
     
     // Consume the event
