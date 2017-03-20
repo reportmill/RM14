@@ -580,8 +580,8 @@ public RMXString fromXML(XMLArchiver anArchiver, XMLElement anElement)
         
         // Unarchive string
         if(e.getName().equals("string")) {
-            String string = e.getValue(); if(string==null) break;
-            addChars(string, map);
+            String str = e.getValue(); if(str==null || str.length()==0) continue;
+            addChars(str, map);
             map.remove(TEXT_EMBEDDED_SHAPE); // Clear embedded shape, if present
         }
         
