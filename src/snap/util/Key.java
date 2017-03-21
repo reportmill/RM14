@@ -212,6 +212,10 @@ public static String getStandard(String aKey)
     // Make sure first character is upper case
     if(Character.isLowerCase(name.charAt(0)))
         name = Character.toUpperCase(name.charAt(0)) + name.substring(1);
+        
+    // Make sure first character isn't number
+    if(Character.isDigit(name.charAt(0)))
+        name = aKey;
     
     // Return name
     return name;
