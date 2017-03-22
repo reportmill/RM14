@@ -2,7 +2,6 @@ package com.reportmill.text;
 import com.reportmill.base.*;
 import com.reportmill.graphics.*;
 import com.reportmill.shape.*;
-import java.beans.PropertyChangeEvent;
 import java.util.*;
 import snap.util.*;
 
@@ -333,6 +332,7 @@ public void setAttribute(String aKey, Object aValue, int aStart, int anEnd)
         // Fire property change
         if(hasListeners()) firePropertyChange(new StyleChange(ostyle, nstyle, run.start(), run.end()));
     }
+    _representableString = null;
 }
 
 /**
@@ -467,18 +467,6 @@ public RMXString rpgClone(ReportOwner anRptOwner, Object userInfo, RMShape aShap
 {
     return RMXStringUtils.rpgClone(this, anRptOwner, userInfo, aShape, doCopy);
 }
-
-/**
- * Override so RMXStringRun can reach this and to reset representable string and version.
- */
-protected void firePropertyChange(PropertyChangeEvent anEvent)
-{ super.firePropertyChange(anEvent); _representableString = null; }
-
-/**
- * Override so RMXStringRun can reach this and to reset representable string and version.
- */
-protected void firePropertyChange(String aName, Object oldVal, Object newVal, int anIndex)
-{ super.firePropertyChange(aName, oldVal, newVal, anIndex); _representableString = null; }
 
 /** Sets whether string fires property change events. */
 public void setFirePropertyChangeEnabled(boolean aValue)  { _firePropertyChangeEnabled = aValue; }
