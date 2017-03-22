@@ -103,8 +103,7 @@ private static class SnapSpringLayout extends snap.util.SpringLayout <RMShape> {
 
     /** Returns child preferred width/height. */
     public double getPrefWidth(RMShape aChild, double aValue)  { return aChild.getPrefWidth(aValue); }
-    public double getPrefHeight(RMShape aChild, double aValue)  {
-        return !(aChild instanceof RMImageShape)? aChild.getPrefHeight(aValue) : aChild.getHeight(); }
+    public double getPrefHeight(RMShape aChild, double aValue)  { return aChild.getPrefHeight(aValue); }
     
     /** Returns/sets the layout info for a shape. */
     public Object getLayoutInfo(RMShape aChild)  { return aChild.getLayoutInfo(); }
