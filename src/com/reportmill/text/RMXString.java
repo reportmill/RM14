@@ -125,6 +125,7 @@ public void addChars(CharSequence theChars, int anIndex)
     _sb.insert(anIndex, theChars);
     _run.addLength(theChars.length(), anIndex); // Add length to run
     if(hasListeners()) firePropertyChange(new CharsChange(null, theChars, anIndex)); // Fire property change
+    _representableString = null;
 }
 
 /**
@@ -169,6 +170,7 @@ public void removeChars(int aStart, int anEnd)
     
     // Fire property change
     if(chars!=null) firePropertyChange(new CharsChange(chars, null, aStart));
+    _representableString = null;
 }
 
 /**
@@ -274,6 +276,7 @@ public void setStyle(RMTextStyle aStyle, int aStart, int anEnd)
         // Fire property change
         if(hasListeners()) firePropertyChange(new StyleChange(ostyle, aStyle, run.start(), run.end()));
     }
+    _representableString = null;
 }
 
 /**
