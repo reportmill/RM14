@@ -48,10 +48,10 @@ public RMShape rpgAll()
             if(!RMKeyChain.getBoolValue(_rptOwner, key))
                 continue; }
         
-        // If StartingPageBreak on successive page, add page
-        if(table.getStartingPageBreak() && i>0) {  // assuming there are objects or first row prints when empty
-            if(getGroup(table).size()>0 || table.getChildCount()>0 && table.getRow(0).getPrintEvenIfGroupIsEmpty())
-                getPageLast().addPage(); }
+        // If StartingPageBreak on successive page and objects or table isPrintEvenIfGroupIsEmpty, add page
+        if(table.getStartingPageBreak() && i>0 &&
+            (getGroup(table).size()>0 || table.isPrintEvenIfGroupIsEmpty()))
+                getPageLast().addPage();
         
         // Do table RPG
         rpgTable(table);
@@ -107,12 +107,11 @@ protected boolean addRowsExtra(RMGroup aGroup, RMTableRowRPG aParentRPG, RMTable
             group = getGroup(ctable); group.setParent(aGroup);
             _rptOwner.popDataStack();
             
-            // If Table.StartingPageBreak, set LastRow+Group and return
-            if(ctable.getStartingPageBreak() && i>0) {
-                if(group.size()>0 || ctable.getChildCount()>0 && ctable.getRow(0).getPrintEvenIfGroupIsEmpty()) {
-                    _lastRow = new RMTableRowRPG(); _lastRow._group = group; 
-                    _childTables.put(_table, ctable); _groups.put(ctable, group); return false;
-                }
+            // If Table.StartingPageBreak and object or table isPrintEvenIfGroupIsEmpty, set LastRow+Group and return
+            if(ctable.getStartingPageBreak() && i>0 &&
+                (group.size()>0 || ctable.isPrintEvenIfGroupIsEmpty())) {
+                _lastRow = new RMTableRowRPG(); _lastRow._group = group; 
+                _childTables.put(_table, ctable); _groups.put(ctable, group); return false;
             }
         }
         
