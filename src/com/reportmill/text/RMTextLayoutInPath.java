@@ -38,7 +38,7 @@ public Point2D getNextLineStartPoint(RMXStringRun aRun)
     
     // Get last line
     RMTextLine lastLine = getLineLast();
-    double nextLineLineHeight = aRun.getFont().getLineHeight();
+    double nextLineLineHeight = aRun.getFont().getLineHeight()*getFontScale();
     
     // Declare variables
     double nextX1 = 0, nextX2 = 0;

@@ -302,8 +302,8 @@ public RMTextLine addLine(RMXStringRun aRun)
     // Initialize line
     line._run = aRun;
     line._start = line._end = length();
-    RMFont font = aRun.getFont(); if(getFontScale()!=1) font = font.scaleFont(getFontScale());
-    line.setRect(startPoint.getX(), startPoint.getY(), 0, font.getLineHeight());
+    double lineHeight = aRun.getFont().getLineHeight()*getFontScale();
+    line.setRect(startPoint.getX(), startPoint.getY(), 0, lineHeight);
     
     // Add default run
     line._runs = addRun(aRun, line);
