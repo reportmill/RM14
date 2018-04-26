@@ -5,7 +5,7 @@ date "+%b-%d-%y %H:%M" > com/reportmill/BuildInfo.txt
 
 echo "Creating ReportMill14.jar"
 rm -rf ReportMill14.jar
-/Temp/Downloads/ant/bin/ant -q -f /Temp/RM14/scripts/rm_buildjars.xml ReportMill14
+/Temp/tools/ant/bin/ant -q -f /Temp/RM14/scripts/rm_buildjars.xml ReportMill14
 	
 #echo "Creating ReportMill14.jar.pack.gz"
 #pack200 -r ReportMill14.jar
