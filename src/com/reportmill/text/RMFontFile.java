@@ -63,7 +63,11 @@ private RMFontFile(String aName)
 {
     // Get AWT font for given name and FontMetrics for font
     _awt = RMFontUtils.getFont(aName, 1000f);
-    _fontMetrics = getGraphics2D().getFontMetrics(_awt);
+    
+    // Get FontMetrics. Failed once for OBI, so adding failsafe: https://netbeans.org/bugzilla/show_bug.cgi?id=168644 
+    try { _fontMetrics = getGraphics2D().getFontMetrics(_awt); }
+    catch(Exception e) { System.err.println("RMFontFile: JVM can't getFontMetrics for: " + _awt.getFontName());
+        _fontMetrics = RMFont.Helvetica12.getFontFile()._fontMetrics; }
 
     // Cache font name and English name, so we have normalized versions
     _fontName = RMFontUtils.getFontNameNormalized(_awt.getFontName());
