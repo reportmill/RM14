@@ -77,9 +77,9 @@ protected void writeShape(T aShape, RMPDFWriter aWriter)
     if(fill!=null)
         RMFillPdfr.writeShapeFill(aShape, fill, aWriter);
     
-    // Get stroke and write pdf if not null
+    // Get stroke and write pdf if present and not StrokeOnTop
     RMStroke stroke = aShape.getStroke();
-    if(stroke!=null)
+    if(stroke!=null && !aShape.getStrokeOnTop())
         RMFillPdfr.writeShapeStroke(aShape, stroke, aWriter);
 }
 
@@ -100,6 +100,11 @@ protected void writeShapeChildren(RMShape aShape, RMPDFWriter aWriter)
  */
 protected void writeShapeAfter(T aShape, RMPDFWriter aWriter)
 {
+    // Get stroke and write pdf if present and StrokeOnTop
+    RMStroke stroke = aShape.getStroke();
+    if(stroke!=null && aShape.getStrokeOnTop())
+        RMFillPdfr.writeShapeStroke(aShape, stroke, aWriter);
+        
     // Get pdf page
     PDFPage pdfPage = aWriter.getPDFPage();
     
