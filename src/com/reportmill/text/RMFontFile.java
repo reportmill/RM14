@@ -112,12 +112,11 @@ public double charAdvance(char aChar)
         return charWidth;
     }
     
-    // Extend cache if less than CharWidthsLength (1200 + 256)
-    if(aChar<1456) {
-        int newLen = _charWidths.length==0 && aChar<256? 256 : 1456;
-        float newWidths[] = new float[newLen];
-        System.arraycopy(_charWidths, 0, newWidths, 0, _charWidths.length);
-        Arrays.fill(newWidths, _charWidths.length, newWidths.length, -1); _charWidths = newWidths;
+    // Extend cache if less than CharWidths.Length (Max = 1200 + 256)
+    if(aChar<1456) synchronized(this) {
+        int oldLen = _charWidths.length, newLen = oldLen==0 && aChar<256? 256 : 1456;
+        float newWidths[] = new float[newLen]; System.arraycopy(_charWidths, 0, newWidths, 0, oldLen);
+        Arrays.fill(newWidths, oldLen, newWidths.length, -1); _charWidths = newWidths;
         return charAdvance(aChar);
     }
     
