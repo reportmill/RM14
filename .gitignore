@@ -1,3 +1,7 @@
+
 /bin/
+/build/
+/out/
+
 .DS_Store
 Project.settings
