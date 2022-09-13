@@ -3,6 +3,7 @@ import javax.swing.*;
 import snap.swing.RMShapeIcon;
 import snap.util.*;
 import snap.web.*;
+import java.net.URL;
 
 /**
  * A JComponentShape subclass for Labeled JComponents (JLabel, AbstractButton).
@@ -62,6 +63,15 @@ public WebFile getImageFile()  { return getImageFile(getImageName()); }
  */
 public WebFile getImageFile(String aName)
 {
+    // If absolute path, just try to get file directly
+    if (aName.startsWith("/")) {
+        URL url = getClass().getResource(aName);
+        WebURL url2 = WebURL.getURL(url);
+        WebFile file = url2.getFile();
+        if (file != null)
+            return file;
+    }
+
     if(aName==null) return null;
     WebURL url = getSourceURL(); if(url==null) return null;
     WebFile file = url.getFile(); if(file==null) return null;

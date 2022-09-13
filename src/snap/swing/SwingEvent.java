@@ -2,13 +2,10 @@ package snap.swing;
 import com.reportmill.shape.RMShape;
 import com.reportmill.swing.shape.JComponentShape;
 import java.awt.*;
-import java.awt.datatransfer.Transferable;
 import java.awt.dnd.*;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
-import java.io.File;
 import java.util.EventObject;
-import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.event.*;
 import snap.util.UIEvent;
@@ -190,27 +187,6 @@ public KeyEvent getKeyEvent()  { return getEvent(KeyEvent.class); }
 /** Returns the event keycode. */
 public int getKeyCode()  { return getKeyEvent()!=null? getKeyEvent().getKeyCode() : 0; }
 
-/** Returns the event key char. */
-public char getKeyChar()  { return getKeyEvent()!=null? getKeyEvent().getKeyChar() : 0; }
-
-/** Returns whether key is left arrow. */
-public boolean isLeftArrow()  { return getKeyCode()==KeyEvent.VK_LEFT; }
-
-/** Returns whether key is right arrow. */
-public boolean isRightArrow()  { return getKeyCode()==KeyEvent.VK_RIGHT; }
-
-/** Returns whether key is up arrow. */
-public boolean isUpArrow()  { return getKeyCode()==KeyEvent.VK_UP; }
-
-/** Returns whether key is down arrow. */
-public boolean isDownArrow()  { return getKeyCode()==KeyEvent.VK_DOWN; }
-
-/** Returns whether key is enter key. */
-public boolean isEnterKey()  { return getKeyCode()==KeyEvent.VK_ENTER; }
-
-/** Returns whether key is escape key. */
-public boolean isEscapeKey()  { return getKeyCode()==KeyEvent.VK_ESCAPE; }
-
 /**
  * Returns the drop event.
  */
@@ -232,29 +208,6 @@ public DropTargetDropEvent getDragDropEvent()  { return getEvent(DropTargetDropE
 public String getDropString()  { return isDragDropEvent()? getStringValue() : null; }
 
 /**
- * Returns the drop files, if drop files.
- */
-public List <File> getDropFiles()
-{
-    // Get transferable (return if null)
-    Transferable trans = isDragDropEvent()? getDragDropEvent().getTransferable() : null; if(trans==null) return null;
-    return ClipboardUtils.getFiles(trans);
-}
-
-/**
- * Returns the drop gesture event.
- */
-public DragGestureEvent getDragGestureEvent()  { return getEvent(DragGestureEvent.class); }
-
-/**
- * Returns a Dragger for this event.
- */
-public SwingDragger getDragger()
-{
-    SwingDragger dragger = new SwingDragger(); dragger.setDragGestureEvent(getDragGestureEvent()); return dragger;
-}
-
-/**
  * Override to provide value for DragDrop event.
  */
 public Object getValue()
@@ -273,11 +226,6 @@ public Object getValue()
 public ListSelectionEvent getSelectionEvent()  { return getEvent(ListSelectionEvent.class); }
 
 /**
- * Returns the tree selection event.
- */
-public TreeSelectionEvent getTreeSelectionEvent() { return getEvent(TreeSelectionEvent.class); }
-
-/**
  * Returns whether event widget or internal event is currently in a continuous state of change.
  */
 public boolean getValueIsAdjusting()  { return isValueAdjusting(); }
@@ -288,11 +236,6 @@ public boolean getValueIsAdjusting()  { return isValueAdjusting(); }
 public Color getColorValue()  { return (Color)getHelper().getValue(getTarget(), "Color"); }
 
 /**
- * Returns the timer.
- */
-public SwingTimer getTimer()  { return isTimerEvent()? getEvent(TimerEvent.class).getTimer() : null; }
-
-/**
  * Returns the Ribs Helper for event widget.
  */
 public SwingHelper getHelper()  { Object t = getTarget(); return t!=null? SwingHelper.getSwingHelper(t) : null; }
@@ -301,20 +244,4 @@ public SwingHelper getHelper()  { Object t = getTarget(); return t!=null? SwingH
  * Consume event.
  */
 public void consume()  { if(isInputEvent()) getInputEvent().consume(); }
-
-/**
- * A timer event.
- */
-public static class TimerEvent extends EventObject {
-
-    // The timer
-    SwingTimer      _timer;
-
-    /** Create new URLClickedEvent. */
-    public TimerEvent(Object aSource, SwingTimer aTimer) { super(aSource); _timer = aTimer; }
-    
-    /** Returns the timer. */
-    public SwingTimer getTimer()  { return _timer; }
-}
-
 }

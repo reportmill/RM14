@@ -1,12 +1,10 @@
 package snap.swing;
 import java.awt.event.ActionEvent;
-import java.util.HashMap;
-import java.util.Map;
+import java.net.URL;
 import java.util.concurrent.Callable;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import snap.util.*;
-import snap.web.*;
 
 /**
  * A base controller class class that manages a JComponent usually loaded from a rib file.
@@ -16,9 +14,6 @@ public abstract class SwingOwner extends UIOwner <SwingEvent, JComponent> {
     // An object to manage a Swing window
     SwingWindow              _swin;
 
-    // Map of known timers
-    Map <String,SwingTimer>  _timers = new HashMap();
-    
 /**
  * Returns the main UI node.
  */
@@ -34,17 +29,42 @@ protected JComponent createUI()  { return createUI(getClass()); }
  */
 protected JComponent createUI(Class aClass)
 {
-    // Get ResourceURL for given class along with the class able to resolved ResourceURL
-    WebFile file = null; Class rclass = aClass; 
-    while(rclass!=Object.class) { String sname = rclass.getSimpleName();
-        WebURL durl = WebURL.getURL(rclass, null); WebFile dfile = durl.getFile().getParent();
-        file = dfile.getFile(sname + ".rib"); if(file!=null) break;
-        file = dfile.getFile(sname + ".ribs/" + sname + ".rib"); if(file!=null) break;
-        rclass = rclass.getSuperclass();
+    // Get resource URL for class
+    URL resURL = getUISource(aClass);
+    if (resURL == null) {
+        System.out.println("SwingOwner.createUI: Rib file not found for " + aClass.getName());
+        return null;
     }
 
-    // Create UI from WebFile
-    return Swing.createUI(file);
+    // Create UI and return
+    return Swing.createUI(resURL);
+}
+
+/**
+ * Returns the UI source.
+ */
+protected URL getUISource(Class<?> aClass)
+{
+    // Look for .rib file for class name
+    String className = aClass.getSimpleName();
+    String resName = className + ".rib";
+    URL url = aClass.getResource(resName);
+    if (url != null)
+        return url;
+
+    // Look for .ribs/.rib file for class name
+    String resName2 = className + ".ribs/" + resName;
+    url = aClass.getResource(resName2);
+    if (url != null)
+        return url;
+
+    // Get superclass - just return if bogus
+    Class<?> superClass = aClass.getSuperclass();
+    if (superClass == SwingOwner.class || superClass == Object.class || superClass == null)
+        return null;
+
+    // Recurse with superClass
+    return getUISource(superClass);
 }
 
 /**
@@ -160,30 +180,6 @@ public boolean isWindowVisible()  { return getWindow().isVisible(); }
  * Sets whether window is visible.
  */
 public void setWindowVisible(boolean aValue)  { getWindow().setVisible(aValue); }
-
-/**
- * Returns a timer for given name.
- */
-public synchronized SwingTimer getTimer(String aName)
-{
-    SwingTimer timer = _timers.get(aName);
-    if(timer==null)
-        _timers.put(aName, timer = createTimer().init(this, aName, 50));
-    return timer;
-}
-
-/**
- * Returns a timer for given name and interval (in milliseconds).
- */
-public SwingTimer getTimer(String aName, int aPeriod)
-{
-    SwingTimer timer = getTimer(aName); timer.setPeriod(aPeriod); return timer;
-}
-
-/**
- * Override to return SwingTimer.
- */
-protected SwingTimer createTimer()  { return new SwingTimer(); }
 
 /**
  * Runs the given runnable in the next event.
