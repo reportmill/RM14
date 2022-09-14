@@ -23,3 +23,15 @@ dependencies {
 }
 
 mainClassName = 'com.reportmill.App'
+
+tasks.named('jar') {
+    manifest {
+        attributes(
+                'Main-Class': 'com.reportmill.App',
+                'Class-Path': 'spell.jar',
+                'Application-Name': 'RMStudio14',
+                'Permissions': 'all-permissions'
+        )
+    }
+    archiveBaseName = 'RMStudio14'
+}
