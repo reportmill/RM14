@@ -46,6 +46,9 @@ public class RMFontFile {
     // Cached graphics object
     static Graphics2D   _graphics2D;
 
+    // Constant for size of font used for metrics calculations
+    private static float METRICS_SIZE = 800f;
+
 /**
  * Returns a font file for a given font name.
  */
@@ -62,7 +65,7 @@ public static synchronized RMFontFile getFontFile(String aName)
 private RMFontFile(String aName)
 {
     // Get AWT font for given name and FontMetrics for font
-    _awt = RMFontUtils.getFont(aName, 1000f);
+    _awt = RMFontUtils.getFont(aName, METRICS_SIZE);
     
     // Get FontMetrics. Failed once for OBI, so adding failsafe: https://netbeans.org/bugzilla/show_bug.cgi?id=168644 
     try { _fontMetrics = getGraphics2D().getFontMetrics(_awt); }
@@ -108,7 +111,7 @@ public double charAdvance(char aChar)
     if(aChar<_charWidths.length) {
         double charWidth = _charWidths[aChar];
         if(charWidth<0)
-            charWidth = _charWidths[aChar] = _fontMetrics.charWidth(aChar)/1000f;
+            charWidth = _charWidths[aChar] = _fontMetrics.charWidth(aChar) / METRICS_SIZE;
         return charWidth;
     }
     
@@ -121,7 +124,7 @@ public double charAdvance(char aChar)
     }
     
     // Get value straight from FontMetrics
-    return _fontMetrics.charWidth(aChar)/1000d;
+    return _fontMetrics.charWidth(aChar) / METRICS_SIZE;
 }
 
 /**
@@ -170,12 +173,20 @@ private RMPath charPathReal(char c)
     for(PathIterator pi = shape.getPathIterator(null); !pi.isDone(); pi.next()) {
         int type = pi.currentSegment(points);
         switch(type) {
-            case PathIterator.SEG_MOVETO: path.moveTo(points[0]/1000f, -points[1]/1000f); break;
-            case PathIterator.SEG_LINETO: path.lineTo(points[0]/1000f, -points[1]/1000f); break;
-            case PathIterator.SEG_QUADTO: path.quadTo(points[0]/1000f, -points[1]/1000f,
-                points[2]/1000f, -points[3]/1000f); break;
-            case PathIterator.SEG_CUBICTO: path.curveTo(points[0]/1000f, -points[1]/1000f,
-                points[2]/1000f, -points[3]/1000f, points[4]/1000f, -points[5]/1000f); break;
+            case PathIterator.SEG_MOVETO:
+                path.moveTo(points[0] / METRICS_SIZE, -points[1] / METRICS_SIZE);
+                break;
+            case PathIterator.SEG_LINETO:
+                path.lineTo(points[0] / METRICS_SIZE, -points[1] / METRICS_SIZE);
+                break;
+            case PathIterator.SEG_QUADTO:
+                path.quadTo(points[0] / METRICS_SIZE, -points[1] / METRICS_SIZE,
+                points[2] / METRICS_SIZE, -points[3] / METRICS_SIZE);
+                break;
+            case PathIterator.SEG_CUBICTO:
+                path.curveTo(points[0] / METRICS_SIZE, -points[1] / METRICS_SIZE,
+                points[2] / METRICS_SIZE, -points[3] / METRICS_SIZE, points[4] / METRICS_SIZE, -points[5] / METRICS_SIZE);
+                break;
             case PathIterator.SEG_CLOSE: path.closePath();
         }
     }
@@ -187,17 +198,17 @@ private RMPath charPathReal(char c)
 /**
  * Returns the max distance above the baseline that this font goes.
  */
-public double getMaxAscent()  { return _fontMetrics.getMaxAscent()/1000f; }
+public double getMaxAscent()  { return _fontMetrics.getMaxAscent() / METRICS_SIZE; }
 
 /**
  * Returns the max distance below the baseline that this font goes.
  */
-public double getMaxDescent()  { return _fontMetrics.getMaxDescent()/1000f; }
+public double getMaxDescent()  { return _fontMetrics.getMaxDescent() / METRICS_SIZE; }
 
 /**
  * Returns the default distance between lines for this font.
  */
-public double getLeading()  { return _fontMetrics.getLeading()/1000f; }
+public double getLeading()  { return _fontMetrics.getLeading() / METRICS_SIZE; }
 
 /**
  * Returns the height of this font file.
@@ -217,7 +228,7 @@ public double getLineAdvance()  { return getMaxAscent() + getMaxDescent() + getL
 /**
  * Returns the max advance of characters in this font.
  */
-public double getMaxAdvance()  { return _fontMetrics.getMaxAdvance()/1000f; }
+public double getMaxAdvance()  { return _fontMetrics.getMaxAdvance() / METRICS_SIZE; }
 
 /**
  * Returns the distance below the baseline that an underline should be drawn.
@@ -238,7 +249,7 @@ public double getUnderlineThickness()
     LineMetrics lm = _awt.getLineMetrics("X", getGraphics2D().getFontRenderContext());
     
     // Return underline thickness for line metrics
-    return lm.getUnderlineThickness()/1000f;
+    return lm.getUnderlineThickness() / METRICS_SIZE;
 }
 
 /**
