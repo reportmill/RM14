@@ -98,12 +98,12 @@ public PDFPagesTree getPagesTree()  { return _pagesTree; }
 /**
  * Sets the author of the pdf file.
  */
-public void setAuthor(String  s)  { _infoDict.put("Author", "(" + s + ")"); }
+public void setInfoDictAuthor(String  s)  { _infoDict.put("Author", "(" + s + ")"); }
 
 /**
  * Sets the creator of the pdf file.
  */
-public void setCreator(String s)  { _infoDict.put("Creator", "(" + s + ")"); }
+public void setInfoDictCreator(String s)  { _infoDict.put("Creator", "(" + s + ")"); }
 
 /**
  * Generates and returns a unique file identifier.

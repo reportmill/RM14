@@ -15,6 +15,12 @@ public class RMPDFWriter extends PDFFile {
 
     // The current PDF Buffer
     PDFBuffer                   _buffer = new PDFBuffer();
+
+    // The author
+    String                      _author = "ReportMill User";
+
+    // The creator
+    String                      _creator;
     
     // Whether PDF stream objects should be compressed
     boolean                     _compress;
@@ -36,7 +42,37 @@ public class RMPDFWriter extends PDFFile {
     
     // Whether writer should include newline and tab characters (like tab, newline, carriage return)
     static boolean              _includeNewlinesDefault = true;
-    
+
+/**
+ * Returns the author.
+ */
+public String getAuthor()  { return _author; }
+
+/**
+ * Sets the author.
+ */
+public void setAuthor(String aValue)  { _author = aValue; }
+
+/**
+ * Returns the creator.
+ */
+public String getCreator()
+{
+    // If set, just return
+    if (_creator != null) return _creator;
+
+    // Create default and return
+    String version = "ReportMill " + RMUtils.getVersion();
+    String build = ", Build: " + RMUtils.getBuildInfo();
+    String jvm = ", JVM: " + System.getProperty("java.version");
+    return version + build + jvm;
+}
+
+/**
+ * Sets the creator.
+ */
+public void setCreator(String aValue)  { _creator = aValue; }
+
 /**
  * Returns a PDF byte array for a given RMDocument.
  */
@@ -52,14 +88,9 @@ public byte[] getBytes(RMDocument aDoc)
     // Get doc pdf attributes
     _compress = aDoc.getCompress();
     
-    // Set PDF file author
-    setAuthor("ReportMill User");
-    
-    // Set PDF file creator
-    String version = "ReportMill " + RMUtils.getVersion();
-    String build = ", Build: " + RMUtils.getBuildInfo();
-    String jvm = ", JVM: " + System.getProperty("java.version");
-    setCreator(version + build + jvm);
+    // Set PDF file author / creator
+    setInfoDictAuthor(getAuthor());
+    setInfoDictCreator(getCreator());
     
     // Iterate over doc pages
     for(int i=0, iMax=aDoc.getPageCount(); i<iMax; i++) { RMShape page = aDoc.getPage(i);
