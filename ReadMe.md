@@ -1,21 +1,19 @@
-
-Eclipse Build Instructions
+Overview
 --------------------------
 
-This project is already an Eclipse project, so you should just be able to import it. However, to create from scratch follow the steps below.
+ReportMill is a Java application reporting tool available for dynamically generating reports and web pages from Java applications in formats such as HTML, PDF, CSV, Excel, RTF and Swing. ReportMill combines an easy-to-use page layout application and a powerful Java API in a single compact jar file, which is easy to integrate into custom Java applications for the desktop and web.
 
-1. Create New Java Project with this project directory (really just need src and lib).
+Build Instructions
+--------------------------
 
-2. Go to Project Properties -> Java Build Path -> Libraries and add all lib jars.
+This project is a gradle project, which should import easily into any standard Java IDE. It can also be built and run from the command line like this:
 
-3. (Optional) Go to Project Properties-> Java Compiler -> Errors/Warnings and set:
-	- Potential programming problems: Serializable class without serialVersionUID: Ignore
-	- Potential programming problems: Incomplete ‘switch’ cases on enum: Ignore
-	- Generic types -> Uncheck generic type operation: Ignore
-	- Generic types -> Usage of a raw type: Ignore
+    ./gradlew build
+    ./gradlew run
 
-4. Go to Run Configurations and add new Java Application configuration with main class:
-	- ReportMill: com.reportmill.App
+Product information is available here: https://reportmill.com/product/
+
+Download of build jars is available here: https://reportmill.com/rm14/
 	
 Jar Versions
 ---------------
