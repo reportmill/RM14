@@ -380,12 +380,23 @@ public static List <Movie> getMovies()
 static void writeMoviesDataset() { new RMXMLWriter().writeObject(getMovies(), "/tmp/Dataset.xml"); }
 
 /** Generates a report. */
-static void genReport()  { new RMDocument("/tmp/junk.rpt").generateReport(getMovies()).write("/tmp/junk.pdf"); }
+static void genReport()
+{
+    RMDocument doc = new RMDocument("Jar:/com/reportmill/examples/Movies.rpt");
+    List<Movie> dataSet = getMovies();
+    RMDocument report = doc.generateReport(dataSet);
+    RMPDFWriter pdfWriter = new RMPDFWriter();
+    pdfWriter.setAuthor("Super Cool Guy");
+    pdfWriter.setCreator("SCG PDF Generator");
+    byte[] pdfBytes = pdfWriter.getBytes(report);
+    RMUtils.writeBytes(pdfBytes, "/tmp/junk.pdf");
+}
 
 /** Writes a movie dataset to file. */
-public static void main(String args[])
+public static void main(String[] args)
 {
-    writeMoviesDataset();
+    //writeMoviesDataset();
+    genReport();
 }
 
 }
