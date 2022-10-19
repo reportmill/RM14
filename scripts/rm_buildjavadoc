@@ -1,7 +1,7 @@
 
 rm -rf /tmp/javadoc
 
-cd /Temp/RM14
+cd /Users/jeff/SnapCode/RM14
 
 javadoc -d /tmp/javadoc -windowtitle 'ReportMill 14 API' \
 -header 'ReportMill 14 API' \
@@ -10,6 +10,7 @@ javadoc -d /tmp/javadoc -windowtitle 'ReportMill 14 API' \
 -public \
 src/com/reportmill/base/*.java \
 src/com/reportmill/graphics/*.java \
+src/com/reportmill/pdf/writer/RMPDFWriter.java \
 src/com/reportmill/text/*.java \
 src/com/reportmill/shape/*.java \
 src/com/reportmill/viewer/RMViewer.java

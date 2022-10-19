@@ -6,7 +6,24 @@ import java.util.*;
 import java.util.zip.Deflater;
 
 /**
- * PDF Writer.
+ * This class generates PDF from an RMDocument (report) instance.
+ *
+ * <p>There are several conveniences in RMDocument that are more commonly used:
+ *
+ * <blockquote><pre>
+ *    byte[] pdfBytes = report.getBytesPDF(); or
+ *    report.writePDF("/tmp/MyReport.pdf");
+ * </pre></blockquote>
+ *
+ * <p>However, this can also easily be done directly with this class, allowing for additional API calls:
+ *
+ * <blockquote><pre>
+ * 	  RMPDFWriter pdfWriter = new RMPDFWriter();
+ * 	  pdfWriter.setAuthor("User Name");
+ * 	  pdfWriter.setCreator("Custom App Name");
+ * 	  byte[] pdfBytes = pdfWriter.getBytes(report);
+ * </pre></blockquote>
+ * <p>
  */
 public class RMPDFWriter extends PDFFile {
 
