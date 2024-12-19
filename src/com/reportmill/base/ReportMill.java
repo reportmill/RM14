@@ -26,7 +26,7 @@ static
     if(!RMUtils.isApp && !RMUtils.isApplet) {
         
         // Print initialization message
-        System.err.println("Initializing ReportMill (Build Date: " + RMUtils.getBuildInfo() +
+        System.out.println("Initializing ReportMill (Build Date: " + RMUtils.getBuildInfo() +
             ", Version " + RMUtils.getVersion() + ", JVM " + System.getProperty("java.version") +
             ", User " + System.getProperty("user.name") + ")");
 
