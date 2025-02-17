@@ -1,6 +1,4 @@
 package com.reportmill;
-import com.apple.eawt.*;
-import com.apple.eawt.AppEvent.*;
 import com.reportmill.app.*;
 import com.reportmill.base.*;
 import com.reportmill.text.RMFontUtils;
@@ -40,7 +38,7 @@ public App(String args[])
     RMPrefsUtils.setPrefsClass(Shell.class);
 
     // This prevents Windows boxes from bringing up the Drive A not ready error
-    System.setSecurityManager(null);
+    //System.setSecurityManager(null);
     
     // Allow XML parser to accept text blocks up to 128k (up from 64k)
     System.setProperty("entityExpansionLimit", "128000");
@@ -49,7 +47,7 @@ public App(String args[])
     System.setProperty("swing.aatext", "true");
     
     // Mac specific stuff
-    if(RMUtils.isMac) new AppleAppHandler().init();
+    //if(RMUtils.isMac) new AppleAppHandler().init();
     
     // Install Exception reporter
     Thread.setDefaultUncaughtExceptionHandler(new ExceptionReporter());
@@ -112,30 +110,30 @@ public static void quitApp()
 /**
  * A class to handle apple events.
  */
-private static class AppleAppHandler implements PreferencesHandler, QuitHandler, OpenFilesHandler {
-
-    /** Initializes Apple Application handling. */
-    public void init()
-    {
-        System.setProperty("apple.laf.useScreenMenuBar", "true"); // 1.4
-        System.setProperty("com.apple.mrj.application.apple.menu.about.name", "RMStudio 14");
-        Application app = Application.getApplication();
-        app.setPreferencesHandler(this); app.setQuitHandler(this); app.setOpenFileHandler(this);
-    }
-
-    /** Handle Preferences. */
-    public void handlePreferences(PreferencesEvent arg0)  { new PreferencesPanel().showPanel(null); }
-
-    /** Handle Preferences. */
-    public void openFiles(OpenFilesEvent anEvent)
-    {
-        final java.io.File file = anEvent.getFiles().size()>0? anEvent.getFiles().get(0) : null; if(file==null) return;
-        SwingUtilities.invokeLater(new Runnable() { public void run() {
-            Welcome.getShared().open(file.getPath()); }});    
-    }
-
-    /** Handle QuitRequest. */
-    public void handleQuitRequestWith(QuitEvent arg0, QuitResponse arg1)  { App.quitApp(); }
-}
+//private static class AppleAppHandler implements PreferencesHandler, QuitHandler, OpenFilesHandler {
+//
+//    /** Initializes Apple Application handling. */
+//    public void init()
+//    {
+//        System.setProperty("apple.laf.useScreenMenuBar", "true"); // 1.4
+//        System.setProperty("com.apple.mrj.application.apple.menu.about.name", "RMStudio 14");
+//        Application app = Application.getApplication();
+//        app.setPreferencesHandler(this); app.setQuitHandler(this); app.setOpenFileHandler(this);
+//    }
+//
+//    /** Handle Preferences. */
+//    public void handlePreferences(PreferencesEvent arg0)  { new PreferencesPanel().showPanel(null); }
+//
+//    /** Handle Preferences. */
+//    public void openFiles(OpenFilesEvent anEvent)
+//    {
+//        final java.io.File file = anEvent.getFiles().size()>0? anEvent.getFiles().get(0) : null; if(file==null) return;
+//        SwingUtilities.invokeLater(new Runnable() { public void run() {
+//            Welcome.getShared().open(file.getPath()); }});
+//    }
+//
+//    /** Handle QuitRequest. */
+//    public void handleQuitRequestWith(QuitEvent arg0, QuitResponse arg1)  { App.quitApp(); }
+//}
 
 }

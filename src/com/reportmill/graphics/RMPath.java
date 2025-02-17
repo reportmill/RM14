@@ -599,10 +599,10 @@ public boolean intersects(double x, double y, double w, double h)
     // catch(Throwable t) { }
     
     // Try to use internal API to return intersects
-    try {
-        sun.awt.geom.Crossings c = sun.awt.geom.Crossings.findCrossings(getPathIterator(null), x, y, x+w, y+h);
-        return c==null || !c.isEmpty();
-    } catch(Throwable t) { }
+    //try {
+    //    sun.awt.geom.Crossings c = sun.awt.geom.Crossings.findCrossings(getPathIterator(null), x, y, x+w, y+h);
+    //    return c==null || !c.isEmpty();
+    //} catch(Throwable t) { }
 
     // Use RM stuff
     return intersects(x, y, w, h, 0);

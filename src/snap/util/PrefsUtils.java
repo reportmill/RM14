@@ -1,7 +1,6 @@
 package snap.util;
 import java.util.*;
 import java.util.prefs.*;
-import java.security.AccessControlException;
 
 /**
  * This class offers a number of useful general purpose utilities used by ribs classes.
@@ -25,7 +24,7 @@ public static Preferences prefs()  { return getPrefs(); }
 public static Preferences getPrefs()
 {
     try { return Preferences.userNodeForPackage(_prefsClass); }
-    catch(AccessControlException ex) { return getBogusPreferences(); }
+    catch(Exception ex) { return getBogusPreferences(); }
 }
 
 /**
